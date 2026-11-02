@@ -14,14 +14,14 @@
 :root{
   --bg:#f5f7fa; --card:#fff; --ink:#2b3542; --mute:#5f6b79; --line:#e2e7ee;
   --accent:#2f5d8a; --accent-soft:#e8eff6;
-  --teal:#23786a; --teal-soft:#e2f1ee; --amber:#8a5a00; --amber-soft:#fbf1da; --rose:#b4475a;
+  --teal:#23786a; --teal-soft:#e2f1ee; --amber:#8a5a00; --amber-soft:#fbf1da; --rose:#b4475a; --hot:#c2571a; --cold:#2f6fb0; --sun:#f0a81c; --cloud:#a9bacb; --rain:#4a86c5; --bolt:#f4b400;
   --ok:#2f5d8a; --bk:#23786a; --opt:#8a5a00; --est:#7b8693;
   --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
-  --r:10px; --nav:64px;
+  --r:10px; --nav:112px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){
   --bg:#12161c; --card:#1a2029; --ink:#e6eaf0; --mute:#a2adbb; --line:#2a323e;
-  --accent:#8db6e0; --accent-soft:#222c3a; --teal:#7cc2b6; --teal-soft:#1d2d2b; --amber:#e0b665; --amber-soft:#2f2a1b; --rose:#e58a9a; --ok:#8db6e0; --bk:#7cc2b6; --opt:#e0b665; --est:#8a94a1}}
+  --accent:#8db6e0; --accent-soft:#222c3a; --teal:#7cc2b6; --teal-soft:#1d2d2b; --amber:#e0b665; --amber-soft:#2f2a1b; --rose:#e58a9a; --hot:#ffab7a; --cold:#8db6e0; --sun:#ffc94d; --cloud:#7f92a7; --rain:#78aef0; --bolt:#ffd54a; --ok:#8db6e0; --bk:#7cc2b6; --opt:#e0b665; --est:#8a94a1}}
 *{box-sizing:border-box}
 html{scroll-padding-top:96px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--font);-webkit-text-size-adjust:100%}
@@ -144,8 +144,47 @@ tr:last-child td{border:0}
 .mt{margin-top:12px}
 .foot{margin:28px 0 0;color:var(--mute);font-size:.82rem}
 
+/* 날씨 */
+.wxwrap{display:grid;gap:10px;margin-top:14px}
+.wx{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.wxhead{display:flex;justify-content:space-between;gap:8px;font-size:.82rem;color:var(--mute)}
+.wxloc{font-weight:500;color:var(--accent)}
+.wxmain{display:flex;gap:12px;align-items:center;margin-top:6px}
+.wxicon svg{width:54px;height:54px;display:block}
+.wxtemp{display:flex;flex-direction:column;line-height:1.15;min-width:4.2rem}
+.wxtemp .hi{font-size:1.7rem;font-weight:700;color:var(--hot)}
+.wxtemp .lo{font-size:1.2rem;font-weight:500;color:var(--cold)}
+.wxtemp small{font-size:.68rem;color:var(--mute)}
+.wxdesc{flex:1;min-width:0;font-size:.86rem;color:var(--mute);display:flex;flex-direction:column;gap:1px;line-height:1.5}
+.wxdesc b{color:var(--ink);font-size:1rem;font-weight:500}
+.wxhaz{margin-top:8px;padding:8px 11px;border-radius:8px;font-size:.88rem;line-height:1.5;border:1px solid;border-left-width:5px}
+.wxhaz.danger{background:color-mix(in srgb,var(--rose) 14%,transparent);border-color:var(--rose);color:var(--rose);font-weight:500}
+.wxhaz.warn{background:var(--amber-soft);border-color:var(--amber);color:var(--amber)}
+.wxfoot{margin-top:8px;font-size:.75rem;color:var(--mute)}
+.wxnorm{font-size:.9rem;color:var(--mute);margin-top:6px;line-height:1.6}
+.wxnorm b{color:var(--ink);font-weight:500}
+.w-sun{fill:var(--sun);stroke:var(--sun)}.w-cloud{fill:var(--cloud)}.w-rain{stroke:var(--rain);fill:none;stroke-width:3;stroke-linecap:round}.w-snow{fill:var(--rain)}.w-bolt{fill:var(--bolt)}.w-dark{fill:#8798ab}
 nav.bar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:4px 8px calc(4px + env(safe-area-inset-bottom))}
 nav.bar .in{display:flex;max-width:720px;margin:0 auto}
+.nextbar{display:flex;align-items:center;gap:10px;max-width:720px;margin:0 auto;padding:7px 12px;font-size:.88rem;cursor:pointer;border-bottom:1px solid var(--line);color:var(--ink)}
+.nextbar[hidden]{display:none}
+.nextbar .lbn{flex:none;font-size:.72rem;font-weight:500;line-height:1;padding:4px 8px;border-radius:5px;background:var(--accent);color:#fff}
+.nextbar .tm{flex:none;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.nextbar .tt{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .nextbar .lbn{color:#10202e}}
+.nextcard{background:var(--accent-soft);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);border-left:5px solid var(--accent);border-radius:var(--r);padding:14px 16px;margin-top:18px}
+.nextcard .lbn{font-size:.8rem;font-weight:700;color:var(--accent)}
+.nextcard .when{font-size:.85rem;color:var(--mute);margin-top:2px}
+.nextcard .big{display:flex;gap:12px;align-items:baseline;margin-top:6px}
+.nextcard .big b{font-size:1.6rem;line-height:1.2;color:var(--accent);font-variant-numeric:tabular-nums}
+.nextcard .big span{font-size:1.15rem;font-weight:500;line-height:1.4}
+.nextcard p{margin:6px 0 0;font-size:.94rem;color:var(--mute)}
+.nextcard .nm{margin-top:10px;font-weight:500;color:var(--accent)}
+.nextcard .go2{margin-top:10px;background:none;border:1px solid var(--accent);color:var(--accent);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.88rem}
+.stop.next .rail button{box-shadow:0 0 0 4px var(--accent-soft)}
+.stop.next .body h4{color:var(--accent);font-weight:700}
+.badge.nx{background:var(--accent);border-color:var(--accent);color:#fff}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .badge.nx{color:#10202e}}
 nav.bar button{flex:1;border:0;background:none;cursor:pointer;padding:6px 0 4px;color:var(--mute);font-size:.72rem;line-height:1.3}
 nav.bar svg{display:block;margin:0 auto 2px;width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
@@ -156,7 +195,7 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
 <div class="wrap">
   <header class="top"><div class="row"><span class="sub">2026.11.12 ~ 11.24 · 라스베이거스, 로스앤젤레스</span><span class="dd" id="dd"></span></div><h1>2026년 크아 가족 미국 서부 여행</h1></header>
   <main id="view"></main>
-  <p class="foot">가족 공유용 일정표입니다. 예약번호 같은 개인 정보는 뺐습니다. 점선 동그라미는 아직 정해지지 않은 예상 시각입니다.</p>
+  <p class="foot">가족 공유용 일정표입니다. 예약번호 같은 개인 정보는 뺐습니다. 점선 동그라미는 아직 정해지지 않은 예상 시각입니다. 날씨는 Open-Meteo 예보와 미국 기상청(NWS) 경보를 사용합니다.</p>
 </div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -166,7 +205,7 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
 <symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.6 5.4-1.6 6 0M14 10h4M14 13h4"/></symbol>
 <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="13" rx="2"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/></symbol>
 </defs></svg>
-<nav class="bar" aria-label="주 메뉴"><div class="in" id="nav">
+<nav class="bar" aria-label="주 메뉴"><div class="nextbar" id="nextbar" hidden></div><div class="in" id="nav">
   <button data-v="home"><svg><use href="#i-home"/></svg>한눈에</button>
   <button data-v="plan"><svg><use href="#i-cal"/></svg>일정</button>
   <button data-v="places"><svg><use href="#i-pin"/></svg>장소</button>
@@ -239,7 +278,7 @@ const days=[
   items:[
    {t:"아침",st:"est",h:"일찍 출발",p:"편도 약 2시간 30분이에요. 입장권과 세부 일정은 정해지면 여기에 추가해요.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림","관광")},
    {t:"점심",st:"est",h:"현지 도착, 관광",p:"사전 예약 없이 컨디션을 보며 정해요."},
-   {t:"14:30",st:"est",h:"늦어도 이 시각에는 출발",p:"일몰(약 16:40) 전에 라스베이거스로 돌아와 야간 운전을 피해요."},
+   {t:"14:30",st:"est",h:"늦어도 이 시각에는 출발",p:"일몰(약 16:30) 전에 라스베이거스로 돌아와 야간 운전을 피해요."},
    {t:"저녁",st:"est",h:"호텔 복귀, 휴식",p:"다음 날 10:00 체크아웃이라 짐을 미리 정리해요."}
   ]},
  {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동",tag:"이동",
@@ -362,13 +401,121 @@ const tripIdx=(()=>{const i=Math.round((today-start)/864e5);return i>=0&&i<days.
 let state={v:"home",day:Math.max(tripIdx,0),ready:"todo",cat:"전체",q:""};
 const done=store.get("done",{}), tdone=store.get("todo",{}), pdone=store.get("pack",{});
 
+// ---- 날씨 (Open-Meteo 예보 + 미국 기상청 경보)
+const LOC={
+  lv:{n:"라스베이거스",lat:36.1088,lon:-115.1683,norm:[19,7]},
+  la:{n:"로스앤젤레스 (글렌데일)",lat:34.1478,lon:-118.2529,norm:[22,11]},
+  gc:{n:"그랜드 캐니언 웨스트",lat:36.0119,lon:-113.8108,norm:[14,2]}
+};
+const WXMAP=[["lv"],["lv"],["lv"],["lv"],["gc","lv"],["lv","la"],["la"],["la"],["la"],["la"],["la"],["la"]];
+const WXD={}, WXT={}, WXA={};
+const WMO={0:"맑음",1:"대체로 맑음",2:"구름 조금",3:"흐림",45:"안개",48:"안개",51:"약한 이슬비",53:"이슬비",55:"강한 이슬비",56:"어는 이슬비",57:"어는 이슬비",61:"약한 비",63:"비",65:"강한 비",66:"어는 비",67:"어는 비",71:"약한 눈",73:"눈",75:"강한 눈",77:"싸락눈",80:"소나기",81:"소나기",82:"강한 소나기",85:"눈 소나기",86:"강한 눈 소나기",95:"뇌우",96:"우박 동반 뇌우",99:"우박 동반 강한 뇌우"};
+function wxIcon(c){
+  const sun=(x,y,r)=>`<circle class="w-sun" cx="${x}" cy="${y}" r="${r}" stroke-width="0"/>`+[0,45,90,135,180,225,270,315].map(a=>{const t=a*Math.PI/180,x1=x+Math.cos(t)*(r+3),y1=y+Math.sin(t)*(r+3),x2=x+Math.cos(t)*(r+7),y2=y+Math.sin(t)*(r+7);return `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="var(--sun)" stroke-width="2.5" stroke-linecap="round"/>`}).join("");
+  const cloud=(dx,dy,cls)=>`<g transform="translate(${dx} ${dy})" class="${cls||""}"><circle class="${cls||"w-cloud"}" cx="17" cy="27" r="7"/><circle class="${cls||"w-cloud"}" cx="26" cy="22" r="9"/><circle class="${cls||"w-cloud"}" cx="35" cy="27" r="6"/><rect class="${cls||"w-cloud"}" x="17" y="27" width="18" height="6"/></g>`;
+  const drops=(n)=>[0,1,2].slice(0,n).map(i=>`<line class="w-rain" x1="${19+i*8}" y1="38" x2="${16+i*8}" y2="45"/>`).join("");
+  let g;
+  if(c===0) g=sun(24,24,9);
+  else if(c===1) g=sun(24,24,9);
+  else if(c===2) g=sun(17,17,7)+cloud(4,6);
+  else if(c===3) g=cloud(0,2);
+  else if(c===45||c===48) g=cloud(0,-3)+`<line x1="12" y1="38" x2="38" y2="38" stroke="var(--cloud)" stroke-width="3" stroke-linecap="round"/><line x1="16" y1="44" x2="34" y2="44" stroke="var(--cloud)" stroke-width="3" stroke-linecap="round"/>`;
+  else if(c>=51&&c<=57) g=cloud(0,-3)+drops(2);
+  else if((c>=61&&c<=67)||(c>=80&&c<=82)) g=cloud(0,-3)+drops(3);
+  else if((c>=71&&c<=77)||c===85||c===86) g=cloud(0,-3)+[0,1,2].map(i=>`<circle class="w-snow" cx="${19+i*8}" cy="${40+(i%2)*4}" r="2.4"/>`).join("");
+  else if(c>=95) g=cloud(0,-4,"w-dark")+`<polygon class="w-bolt" points="26,28 19,40 25,40 22,48 33,35 27,35 30,28"/>`;
+  else g=cloud(0,2);
+  return `<svg viewBox="0 0 48 48" role="img" aria-label="${WMO[c]||"날씨"}">${g}</svg>`;
+}
+function hm(t){return String(t).slice(11,16)}
+function wxHazards(c,ps,g,lo,hi){
+  const h=[];
+  if(c===96||c===99)h.push(["danger","뇌우·벼락, 우박 위험. 야외 활동을 피하고 실내로 이동해요."]);
+  else if(c===95)h.push(["danger","뇌우·벼락 위험. 번개가 보이면 실내로 이동해요."]);
+  if(ps>=30||c===65||c===82)h.push([ps>=50?"danger":"warn",`많은 비 (${Math.round(ps)}mm). 협곡·도로 침수에 주의해요.`]);
+  if((c>=71&&c<=77)||c===85||c===86)h.push(["warn","눈이 와요. 도로 결빙에 주의하고 운전은 천천히."]);
+  if(g>=80)h.push(["danger",`매우 강한 돌풍 (${g}km/h). 야외 이동에 주의해요.`]);
+  else if(g>=60)h.push(["warn",`강한 돌풍 (${g}km/h). 운전과 야외 활동에 주의해요.`]);
+  if(lo<=0)h.push(["warn",`영하까지 내려가요 (${lo}°). 두꺼운 옷을 챙겨요.`]);
+  if(hi>=35)h.push(["warn",`매우 더워요 (${hi}°). 물을 자주 마셔요.`]);
+  return h;
+}
+function alertsFor(k,date){
+  const a=WXA[k]||[], t0=Date.parse(date+"T00:00:00Z"), t1=t0+864e5;
+  return a.filter(x=>{const s=Date.parse(x.start||""),e=Date.parse(x.end||"");return (isNaN(s)||s<=t1)&&(isNaN(e)||e>=t0)}).slice(0,3);
+}
+function wxOne(k,date){
+  const L=LOC[k], D=WXD[k];
+  const alerts=alertsFor(k,date).map(a=>`<div class="wxhaz danger">⚠ 미국 기상청 경보: ${esc(a.event)}${a.headline?`<br><span style="font-weight:400">${esc(a.headline)}</span>`:""}</div>`).join("");
+  if(D===undefined)return `<div class="wx"><div class="wxhead"><span class="wxloc">${esc(L.n)}</span></div><div class="wxnorm">날씨를 불러오는 중이에요…</div></div>`;
+  const idx=D?D.time.indexOf(date):-1;
+  if(idx<0){
+    const first=new Date(date+"T00:00:00"); first.setDate(first.getDate()-15);
+    const msg=D===false?"날씨를 불러오지 못했어요. 연결을 확인하고 다시 열어 보세요.":`일기예보는 ${first.getMonth()+1}/${first.getDate()}부터 볼 수 있어요.`;
+    return `<div class="wx"><div class="wxhead"><span class="wxloc">${esc(L.n)}</span><span>평년 기온(대략)</span></div><div class="wxnorm">11월 평년 기온은 <b>최고 ${L.norm[0]}° / 최저 ${L.norm[1]}°</b> 정도예요. ${msg}</div>${alerts}</div>`;
+  }
+  const c=D.weather_code[idx], hi=Math.round(D.temperature_2m_max[idx]), lo=Math.round(D.temperature_2m_min[idx]);
+  const pp=D.precipitation_probability_max[idx], ps=D.precipitation_sum[idx]||0, g=Math.round(D.wind_gusts_10m_max[idx]||0);
+  const away=Math.round((new Date(date+"T00:00:00")-today)/864e5);
+  const haz=wxHazards(c,ps,g,lo,hi).map(([lv,t])=>`<div class="wxhaz ${lv}">${lv==="danger"?"⚠ 위험 · ":"주의 · "}${esc(t)}</div>`).join("");
+  const upd=WXT[k]?new Date(WXT[k]):null;
+  const fd=upd?`${upd.getMonth()+1}/${upd.getDate()} ${String(upd.getHours()).padStart(2,"0")}:${String(upd.getMinutes()).padStart(2,"0")}`:"";
+  return `<div class="wx"><div class="wxhead"><span class="wxloc">${esc(L.n)}</span><span>${away>7?"아직 멀어서 예보가 바뀔 수 있어요":"예보"}</span></div>
+  <div class="wxmain"><div class="wxicon">${wxIcon(c)}</div><div class="wxtemp"><span class="hi">${hi}°</span><span class="lo">${lo}°</span><small>최고 / 최저 °C</small></div>
+  <div class="wxdesc"><b>${WMO[c]||"날씨"}</b><span>비 올 확률 ${pp==null?"-":pp+"%"}${ps>=1?` · ${Math.round(ps)}mm`:""} · 돌풍 ${g}km/h</span><span>일출 ${hm(D.sunrise[idx])} · 일몰 ${hm(D.sunset[idx])}</span></div></div>${alerts}${haz}<div class="wxfoot">${fd?`예보 갱신 ${fd}`:""}</div></div>`;
+}
+function wxInner(i){
+  const date=`2026-11-${String(12+i).padStart(2,"0")}`;
+  return WXMAP[i].map(k=>wxOne(k,date)).join("");
+}
+function wxRefresh(){$$(".wxwrap").forEach(w=>{w.innerHTML=wxInner(+w.dataset.i)})}
+async function loadWx(){
+  const now=Date.now();
+  await Promise.all(Object.keys(LOC).map(async k=>{
+    const L=LOC[k], ck="wx_"+k, c=store.get(ck,null);
+    if(c&&now-c.t<3*3600e3){WXD[k]=c.d;WXT[k]=c.t}
+    else{
+      try{
+        const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${L.lat}&longitude=${L.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_gusts_10m_max,sunrise,sunset&timezone=auto&forecast_days=16`);
+        if(!r.ok)throw 0; const j=await r.json(); WXD[k]=j.daily; WXT[k]=now; store.set(ck,{t:now,d:j.daily});
+      }catch(e){ if(c){WXD[k]=c.d;WXT[k]=c.t}else WXD[k]=false }
+    }
+    wxRefresh();
+    try{
+      const r=await fetch(`https://api.weather.gov/alerts/active?point=${L.lat.toFixed(4)},${L.lon.toFixed(4)}`);
+      if(r.ok){const j=await r.json();WXA[k]=(j.features||[]).map(f=>({event:f.properties.event,headline:f.properties.headline,start:f.properties.onset||f.properties.effective,end:f.properties.ends||f.properties.expires}))}
+    }catch(e){}
+  }));
+  wxRefresh();
+}
+// ---- 다음 일정: 오늘(여행 전이면 1일차)부터 완료 표시가 없는 첫 항목
+function nextStop(){
+  const from=tripIdx>=0?tripIdx:(dd>0?0:-1);
+  if(from<0)return null;
+  for(let d=from;d<days.length;d++){
+    for(let j=0;j<days[d].items.length;j++){if(!done[`${d}-${j}`])return {d,j,it:days[d].items[j]}}
+  }
+  return null;
+}
+function nextCard(){
+  const n=nextStop(); if(!n)return `<div class="nextcard"><div class="lbn">다음 일정</div><p>모든 일정을 마쳤어요.</p></div>`;
+  const x=days[n.d], it=n.it;
+  const when=tripIdx<0?`출발까지 D-${dd} · ${n.d+1}일차 ${x.d} ${x.w}`:`${n.d+1}일차 · ${x.d} ${x.w}`;
+  return `<div class="nextcard"><div class="lbn">다음 일정</div><div class="when">${when}</div><div class="big"><b>${esc(it.t)}</b><span>${esc(it.h)}</span></div>${it.p?`<p>${esc(it.p)}</p>`:""}${it.pl?`<div class="nm">${esc(it.pl.name)}</div><div class="ad">${esc(it.pl.addr)}</div><div class="links"><a class="go" href="${nav(it.pl.q)}" target="_blank" rel="noopener">길 안내</a><a href="${gmap(it.pl.q)}" target="_blank" rel="noopener">구글 지도</a></div>`:""}<button class="go2" data-next="1">일정에서 보기</button></div>`;
+}
+function renderNextBar(){
+  const b=$("#nextbar"), n=nextStop();
+  if(!n||state.v==="home"){b.hidden=true;return}
+  b.hidden=false;
+  b.innerHTML=`<span class="lbn">다음</span><span class="tm">${esc(n.it.t)}</span><span class="tt">${esc(n.it.h)}</span>`;
+}
 // ---- 화면
 function dayRow(i){
   const x=days[i];
   return `<li><button data-day="${i}"><span class="n">${i+1}일차</span><span><span class="t">${esc(x.t)}</span><br><span class="s">${esc(x.r)} · ${esc(x.tag)}</span></span><span class="d">${x.d} ${x.w}</span></button></li>`;
 }
 function home(){
-  return `<h2 class="sec" style="margin-top:20px">여행 요약</h2>
+  return `${nextCard()}<h2 class="sec">여행 요약</h2>
   <div class="card"><dl class="kv">
    <div><dt>기간</dt><dd>2026.11.12(목) ~ 11.24(화), 현지 11박</dd></div>
    <div><dt>인원</dt><dd>석환, 혜정, 지후</dd></div>
@@ -380,17 +527,19 @@ function home(){
   <h2 class="sec">12일 일정</h2><ul class="rows">${days.map((_,i)=>dayRow(i)).join("")}</ul>`;
 }
 function plan(){
-  const x=days[state.day], i=state.day;
+  const x=days[state.day], i=state.day, NX=nextStop();
   const chips=days.map((y,k)=>`<button role="tab" data-d="${k}" aria-selected="${k===i}">${k+1}일차<span>${y.d} ${y.w}</span></button>`).join("");
   const n=x.items.filter((_,j)=>done[`${i}-${j}`]).length, tot=x.items.length;
   const stops=x.items.map((it,j)=>{
     const on=!!done[`${i}-${j}`];
+    const isNext=!!(NX&&NX.d===i&&NX.j===j);
     const pl=it.pl?`<div class="place"><div class="nm">${esc(it.pl.name)}</div><div class="ad">${esc(it.pl.addr)}</div><div class="links"><a class="go" href="${nav(it.pl.q)}" target="_blank" rel="noopener">길 안내</a><a href="${gmap(it.pl.q)}" target="_blank" rel="noopener">구글 지도</a><a href="${amap(it.pl.q)}" target="_blank" rel="noopener">애플 지도</a></div><div class="mini" data-q="${esc(it.pl.q)}" aria-label="${esc(it.pl.name)} 미니맵"></div></div>`:"";
     const notes=it.l?`<ul class="notes">${it.l.map(t=>`<li>${esc(t)}</li>`).join("")}</ul>`:"";
-    return `<li class="stop ${it.st} ${on?"done":""}"><time>${esc(it.t)}${it.nt?`<small>${esc(it.nt)}</small>`:""}</time><div class="rail"><button data-k="${i}-${j}" role="checkbox" aria-checked="${on}" aria-label="${esc(it.h)} 완료 표시"></button></div><div class="body"><h4>${esc(it.h)}<span class="badge">${STL[it.st]}</span></h4>${it.p?`<p>${esc(it.p)}</p>`:""}${notes}${pl}</div></li>`;
+    return `<li class="stop ${it.st} ${on?"done":""} ${isNext?"next":""}"><time>${esc(it.t)}${it.nt?`<small>${esc(it.nt)}</small>`:""}</time><div class="rail"><button data-k="${i}-${j}" role="checkbox" aria-checked="${on}" aria-label="${esc(it.h)} 완료 표시"></button></div><div class="body"><h4>${esc(it.h)}<span class="badge">${STL[it.st]}</span>${isNext?`<span class="badge nx">다음</span>`:""}</h4>${it.p?`<p>${esc(it.p)}</p>`:""}${notes}${pl}</div></li>`;
   }).join("");
   return `<div class="chips" role="tablist" aria-label="일차 선택">${chips}</div>
   <header class="dayhead"><div class="dn">${i+1}일차 · ${x.d} ${x.w}</div><h2>${esc(x.t)}</h2><p>${esc(x.r)} · ${esc(x.tag)}</p>
+  <div class="wxwrap" data-i="${i}">${wxInner(i)}</div>
   <div class="prog"><span>${n}/${tot} 완료</span><i><b style="width:${tot?n/tot*100:0}%"></b></i></div>
   <div class="legend"><span style="--c:var(--ok)">확정</span><span style="--c:var(--bk)">예약</span><span class="l-est" style="--c:var(--est)">예상</span><span style="--c:var(--opt)">선택</span></div></header>
   <ol class="route">${stops}</ol>`;
@@ -432,13 +581,17 @@ function render(push=true){
   const v=$("#view");
   v.innerHTML={home,plan,places,phrase,ready}[state.v]();
   $$(".mini",v).forEach(m=>{const f=document.createElement("iframe");f.loading="lazy";f.referrerPolicy="no-referrer-when-downgrade";f.title=m.getAttribute("aria-label");f.src=embed(m.dataset.q);m.appendChild(f)});
+  renderNextBar();
+  if(state.focus&&state.v==="plan"){const el=$(".stop.next");if(el)el.scrollIntoView({block:"center"});state.focus=false}
   if(push){try{history.replaceState(null,"",state.v==="plan"?`#day${state.day+1}`:`#${state.v}`)}catch(e){}}
 }
 function go(v,scroll=true){state.v=v;render();if(scroll)window.scrollTo({top:0})}
 $("#nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b)go(b.dataset.v)});
+$("#nextbar").addEventListener("click",()=>{const n=nextStop();if(n){state.day=n.d;state.focus=true;go("plan",false)}});
 $("#view").addEventListener("click",e=>{
   const t=e.target, c=n=>t.closest(n);
-  if(c("[data-day]")){state.day=+c("[data-day]").dataset.day;go("plan")}
+  if(c("[data-next]")){const n=nextStop();if(n){state.day=n.d;state.focus=true;go("plan",false)}}
+  else if(c("[data-day]")){state.day=+c("[data-day]").dataset.day;go("plan")}
   else if(c("[data-d]")){state.day=+c("[data-d]").dataset.d;render();window.scrollTo({top:0})}
   else if(c("[data-k]")){const k=c("[data-k]").dataset.k;done[k]=!done[k];store.set("done",done);const y=scrollY;render(false);scrollTo({top:y})}
   else if(c("[data-c]")){state.cat=c("[data-c]").dataset.c;render(false)}
@@ -466,8 +619,10 @@ $("#dclose").onclick=()=>$("#dlg").close();
 const h=location.hash.slice(1), m=h.match(/^day(\d+)$/);
 if(m&&days[+m[1]-1]){state.day=+m[1]-1;state.v="plan"}
 else if(["home","plan","places","phrase","ready"].includes(h))state.v=h;
-else if(tripIdx>=0){state.v="plan"}
+else if(tripIdx>=0){state.v="plan";const n=nextStop();if(n){state.day=n.d;state.focus=true}}
 render(false);
+loadWx();
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadWx()});
 </script>
 </body>
 </html>
