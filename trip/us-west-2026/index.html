@@ -3,127 +3,326 @@
 <head>
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b6e4f">
 <title>26년 미국 서부 여행</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=IBM+Plex+Sans+KR:wght@400;500;700&display=swap">
 <style>
-:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mute:#667085;--line:#e4e0d6;--acc:#d9531e;--acc2:#1f6f8b;--ok:#2e7d32;--warn:#b26a00;--chip:#efe9dc}
-@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12151c;--card:#1b2030;--ink:#eceff6;--mute:#9aa4b8;--line:#2b3247;--acc:#ff8a57;--acc2:#6cc3dd;--ok:#7fd48a;--warn:#f0b35a;--chip:#262d42}}
-:root[data-theme=dark]{--bg:#12151c;--card:#1b2030;--ink:#eceff6;--mute:#9aa4b8;--line:#2b3247;--acc:#ff8a57;--acc2:#6cc3dd;--ok:#7fd48a;--warn:#f0b35a;--chip:#262d42}
+/* 하이웨이 사인 + 로드 트립: 초록 표지판, 앰버 중앙선, 노선 표지(shield). 색은 도로 표지에서만 가져온다. */
+:root{
+  --ground:#e9eeeb; --paper:#fbfcfb; --ink:#14221b; --mute:#5b6a62; --rule:#cdd7d1;
+  --sign:#0b6e4f; --sign-ink:#ffffff; --amber:#f5b700; --amber-ink:#2a2100;
+  --blue:#1f5fa6; --road:#9aa9a1;
+  --display:"Black Han Sans","IBM Plex Sans KR","Malgun Gothic",sans-serif;
+  --body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
+  --r:10px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){
+  --ground:#0c1410; --paper:#131e18; --ink:#e8f0eb; --mute:#92a59a; --rule:#26362d;
+  --sign:#12875f; --amber:#ffc928; --blue:#6aa6ec; --road:#4b5e53}}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
-.wrap{max-width:860px;margin:0 auto;padding:0 16px 64px}
-header{padding:28px 0 12px}
-h1{margin:0;font-size:1.7rem;letter-spacing:-.02em}
-.sub{color:var(--mute);margin-top:4px}
-.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
-.chip{background:var(--chip);border-radius:999px;padding:4px 12px;font-size:.85rem}
-.dday{color:var(--acc);font-weight:700}
-nav{position:sticky;top:0;background:var(--bg);display:flex;gap:6px;padding:10px 0;z-index:5;border-bottom:1px solid var(--line);overflow-x:auto}
-nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:10px;font-size:.95rem;cursor:pointer;white-space:nowrap}
-nav button.on{background:var(--acc);border-color:var(--acc);color:#fff}
-section{display:none;padding-top:16px}
-section.on{display:block}
-.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
-.card h3{margin:0 0 4px;font-size:1.05rem}
-.day{display:grid;grid-template-columns:64px 1fr;gap:12px}
-.date{text-align:center;border-right:1px solid var(--line);padding-right:10px}
-.date b{display:block;font-size:1.1rem;color:var(--acc)}
-.date span{font-size:.78rem;color:var(--mute)}
-.tag{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:6px;background:var(--chip);color:var(--acc2);margin-right:4px}
-.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
-ul{margin:6px 0 0;padding-left:18px}
-li{margin:2px 0}
-.mute{color:var(--mute);font-size:.88rem}
-table{width:100%;border-collapse:collapse;font-size:.92rem}
-td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-th{color:var(--mute);font-weight:600;font-size:.8rem}
-.kv{display:grid;grid-template-columns:96px 1fr;gap:4px 10px;font-size:.93rem}
-.kv dt{color:var(--mute)}.kv dd{margin:0;word-break:break-word}
-label.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
-label.chk input{margin-top:5px;width:18px;height:18px;accent-color:var(--acc)}
-label.chk.done span{text-decoration:line-through;color:var(--mute)}
-h2{font-size:1.05rem;margin:18px 0 8px;color:var(--mute)}
-@media (max-width:520px){.day{grid-template-columns:54px 1fr}.kv{grid-template-columns:80px 1fr}}
+html{scroll-padding-top:120px}
+body{margin:0;background:var(--ground);color:var(--ink);font:16px/1.65 var(--body);-webkit-text-size-adjust:100%}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px;border-radius:4px}
+.wrap{max-width:820px;margin:0 auto;padding:0 16px calc(64px + env(safe-area-inset-bottom))}
+
+/* 표지판 머리말 */
+.hero{background:var(--sign);color:var(--sign-ink);margin:0 -16px;padding:26px 20px 22px;position:relative}
+.hero::before{content:"";position:absolute;inset:8px;border:2px solid rgba(255,255,255,.85);border-radius:8px;pointer-events:none}
+.hero h1{margin:0;font:400 clamp(1.9rem,7vw,2.8rem)/1.1 var(--display);letter-spacing:.01em}
+.hero .meta{margin:8px 0 0;font-size:.95rem;opacity:.95}
+.facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.fact{background:rgba(255,255,255,.16);border-radius:6px;padding:3px 10px;font-size:.85rem}
+.fact.dday{background:var(--amber);color:var(--amber-ink);font-weight:700}
+
+/* 상단 탭 */
+.tabs{position:sticky;top:0;z-index:10;background:var(--ground);display:flex;gap:4px;border-bottom:2px solid var(--rule);margin:0 -16px;padding:0 12px}
+.tabs button{flex:1;appearance:none;border:0;background:none;color:var(--mute);font:700 1rem var(--body);padding:13px 8px;cursor:pointer;border-bottom:4px solid transparent;margin-bottom:-2px}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--amber)}
+.panel{display:none;padding-top:18px}
+.panel.on{display:block}
+
+/* 일차 선택 (출구 표지) */
+.days{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 12px;margin:0 -16px;padding-inline:16px;scrollbar-width:thin}
+.days button{flex:none;min-width:58px;appearance:none;border:2px solid var(--sign);background:var(--paper);color:var(--ink);border-radius:6px;padding:5px 8px 6px;cursor:pointer;font:inherit;line-height:1.2;text-align:center}
+.days button b{display:block;font:400 1.05rem var(--display)}
+.days button span{font-size:.72rem;color:var(--mute)}
+.days button[aria-selected=true]{background:var(--sign);color:var(--sign-ink);border-color:var(--sign)}
+.days button[aria-selected=true] span{color:rgba(255,255,255,.85)}
+.days .all{min-width:64px}
+
+/* 한눈에 */
+.glance{list-style:none;margin:0;padding:0;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r)}
+.glance li{border-bottom:1px solid var(--rule)}
+.glance li:last-child{border:0}
+.glance button{display:grid;grid-template-columns:52px 1fr;gap:12px;width:100%;text-align:left;appearance:none;border:0;background:none;color:inherit;font:inherit;padding:12px 14px;cursor:pointer}
+.glance .n{font:400 1.2rem/1.2 var(--display);color:var(--sign)}
+.glance .n small{display:block;font:400 .72rem var(--body);color:var(--mute)}
+.glance h3{margin:0;font-size:1rem}
+.glance p{margin:2px 0 0;font-size:.88rem;color:var(--mute)}
+.glance button:hover{background:color-mix(in srgb,var(--sign) 7%,transparent)}
+
+/* 하루 머리표 */
+.sign{display:flex;gap:14px;align-items:center;background:var(--sign);color:var(--sign-ink);border-radius:var(--r);padding:14px 16px;position:relative}
+.sign::after{content:"";position:absolute;inset:5px;border:1.5px solid rgba(255,255,255,.75);border-radius:6px;pointer-events:none}
+.shield{flex:none;width:52px;height:52px;display:grid;place-items:center;background:#fff;color:var(--sign);border-radius:50% 50% 46% 46%;font:400 1.35rem var(--display);box-shadow:0 0 0 3px var(--sign),0 0 0 5px #fff}
+.sign h2{margin:0;font:400 1.35rem/1.25 var(--display)}
+.sign p{margin:2px 0 0;font-size:.88rem;opacity:.92}
+
+/* 타임라인: 시간 | 도로 | 내용 */
+.route{list-style:none;margin:22px 0 0;padding:0}
+.stop{display:grid;grid-template-columns:3.6rem 22px 1fr;gap:0 10px}
+.stop time{font:700 1rem/1.5 var(--body);font-variant-numeric:tabular-nums;text-align:right;padding-top:1px}
+.stop time.nt{color:var(--mute);font-weight:500;font-size:.85rem}
+.rail{position:relative}
+.rail::before{content:"";position:absolute;left:50%;top:14px;bottom:-4px;border-left:3px dashed var(--road);transform:translateX(-50%)}
+.rail::after{content:"";position:absolute;left:50%;top:4px;width:16px;height:16px;border-radius:50%;transform:translateX(-50%);background:var(--paper);border:3px solid var(--road)}
+.stop:last-child .rail::before{display:none}
+.stop.ok .rail::after{background:var(--sign);border-color:var(--sign)}
+.stop.bk .rail::after{background:var(--blue);border-color:var(--blue)}
+.stop.est .rail::after{border-style:dashed}
+.body{padding-bottom:26px;min-width:0}
+.body h3{margin:0;font-size:1.05rem;line-height:1.45;display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center}
+.body p{margin:3px 0 0;color:var(--mute);font-size:.93rem}
+.badge{font:500 .72rem/1 var(--body);padding:3px 7px;border-radius:4px;border:1px solid currentColor}
+.badge.ok{color:var(--sign)}.badge.bk{color:var(--blue)}.badge.est{color:var(--mute);border-style:dashed}.badge.opt{color:var(--mute)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .badge.ok{color:#5fd0a2}}
+
+/* 장소: 링크 + 미니맵 */
+.place{margin-top:10px;display:grid;grid-template-columns:1fr;gap:8px;max-width:420px}
+.place a.go{display:inline-flex;gap:6px;align-items:center;font-weight:500;font-size:.92rem;text-decoration:none;color:var(--blue)}
+.place a.go:hover{text-decoration:underline}
+.place a.go span{color:var(--ink)}
+.mini{width:100%;height:130px;border:1px solid var(--rule);border-radius:8px;background:var(--ground) center/cover;overflow:hidden}
+.mini iframe{width:100%;height:100%;border:0;display:block}
+
+.end{margin-top:4px;padding:12px 14px;border-left:5px solid var(--amber);background:var(--paper);border-radius:0 var(--r) var(--r) 0;font-size:.93rem}
+
+/* 예약 */
+.sec{margin:0 0 26px}
+.sec h2{margin:0 0 8px;font:400 1.25rem var(--display);color:var(--sign)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .sec h2{color:#5fd0a2}}
+table{width:100%;border-collapse:collapse;font-size:.92rem;background:var(--paper)}
+th,td{padding:8px 10px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top}
+th{font-weight:700;color:var(--mute);font-size:.8rem}
+dl.kv{margin:0;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r)}
+dl.kv div{display:grid;grid-template-columns:5.5rem 1fr;gap:10px;padding:9px 12px;border-bottom:1px solid var(--rule)}
+dl.kv div:last-child{border:0}
+dl.kv dt{color:var(--mute);font-size:.88rem}
+dl.kv dd{margin:0;word-break:break-word}
+
+/* 체크리스트 */
+.cl h2{font:700 .95rem var(--body);color:var(--mute);margin:20px 0 6px}
+.chk{display:flex;gap:12px;align-items:flex-start;padding:11px 4px;border-bottom:1px solid var(--rule);cursor:pointer}
+.chk input{width:22px;height:22px;margin:2px 0 0;accent-color:var(--sign);flex:none}
+.chk.done span{color:var(--mute);text-decoration:line-through}
+.foot{margin-top:30px;color:var(--mute);font-size:.85rem}
+
+@media (max-width:480px){.stop{grid-template-columns:3.1rem 20px 1fr;gap:0 8px}.sign h2{font-size:1.15rem}dl.kv div{grid-template-columns:4.6rem 1fr}}
+@media (prefers-reduced-motion:no-preference){.panel.on .route{animation:rise .35s ease-out}@keyframes rise{from{opacity:.0;transform:translateY(6px)}}}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <h1>🇺🇸 26년 미국 서부 여행</h1>
-  <div class="sub">2026.11.12(목) ~ 11.24(화) · 라스베이거스 5박 + 로스앤젤레스 6박 · 석환 · 혜정 · 지후</div>
-  <div class="stats"><span class="chip dday" id="dday"></span><span class="chip">현지 11박</span><span class="chip">렌터카 Mercedes GLE</span><span class="chip">ESTA 완료 ✓</span></div>
-</header>
-<nav id="tabs">
-  <button data-t="plan" class="on">일정</button>
-  <button data-t="book">예약</button>
-  <button data-t="todo">체크리스트</button>
-</nav>
+  <header class="hero">
+    <h1>미국 서부 가족여행</h1>
+    <p class="meta">2026.11.12(목) ~ 11.24(화) · 라스베이거스 5박, 로스앤젤레스 6박 · 석환, 혜정, 지후</p>
+    <div class="facts"><span class="fact dday" id="dday"></span><span class="fact">현지 11박</span><span class="fact">렌터카 Mercedes GLE</span><span class="fact">ESTA 완료</span></div>
+  </header>
 
-<section id="plan" class="on"></section>
-<section id="book"></section>
-<section id="todo"></section>
-<p class="mute" style="margin-top:28px">가족 공유용 일정표입니다. 예약번호 등 상세는 제외했습니다.</p>
+  <div class="tabs" role="tablist" id="tabs">
+    <button role="tab" id="t-plan" aria-selected="true" aria-controls="plan">일정</button>
+    <button role="tab" id="t-book" aria-selected="false" aria-controls="book">예약</button>
+    <button role="tab" id="t-todo" aria-selected="false" aria-controls="todo">체크리스트</button>
+  </div>
+
+  <main>
+    <section class="panel on" id="plan" role="tabpanel" aria-labelledby="t-plan" style="padding-top:14px">
+      <div class="days" id="days" role="tablist" aria-label="일차 선택"></div>
+      <div id="dayview"></div>
+    </section>
+    <section class="panel" id="book" role="tabpanel" aria-labelledby="t-book"></section>
+    <section class="panel cl" id="todo" role="tabpanel" aria-labelledby="t-todo"></section>
+  </main>
+  <p class="foot">가족 공유용 일정표입니다. 예약번호 등 상세 정보는 제외했습니다. 시간 앞에 점선 표시는 예상 시각입니다.</p>
 </div>
 
 <script>
+// st: ok 확정 / bk 예약 완료 / est 예상 / opt 선택
+const G=(q,name)=>({name:name||q,q});
 const days=[
- {n:1,d:"11/12 목",r:"이동",t:"출국 → 라스베이거스",tags:["확정"],li:["PUS 16:10 → ICN 17:20 (KE1410, 부산에서 출국심사)","ICN T2 21:00 → LAS T3 15:10 (KE005, 프레스티지)","16:30 LAS 공항 Hertz 렌터카 인수 (아내 추가운전자 현지 등록)","16:00~ 엘라라 호텔 체크인"]},
- {n:2,d:"11/13 금",r:"라스베이거스",t:"윈 뷔페 & 스트립",tags:["예약"],li:["13:30 윈(Wynn) 호텔 뷔페","오후 스트립 산책 (M&M, 코카콜라 스토어 등)"]},
- {n:3,d:"11/14 토",r:"라스베이거스",t:"쇼핑 & 휴식",li:["노스 프리미엄 아울렛 등 (렌터카 이용)","호텔 부대시설 휴식"]},
- {n:4,d:"11/15 일",r:"라스베이거스",t:"스피어 '오즈의 마법사'",tags:["예약"],li:["10:15까지 스피어 도착 → 투어 시작","11:00 공연 시작 (3인)","오후 호텔 수영장/자유"]},
- {n:5,d:"11/16 월",r:"라스베이거스",t:"그랜드 캐니언 웨스트 림",tags:["러프하게"],li:["사전 예약·시간표 없이 컨디션 보며 현지 결정","렌터카 당일 왕복, 일몰(약 16:40) 전 복귀 · 야간 운전 지양","세부 정보는 추후 업데이트"]},
- {n:6,d:"11/17 화",r:"LAS → LA",t:"LA 이동 & 체크인",tags:["예약"],li:["10:00까지 엘라라 체크아웃","렌터카로 LA 이동 (약 4.5~5시간)","Residence Inn Glendale 체크인"]},
- {n:7,d:"11/18 수",r:"로스앤젤레스",t:"LA 워밍업",li:["캘리포니아 사이언스 센터 또는 아메리카나 앳 브랜드","테마파크 전 컨디션 조절"]},
- {n:8,d:"11/19 목",r:"로스앤젤레스",t:"유니버설 스튜디오 1일차",tags:["티켓 보유"],li:["2일권 첫 입장일(11/19 고정)","여권 + 바우처 지참, 개찰구 직행","슈퍼 닌텐도 월드 집중"]},
- {n:9,d:"11/20 금",r:"로스앤젤레스",t:"유니버설 스튜디오 2일차",tags:["티켓 보유"],li:["같은 티켓으로 재입장 (재발급 불가)","못 본 어트랙션·공연"]},
- {n:10,d:"11/21 토",r:"로스앤젤레스",t:"키드스페이스 & 그리피스",li:["낮: 패서디나 키드스페이스 칠드런스 뮤지엄","오후~저녁: 그리피스 천문대 일몰·야경 (주말 주차 혼잡, 셔틀 고려)"]},
- {n:11,d:"11/22 일",r:"로스앤젤레스",t:"산타모니카 & 렌터카 반납",li:["산타모니카 해변 · 퍼시픽 파크","19:00 Hertz 버뱅크 공항(BUR) 반납 → 우버로 숙소"]},
- {n:12,d:"11/23 월",r:"LA → 귀국",t:"LAX 출국",tags:["확정"],li:["LAX Tom Bradley 터미널(B), 08:00까지 도착 권장","KE018 11:00 출발 (프레스티지)","체크아웃 11/23"]},
- {n:13,d:"11/24 화",r:"인천 → 부산",t:"귀가",li:["ICN T2 17:35 도착, 같은 터미널에서 환승 (인천 입국심사 없음)","KE1409 19:35 → PUS 20:45, 입국심사는 부산"]}
+ {d:"11/12",w:"목",r:"이동",t:"출국, 라스베이거스 도착",tag:"확정",
+  items:[
+   {t:"14:10",st:"est",h:"부산 김해공항 국제선 도착",p:"출발 2시간 전 도착 권장. 부산에서 출국심사를 하고, 인천에서는 입출국 절차가 없습니다.",pl:G("Gimhae International Airport","김해국제공항")},
+   {t:"16:10",st:"ok",h:"KE1410 부산 → 인천",p:"17:20 인천 T2 도착. 같은 터미널에서 환승합니다."},
+   {t:"21:00",st:"ok",h:"KE005 인천 T2 → 라스베이거스",p:"프레스티지석, 비행 11시간 10분. 날짜변경선을 지나 같은 날 오후에 도착합니다.",pl:G("Incheon International Airport Terminal 2","인천공항 T2")},
+   {t:"15:10",nt:"11/12 현지",st:"ok",h:"라스베이거스 해리 리드 공항 T3 도착",p:"입국심사와 수하물을 찾습니다.",pl:G("Harry Reid International Airport Terminal 3","해리 리드 국제공항 T3")},
+   {t:"16:30",st:"ok",h:"Hertz 렌터카 인수",p:"Mercedes GLE. 아내 추가운전자를 카운터에서 등록하고, 여권, 한국 면허증, 국제면허증, 카드를 챙깁니다. 지후 부스터 시트를 장착합니다.",pl:G("Hertz Harry Reid International Airport Las Vegas 7135 Gilespie St","Hertz 라스베이거스 공항점")},
+   {t:"17:30",st:"est",h:"엘라라 호텔 체크인",p:"체크인은 16:00부터. 여권과 보증금용 카드가 필요합니다. 짐 풀고 근처에서 가볍게 저녁.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라 (HGV Club)")}
+  ]},
+ {d:"11/13",w:"금",r:"라스베이거스",t:"윈 뷔페와 스트립 산책",tag:"예약",
+  items:[
+   {t:"오전",st:"est",h:"시차 적응, 늦은 아침",p:"컨디션이 우선입니다."},
+   {t:"13:30",st:"bk",h:"윈(Wynn) 호텔 뷔페",p:"점심 예약이 되어 있습니다. 차로 이동하면 호텔 주차 요금을 확인하세요.",pl:G("Wynn Las Vegas","윈 라스베이거스")},
+   {t:"15:30",st:"est",h:"스트립 산책",p:"M&M's World와 코카콜라 스토어 구경.",pl:G("M&M's World Las Vegas","M&M's World")},
+   {t:"저녁",st:"opt",h:"벨라지오 분수쇼",p:"날씨와 체력을 보고 결정합니다.",pl:G("Fountains of Bellagio","벨라지오 분수")}
+  ]},
+ {d:"11/14",w:"토",r:"라스베이거스",t:"아울렛 쇼핑과 휴식",tag:"자유",
+  items:[
+   {t:"오전",st:"est",h:"호텔에서 여유롭게 시작"},
+   {t:"11:00",st:"est",h:"노스 프리미엄 아울렛",p:"렌터카로 이동합니다. 토요일은 붐빌 수 있어 오후 전에 도착하면 좋습니다.",pl:G("Las Vegas North Premium Outlets","라스베이거스 노스 프리미엄 아울렛")},
+   {t:"오후",st:"opt",h:"호텔 수영장, 부대시설 휴식",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라")}
+  ]},
+ {d:"11/15",w:"일",r:"라스베이거스",t:"스피어 '오즈의 마법사'",tag:"예약",
+  items:[
+   {t:"09:30",st:"est",h:"호텔 출발",p:"스피어 10:15 도착을 기준으로 이동 시간을 확인하세요."},
+   {t:"10:15",st:"bk",h:"스피어 도착, 투어 시작",p:"입장과 투어가 먼저 진행됩니다. 3인 예약.",pl:G("Sphere Las Vegas 255 Sands Ave","스피어")},
+   {t:"11:00",st:"bk",h:"'오즈의 마법사' 공연 시작"},
+   {t:"오후",st:"opt",h:"호텔 수영장, 자유 일정"}
+  ]},
+ {d:"11/16",w:"월",r:"라스베이거스",t:"그랜드 캐니언 웨스트 림",tag:"러프하게",
+  items:[
+   {t:"아침",st:"est",h:"일찍 출발",p:"편도 약 2시간 30분. 입장권과 세부 일정은 정해지면 이 칸에 추가합니다.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림")},
+   {t:"점심",st:"est",h:"현지 도착, 관광",p:"사전 예약 없이 컨디션을 보며 정합니다."},
+   {t:"14:30",st:"est",h:"늦어도 이 시각에는 출발",p:"일몰(약 16:40) 전에 라스베이거스로 돌아와 야간 운전을 피합니다."},
+   {t:"저녁",st:"est",h:"호텔 복귀, 휴식",p:"다음 날 10:00 체크아웃을 위해 짐을 미리 정리합니다."}
+  ]},
+ {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동",tag:"이동",
+  items:[
+   {t:"10:00",st:"ok",h:"엘라라 체크아웃",p:"10:00까지 체크아웃합니다. 짐을 싣고 출발합니다.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라")},
+   {t:"11:00",st:"est",h:"LA로 출발",p:"약 4시간 30분~5시간. 중간에 점심과 휴식을 넣습니다."},
+   {t:"15:30",st:"est",h:"글렌데일 호텔 체크인",p:"Residence Inn Los Angeles Glendale. 결제 완료.",pl:G("Residence Inn by Marriott Los Angeles Glendale","레지던스 인 글렌데일")},
+   {t:"저녁",st:"opt",h:"아메리카나 앳 브랜드에서 저녁",pl:G("The Americana at Brand","아메리카나 앳 브랜드")}
+  ]},
+ {d:"11/18",w:"수",r:"로스앤젤레스",t:"LA 워밍업",tag:"자유",
+  items:[
+   {t:"오전",st:"est",h:"컨디션 조절",p:"내일부터 이틀 동안 테마파크라 체력을 아낍니다."},
+   {t:"오후",st:"opt",h:"캘리포니아 사이언스 센터 또는 아메리카나 앳 브랜드",p:"둘 중 하나를 고릅니다.",pl:G("California Science Center","캘리포니아 사이언스 센터")}
+  ]},
+ {d:"11/19",w:"목",r:"로스앤젤레스",t:"유니버설 스튜디오 1일차",tag:"티켓 보유",
+  items:[
+   {t:"개장 전",st:"est",h:"숙소 출발",p:"우버가 편합니다. 주차는 티켓에 포함되지 않습니다. 개장 시간은 공식 사이트에서 확인하세요."},
+   {t:"개장",st:"ok",h:"유니버설 스튜디오 할리우드 입장",p:"2일권의 첫 입장은 11/19 고정입니다. 여권과 바우처를 들고 개찰구로 갑니다.",pl:G("Universal Studios Hollywood","유니버설 스튜디오 할리우드")},
+   {t:"하루 종일",st:"est",h:"슈퍼 닌텐도 월드 집중",p:"지후가 가장 좋아할 어트랙션부터 탑승합니다."}
+  ]},
+ {d:"11/20",w:"금",r:"로스앤젤레스",t:"유니버설 스튜디오 2일차",tag:"티켓 보유",
+  items:[
+   {t:"개장",st:"ok",h:"같은 티켓으로 재입장",p:"2일차에도 원본 티켓과 여권이 필요하고, 재발급이 안 됩니다.",pl:G("Universal Studios Hollywood","유니버설 스튜디오 할리우드")},
+   {t:"하루 종일",st:"est",h:"못 탄 어트랙션, 공연"}
+  ]},
+ {d:"11/21",w:"토",r:"로스앤젤레스",t:"키드스페이스와 그리피스 천문대",tag:"자유",
+  items:[
+   {t:"낮",st:"est",h:"키드스페이스 칠드런스 뮤지엄 (패서디나)",p:"운영 시간은 방문 전에 확인하세요.",pl:G("KidSpace Children's Museum Pasadena","키드스페이스 칠드런스 뮤지엄")},
+   {t:"15:30",st:"est",h:"그리피스 천문대로 이동",p:"주말에는 주차가 어렵습니다. 일몰은 약 16:50이라 조금 일찍 도착합니다.",pl:G("Griffith Observatory","그리피스 천문대")},
+   {t:"17:00",st:"est",h:"일몰과 야경",p:"저녁에 기온이 내려가니 겉옷을 챙깁니다."}
+  ]},
+ {d:"11/22",w:"일",r:"로스앤젤레스",t:"산타모니카와 렌터카 반납",tag:"반납",
+  items:[
+   {t:"오전",st:"est",h:"산타모니카 해변, 퍼시픽 파크",pl:G("Santa Monica Pier","산타모니카 피어")},
+   {t:"17:30",st:"est",h:"버뱅크로 이동",p:"일몰 후 운전을 줄이도록 여유 있게 출발합니다."},
+   {t:"19:00",st:"ok",h:"Hertz 버뱅크 공항점 반납",p:"일요일 06:00~23:00 영업. 반납 후 우버로 숙소로 돌아옵니다.",pl:G("Hertz Hollywood Burbank Airport 2501 N Hollywood Way Burbank","Hertz 버뱅크 공항점")},
+   {t:"저녁",st:"est",h:"짐 정리",p:"위탁 수하물은 1인 2개, 개당 32kg까지입니다."}
+  ]},
+ {d:"11/23",w:"월",r:"LA → 귀국",t:"LAX 출국",tag:"확정",
+  items:[
+   {t:"07:30",st:"est",h:"호텔 체크아웃, 우버로 LAX 이동"},
+   {t:"08:00",st:"est",h:"LAX Tom Bradley 터미널(B) 도착",p:"출발 3시간 전 도착을 권장합니다.",pl:G("Tom Bradley International Terminal LAX","LAX 톰 브래들리 국제선 터미널")},
+   {t:"11:00",st:"ok",h:"KE018 로스앤젤레스 → 인천",p:"프레스티지석, 비행 13시간 35분. 좌석 15A, 15B, 15D."},
+   {t:"11/24",nt:"한국 날짜",st:"ok",h:"17:35 인천 T2 도착, 19:35 KE1409, 20:45 부산 도착",p:"인천에서는 입국심사 없이 같은 터미널에서 환승하고, 입국심사는 부산에서 합니다."}
+  ]}
 ];
-const flights=[["11/12","KE1410","PUS 16:10 → ICN T2 17:20","일반석"],["11/12","KE005","ICN T2 21:00 → LAS T3 15:10","프레스티지"],["11/23","KE018","LAX TBIT 11:00 → ICN T2 11/24 17:35","프레스티지 15A·B·D"],["11/24","KE1409","ICN T2 19:35 → PUS 20:45","일반석 41A·B·C"]];
+const flights=[["11/12","KE1410","부산 16:10 → 인천 T2 17:20","일반석"],["11/12","KE005","인천 T2 21:00 → 라스베이거스 T3 15:10","프레스티지"],["11/23","KE018","LAX 11:00 → 인천 T2 11/24 17:35","프레스티지 15A·B·D"],["11/24","KE1409","인천 T2 19:35 → 부산 20:45","일반석 41A·B·C"]];
 const books=[
- ["항공",[["수하물","위탁 2개(각 32kg) · 기내 ICN→LAS/LAX→ICN 2개, 부산 구간 1개"],["좌석","KE1410·KE005 아직 미배정 → 사전 지정 필요"]]],
- ["라스베이거스 · Elara (HGV Club)",[["주소","80 E Harmon Ave · 1-702-669-6700"],["기간","11/12 16:00 ~ 11/17 10:00 (5박)"],["객실","Junior Suite, 킹+소파베드, 키친넷"],["취소","한국시간 11/10 16:59까지 전액 환불"],["체크인","여권 + 보증금용 카드(현금 불가), 전면 금연(위반 시 $350)"]]],
- ["LA · Residence Inn Glendale",[["기간","11/17 ~ 11/23 (6박)"],["상태","결제 완료 · 무료취소 11/15까지"]]],
- ["렌터카 · Hertz",[["차량","Mercedes GLE (Medium Elite SUV)"],["인수","11/12(목) 16:30 · LAS 공항 · 24시간 · +1 702-262-7700"],["반납","11/22(일) 19:00 · Burbank BUR · 일 06~23시 · +1 818-569-3565"],["요금","총 608.80 USD · 반납 시 결제"],["회원/보험","Gold 회원 · 풀 커버리지 · 아내 추가운전자 현지 등록 · 부부 모두 국제면허"],["카시트","myfold 휴대용 구매 완료"]]],
- ["입장권·공연",[["윈 뷔페","11/13 13:30"],["스피어","11/15 10:15 도착 → 11:00 공연 (3인)"],["USH 2일권","11/19 + 11/20 (11/25까지) · 여권 지참 · 주차 불포함"]]]
+ ["항공",[["수하물","위탁 1인 2개(개당 32kg). 기내 인천→LAS, LAX→인천은 2개(18kg), 부산 구간은 1개(10kg)"],["좌석","KE1410, KE005는 미배정. 사전 지정 필요"]]],
+ ["라스베이거스 숙소: 엘라라 (HGV Club)",[["주소","80 E Harmon Ave"],["기간","11/12 16:00 ~ 11/17 10:00 (5박)"],["객실","Junior Suite, 킹 침대와 소파베드, 키친넷"],["취소","한국시간 11/10 16:59까지 전액 환불"],["체크인","여권과 보증금용 카드(현금 불가). 객실 전면 금연"]]],
+ ["LA 숙소: Residence Inn Glendale",[["기간","11/17 ~ 11/23 (6박)"],["상태","결제 완료, 11/15까지 무료 취소"]]],
+ ["렌터카: Hertz",[["차량","Mercedes GLE"],["인수","11/12(목) 16:30, 라스베이거스 공항, 24시간 영업"],["반납","11/22(일) 19:00, 버뱅크 공항(BUR), 일요일 06:00~23:00"],["요금","총 608.80 USD, 반납 시 결제"],["준비","Gold 회원, 풀 커버리지, 아내 추가운전자는 현지 등록, 부부 모두 국제면허증"],["카시트","myfold 휴대용 부스터 구매 완료"]]],
+ ["입장권, 공연",[["윈 뷔페","11/13 13:30"],["스피어","11/15 10:15 도착, 11:00 공연 (3인)"],["유니버설","2일권, 11/19와 11/20 (11/25까지 사용 가능). 여권 지참, 주차 불포함"]]]
 ];
 const todos=[
- ["엘라라 주차/리조트 요금 확인",0],["아내 추가운전자 등록 요금 (Gold 혜택 현장 확인)",0],["Hertz 온라인 체크인 + 카드 홀드 확인",0],
- ["KE1410·KE005 사전 좌석 지정",0],["(선택) USH 익스프레스 추가 여부",0],["(선택) 지후 유소아식 신청",0],
- ["스피어 10:15 도착 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],
- ["(보류) 웨스트 림 입장권·세부 일정 — 러프하게, 추후 공유",0],
- ["ESTA 신청",1],["엘라라 예약",1],["Glendale 호텔 예약",1],["Hertz 예약",1],["USH 2일권",1],["스피어 예약",1],["윈 뷔페 예약",1],["렌터카 보험 풀 커버리지",1],["myfold 카시트 구매",1]
+ ["엘라라 주차, 리조트 요금 확인",0],["아내 추가운전자 등록 요금 확인",0],["Hertz 온라인 체크인, 카드 홀드 확인",0],
+ ["KE1410, KE005 사전 좌석 지정",0],["(선택) 유니버설 익스프레스 추가",0],["(선택) 지후 유소아식 신청",0],
+ ["스피어 10:15 도착을 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],["웨스트 림 입장권, 세부 일정 (러프하게, 추후 정리)",0],
+ ["ESTA 신청",1],["엘라라 예약",1],["글렌데일 호텔 예약",1],["Hertz 예약",1],["유니버설 2일권",1],["스피어 예약",1],["윈 뷔페 예약",1],["렌터카 풀 커버리지 보험",1],["myfold 카시트 구매",1]
 ];
-const $=s=>document.querySelector(s);
+
+const $=(s,e=document)=>e.querySelector(s), $$=(s,e=document)=>[...e.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const STL={ok:"확정",bk:"예약",est:"예상",opt:"선택"};
 
 // D-day
-const dd=Math.ceil((new Date("2026-11-12T00:00:00")-new Date().setHours(0,0,0,0))/864e5);
-$("#dday").textContent=dd>0?`D-${dd}`:dd===0?"D-DAY":`여행 ${-dd+1}일차`;
+const start=new Date("2026-11-12T00:00:00"), today=new Date(); today.setHours(0,0,0,0);
+const dd=Math.round((start-today)/864e5);
+$("#dday").textContent=dd>0?`D-${dd}`:dd===0?"오늘 출발":`${-dd+1}일차`;
 
-// plan
-$("#plan").innerHTML=days.map(x=>`<div class="card day"><div class="date"><b>D${x.n}</b><span>${x.d}</span></div><div><h3>${x.t}</h3><div class="mute">${x.r} ${(x.tags||[]).map(t=>`<span class="tag ${t==="러프하게"?"warn":"ok"}">${t}</span>`).join("")}</div><ul>${x.li.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`).join("");
+// 일차 탭
+const dayBar=$("#days");
+dayBar.innerHTML=`<button class="all" role="tab" data-d="all"><b>한눈에</b><span>전체</span></button>`+
+ days.map((x,i)=>`<button role="tab" data-d="${i}"><b>${i+1}일차</b><span>${x.d} ${x.w}</span></button>`).join("");
 
-// book
-$("#book").innerHTML=`<div class="card"><h3>✈️ 항공</h3><table><tr><th>날짜</th><th>편명</th><th>구간</th><th>좌석</th></tr>${flights.map(f=>`<tr><td>${f[0]}</td><td>${f[1]}</td><td>${f[2]}</td><td>${f[3]}</td></tr>`).join("")}</table></div>`+
- books.map(b=>`<div class="card"><h3>${b[0]}</h3><dl class="kv">${b[1].map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl></div>`).join("");
+const mapLink=q=>`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+const mapEmbed=q=>`https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=15&output=embed`;
 
-// todo
+function glance(){
+  return `<ol class="glance">`+days.map((x,i)=>`<li><button data-d="${i}"><div class="n">${i+1}일차<small>${x.d} ${x.w}</small></div><div><h3>${esc(x.t)}</h3><p>${esc(x.r)}${x.tag?` · ${esc(x.tag)}`:""}</p></div></button></li>`).join("")+`</ol>`;
+}
+function dayHTML(i){
+  const x=days[i];
+  const stops=x.items.map(it=>{
+    const pl=it.pl?`<div class="place"><a class="go" href="${mapLink(it.pl.q)}" target="_blank" rel="noopener">📍 <span>${esc(it.pl.name)}</span> 구글 지도로 열기</a><div class="mini" data-q="${esc(it.pl.q)}" aria-label="${esc(it.pl.name)} 미니맵"></div></div>`:"";
+    return `<li class="stop ${it.st}"><time class="${it.nt?"":""}">${esc(it.t)}${it.nt?`<br><small class="nt" style="font-weight:500;color:var(--mute);font-size:.72rem">${esc(it.nt)}</small>`:""}</time><div class="rail" aria-hidden="true"></div><div class="body"><h3>${esc(it.h)} <span class="badge ${it.st}">${STL[it.st]}</span></h3>${it.p?`<p>${esc(it.p)}</p>`:""}${pl}</div></li>`;
+  }).join("");
+  return `<div class="sign"><div class="shield" aria-hidden="true">${i+1}</div><div><h2>${esc(x.t)}</h2><p>${i+1}일차, ${x.d} ${x.w} · ${esc(x.r)}</p></div></div><ol class="route">${stops}</ol>`;
+}
+function showDay(k,push=true){
+  $$("#days button").forEach(b=>b.setAttribute("aria-selected",String(b.dataset.d===String(k))));
+  const v=$("#dayview");
+  v.innerHTML=k==="all"?glance():dayHTML(+k);
+  // 미니맵은 열린 날짜만 로드
+  $$(".mini",v).forEach(m=>{const f=document.createElement("iframe");f.loading="lazy";f.referrerPolicy="no-referrer-when-downgrade";f.title=m.getAttribute("aria-label");f.src=mapEmbed(m.dataset.q);m.appendChild(f)});
+  const cur=$(`#days button[data-d="${k}"]`); if(cur) cur.scrollIntoView({inline:"center",block:"nearest"});
+  if(push){try{history.replaceState(null,"",k==="all"?"#plan":`#day${+k+1}`)}catch(e){}}
+  window.scrollTo({top:0});
+}
+dayBar.addEventListener("click",e=>{const b=e.target.closest("button");if(b)showDay(b.dataset.d)});
+$("#dayview").addEventListener("click",e=>{const b=e.target.closest(".glance button");if(b)showDay(b.dataset.d)});
+
+// 예약
+$("#book").innerHTML=`<div class="sec"><h2>항공</h2><table><tr><th>날짜</th><th>편명</th><th>구간</th><th>좌석</th></tr>${flights.map(f=>`<tr><td>${f[0]}</td><td>${f[1]}</td><td>${f[2]}</td><td>${f[3]}</td></tr>`).join("")}</table></div>`+
+ books.map(b=>`<div class="sec"><h2>${esc(b[0])}</h2><dl class="kv">${b[1].map(r=>`<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl></div>`).join("");
+
+// 체크리스트
 const saved=store.get("todo")||{};
 function drawTodo(){
-  const row=(t,i)=>{const on=saved[i]??t[1];return `<label class="chk ${on?"done":""}"><input type="checkbox" data-i="${i}" ${on?"checked":""}><span>${t[0]}</span></label>`};
-  const open=todos.map((t,i)=>[t,i]).filter(([t,i])=>!(saved[i]??t[1]));
-  const done=todos.map((t,i)=>[t,i]).filter(([t,i])=>saved[i]??t[1]);
-  $("#todo").innerHTML=`<h2>해야 할 일 (${open.length})</h2>${open.map(([t,i])=>row(t,i)).join("")||'<p class="mute">모두 완료!</p>'}<h2>완료 (${done.length})</h2>${done.map(([t,i])=>row(t,i)).join("")}`;
+  const row=([t,d],i)=>{const on=saved[i]??d;return `<label class="chk ${on?"done":""}"><input type="checkbox" data-i="${i}" ${on?"checked":""}><span>${esc(t)}</span></label>`};
+  const all=todos.map((t,i)=>[t,i]);
+  const open=all.filter(([t,i])=>!(saved[i]??t[1])), done=all.filter(([t,i])=>saved[i]??t[1]);
+  $("#todo").innerHTML=`<h2>남은 일 ${open.length}개</h2>${open.map(([t,i])=>row(t,i)).join("")||"<p>모두 끝났습니다.</p>"}<h2>끝낸 일 ${done.length}개</h2>${done.map(([t,i])=>row(t,i)).join("")}`;
 }
 drawTodo();
 $("#todo").addEventListener("change",e=>{if(e.target.matches("input")){saved[e.target.dataset.i]=e.target.checked;store.set("todo",saved);drawTodo()}});
 
-// tabs
-$("#tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on");try{history.replaceState(null,"","#"+b.dataset.t)}catch(e){}});
-const h=location.hash.slice(1);if(["plan","book","todo"].includes(h))document.querySelector(`nav [data-t=${h}]`).click();
+// 상위 탭
+function showTab(id,push=true){
+  $$("#tabs button").forEach(b=>b.setAttribute("aria-selected",String(b.id==="t-"+id)));
+  $$(".panel").forEach(p=>p.classList.toggle("on",p.id===id));
+  if(push&&id!=="plan"){try{history.replaceState(null,"","#"+id)}catch(e){}}
+  window.scrollTo({top:0});
+}
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(b)showTab(b.id.slice(2),true);if(b&&b.id==="t-plan")showDay(currentDay(),true)});
+function currentDay(){const s=$("#days [aria-selected=true]");return s?s.dataset.d:"all"}
+
+// 시작 화면: 해시 > 여행 중이면 오늘 > 한눈에
+const h=location.hash.slice(1);
+let startDay="all";
+const m=h.match(/^day(\d+)$/);
+if(m&&days[+m[1]-1]) startDay=String(+m[1]-1);
+else if(!h){const i=Math.round((today-start)/864e5);if(i>=0&&i<days.length) startDay=String(i)}
+if(h==="book"||h==="todo"){showTab(h,false);showDay("all",false)}else{showTab("plan",false);showDay(startDay,false)}
 </script>
 </body>
 </html>
