@@ -12,15 +12,16 @@
 <style>
 /* 정돈된 여행 노트: 중립 회색 바탕, 차분한 파란색 하나, 얇은 선과 충분한 여백. */
 :root{
-  --bg:#f5f7fa; --card:#fff; --ink:#1f2933; --mute:#5b6673; --line:#e2e7ee;
+  --bg:#f5f7fa; --card:#fff; --ink:#2b3542; --mute:#5f6b79; --line:#e2e7ee;
   --accent:#2f5d8a; --accent-soft:#e8eff6;
-  --ok:#2f5d8a; --bk:#3f7d74; --opt:#9a7324; --est:#8a94a1;
+  --teal:#23786a; --teal-soft:#e2f1ee; --amber:#8a5a00; --amber-soft:#fbf1da; --rose:#b4475a;
+  --ok:#2f5d8a; --bk:#23786a; --opt:#8a5a00; --est:#7b8693;
   --font:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --r:10px; --nav:64px;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]){
   --bg:#12161c; --card:#1a2029; --ink:#e6eaf0; --mute:#a2adbb; --line:#2a323e;
-  --accent:#8db6e0; --accent-soft:#222c3a; --ok:#8db6e0; --bk:#7cc2b6; --opt:#d9b45f; --est:#8a94a1}}
+  --accent:#8db6e0; --accent-soft:#222c3a; --teal:#7cc2b6; --teal-soft:#1d2d2b; --amber:#e0b665; --amber-soft:#2f2a1b; --rose:#e58a9a; --ok:#8db6e0; --bk:#7cc2b6; --opt:#e0b665; --est:#8a94a1}}
 *{box-sizing:border-box}
 html{scroll-padding-top:96px}
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 var(--font);-webkit-text-size-adjust:100%}
@@ -32,16 +33,16 @@ a{color:var(--accent)}
 .top{padding:22px 0 14px;border-bottom:1px solid var(--line)}
 .top .row{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
 .top .sub{font-size:.85rem;color:var(--mute)}
-.top h1{margin:2px 0 0;font:700 1.35rem/1.35 var(--font);letter-spacing:-.01em}
+.top h1{margin:2px 0 0;font:500 1.4rem/1.35 var(--font);letter-spacing:-.01em;color:var(--accent)}
 .dd{font-size:.85rem;font-weight:500;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 10px;white-space:nowrap}
 
-h2.sec{margin:28px 0 8px;font:700 1rem var(--font);color:var(--mute)}
+h2.sec{margin:28px 0 8px;font:700 1rem var(--font);color:var(--accent);padding-left:10px;border-left:3px solid var(--accent)}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:4px 16px}
 .card.pad{padding:14px 16px}
 dl.kv{margin:0}
 dl.kv div{display:grid;grid-template-columns:5.2rem 1fr;gap:12px;padding:10px 0;border-bottom:1px solid var(--line)}
 dl.kv div:last-child{border:0}
-dl.kv dt{color:var(--mute);font-size:.9rem}
+dl.kv dt{color:var(--accent);font-size:.9rem;font-weight:500}
 dl.kv dd{margin:0;word-break:break-word}
 
 /* 한눈에 목록 */
@@ -65,7 +66,7 @@ dl.kv dd{margin:0;word-break:break-word}
 
 .dayhead{padding:22px 0 6px}
 .dayhead .dn{font-size:.85rem;color:var(--accent);font-weight:700}
-.dayhead h2{margin:2px 0 0;font:700 1.35rem/1.35 var(--font);letter-spacing:-.01em}
+.dayhead h2{margin:2px 0 0;font:500 1.4rem/1.35 var(--font);letter-spacing:-.01em}
 .dayhead p{margin:2px 0 0;color:var(--mute);font-size:.92rem}
 .prog{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:.85rem;color:var(--mute)}
 .prog i{flex:1;height:4px;border-radius:99px;background:var(--line);overflow:hidden}
@@ -77,7 +78,7 @@ dl.kv dd{margin:0;word-break:break-word}
 /* 타임라인 */
 .route{list-style:none;margin:20px 0 0;padding:0}
 .stop{display:grid;grid-template-columns:3.6rem 20px 1fr;gap:0 10px}
-.stop time{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.5;padding-top:1px}
+.stop time{text-align:right;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums;line-height:1.5;padding-top:1px}
 .stop time small{display:block;font-weight:400;font-size:.72rem;color:var(--mute)}
 .rail{position:relative}
 .rail::before{content:"";position:absolute;left:50%;top:20px;bottom:-4px;border-left:1px solid var(--line);transform:translateX(-50%)}
@@ -88,14 +89,14 @@ dl.kv dd{margin:0;word-break:break-word}
 .stop.done .rail button::after{content:"✓"}
 .stop:last-child .rail::before{display:none}
 .body{padding-bottom:26px;min-width:0}
-.body h4{margin:0;font-size:1rem;font-weight:700;line-height:1.5}
+.body h4{margin:0;font-size:1.02rem;font-weight:500;line-height:1.5}
 .stop.done .body h4{color:var(--mute);text-decoration:line-through}
-.badge{display:inline-block;margin-left:8px;vertical-align:1px;font-weight:500;font-size:.72rem;line-height:1;padding:3px 7px;border-radius:5px;color:var(--c);border:1px solid var(--c)}
+.badge{display:inline-block;margin-left:8px;vertical-align:1px;font-weight:500;font-size:.72rem;line-height:1;padding:3px 7px;border-radius:5px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,transparent);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
 .body p{margin:3px 0 0;color:var(--mute);font-size:.94rem;line-height:1.65}
-ul.notes{margin:8px 0 0;padding:10px 14px 10px 30px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);font-size:.92rem;line-height:1.6}
+ul.notes{margin:8px 0 0;padding:10px 14px 10px 30px;background:var(--amber-soft);border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);border-left:4px solid var(--amber);border-radius:var(--r);font-size:.92rem;line-height:1.6}
 ul.notes li+li{margin-top:4px}
 .place{margin-top:10px;max-width:440px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px}
-.place .nm{font-weight:700;font-size:.95rem;line-height:1.4}
+.place .nm{font-weight:500;font-size:.98rem;line-height:1.4;color:var(--accent)}
 .ad{font-size:.8rem;color:var(--mute);line-height:1.45;margin-top:1px}
 .links{display:flex;gap:6px;margin:8px 0;flex-wrap:wrap}
 .links a{font-size:.82rem;text-decoration:none;border:1px solid var(--line);border-radius:6px;padding:4px 10px;color:var(--accent);background:var(--card)}
@@ -113,8 +114,14 @@ ul.notes li+li{margin-top:4px}
 .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
 .list .card{padding:12px 16px}
 .ph{display:flex;gap:12px;align-items:center;justify-content:space-between}
-.ph .t{font-weight:700;line-height:1.45}.ph .k{color:var(--mute);font-size:.88rem}
-.ph .sayb{flex:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.85rem;color:var(--accent)}
+.lb{display:inline-block;font-size:.72rem;font-weight:500;line-height:1;padding:3px 7px;border-radius:5px;margin-right:7px;vertical-align:2px}
+.lb.qq{background:var(--accent-soft);color:var(--accent)}
+.lb.aa{background:var(--teal-soft);color:var(--teal)}
+.ph .q{font-size:.9rem;color:var(--accent);line-height:1.55;margin-bottom:8px;padding-bottom:8px;border-bottom:1px dashed var(--line)}
+.ph .q .qk{color:var(--mute);font-size:.85rem}
+.note{margin:0 0 6px;padding:10px 14px;background:var(--amber-soft);border-left:4px solid var(--amber);border-radius:var(--r);font-size:.92rem;line-height:1.6}
+.ph .t{font-weight:500;font-size:1.08rem;line-height:1.5;color:var(--teal)}.ph .k{color:var(--mute);font-size:.88rem}
+.ph .sayb{flex:none;border:1px solid color-mix(in srgb,var(--teal) 40%,transparent);background:var(--teal-soft);border-radius:8px;padding:6px 12px;cursor:pointer;font-size:.85rem;color:var(--teal)}
 dialog{border:0;border-radius:14px;max-width:min(560px,92vw);width:100%;padding:28px 22px;background:var(--card);color:var(--ink);text-align:center}
 dialog::backdrop{background:rgba(20,28,40,.5)}
 dialog .big{font:700 clamp(1.45rem,6vw,2rem)/1.4 var(--font);margin:4px 0 10px}
@@ -156,14 +163,14 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
 <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-<symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8Z"/></symbol>
+<symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.6 5.4-1.6 6 0M14 10h4M14 13h4"/></symbol>
 <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="13" rx="2"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/></symbol>
 </defs></svg>
 <nav class="bar" aria-label="주 메뉴"><div class="in" id="nav">
   <button data-v="home"><svg><use href="#i-home"/></svg>한눈에</button>
   <button data-v="plan"><svg><use href="#i-cal"/></svg>일정</button>
   <button data-v="places"><svg><use href="#i-pin"/></svg>장소</button>
-  <button data-v="phrase"><svg><use href="#i-chat"/></svg>영어</button>
+  <button data-v="phrase"><svg><use href="#i-id"/></svg>입국 심사</button>
   <button data-v="ready"><svg><use href="#i-bag"/></svg>준비</button>
 </div></nav>
 
@@ -300,13 +307,43 @@ const packing=[
  "충전기, 보조배터리(기내 휴대), 미국 플러그 변환 어댑터","지후 간식, 상비약, 물티슈","작은 가방 (테마파크용)"
 ];
 const phrases=[
- ["입국, 공항",[["I'm here for vacation. We'll stay for eleven nights.","여행 왔고 11박 머물 예정이에요."],["We're staying at the Elara hotel in Las Vegas.","라스베이거스 엘라라 호텔에서 묵어요."],["This is my wife and my son.","제 아내와 아들이에요."]]],
- ["렌터카",[["I have a reservation under Yun.","윤 이름으로 예약했어요."],["I'd like to add my wife as an additional driver.","아내를 추가 운전자로 등록하고 싶어요."],["Does this include full coverage insurance?","풀 커버리지 보험이 포함인가요?"],["Could we check the car for scratches together?","차에 기스가 있는지 같이 확인해 주시겠어요?"],["Where do I return the car?","차는 어디로 반납하나요?"]]],
- ["호텔",[["I have a reservation. The name is Yun.","예약했어요. 이름은 윤이에요."],["Could we check in early?","조금 일찍 체크인할 수 있을까요?"],["Is there a parking fee?","주차 요금이 있나요?"],["Could you keep our luggage, please?","짐을 맡아 주실 수 있나요?"],["Could we get extra towels, please?","수건을 더 받을 수 있을까요?"]]],
- ["식당",[["A table for three, please.","세 명 자리 부탁해요."],["Could we have a kids' menu, please?","어린이 메뉴 있나요?"],["Could I get a glass of water, please?","물 한 잔 주세요."],["Could we get the check, please?","계산서 주세요."],["Is the tip included?","팁이 포함인가요?"],["Could I get this to go?","포장해 주세요."]]],
- ["테마파크, 관광",[["How long is the wait for this ride?","이 놀이기구 대기 시간이 얼마나 되나요?"],["Is my son tall enough for this ride?","우리 아들이 이 놀이기구 키 제한에 맞나요?"],["Where is the restroom?","화장실이 어디예요?"],["Could you take a photo of us, please?","사진 한 장 찍어 주시겠어요?"]]],
- ["우버, 길 찾기",[["Could you take us to the Sphere, please?","스피어로 가 주세요."],["Where is the pickup spot?","탑승 장소가 어디예요?"],["Could you drop us off here, please?","여기서 내려 주세요."]]],
- ["도움이 필요할 때",[["I need help, please.","도움이 필요해요."],["My son is lost. He is seven years old.","아들이 길을 잃었어요. 일곱 살이에요."],["Please call 911.","911에 전화해 주세요."],["Where is the nearest pharmacy?","가장 가까운 약국이 어디예요?"],["My son feels sick.","아들이 아파요."]]]
+ ["1. 꼭 나오는 질문",[
+  ["We are here for vacation.","여행 왔어요.","Why are you here?","왜 왔나요? (방문 목적)"],
+  ["Twelve days.","12일이요.","How long will you stay?","얼마나 머무나요?"],
+  ["Las Vegas, then Los Angeles.","라스베이거스, 그다음 로스앤젤레스요.","Where will you stay?","어디에서 지내나요?"],
+  ["Hotel Elara, in Las Vegas.","라스베이거스의 Elara 호텔이요.","What is the name of your hotel?","호텔 이름이 뭔가요?"],
+  ["My wife and my son.","아내와 아들이요.","Who is with you?","누구와 왔나요?"],
+  ["Yes. We go home on November 23.","네. 11월 23일에 집에 가요.","Do you have a return ticket?","돌아가는 비행기표 있나요?"],
+  ["About 300 dollars. And credit cards.","300달러쯤 있어요. 신용카드도 있어요.","How much money do you have?","돈이 얼마나 있나요?"],
+  ["No.","아니요.","Do you have more than 10,000 dollars?","1만 달러 넘게 있나요?"],
+  ["No.","아니요.","Do you have anything to declare?","신고할 물건 있나요?"],
+  ["Only snacks.","과자만 있어요.","Do you have food, fruit, or plants?","음식, 과일, 식물 있나요?"]
+ ],"가족이 한 창구에서 같이 받아요. 여권을 주고, 손가락 지문과 사진을 찍어요. 질문이 몇 개 나와요. 짧게, 사실대로 답해요. 모르면 아래 \"못 알아들었을 때\" 문장을 써요.","질문"],
+ ["2. 가끔 나오는 질문",[
+  ["Yes, first time.","네, 처음이에요. (처음이 아니면: No, I came before.)","Is this your first time here?","미국에 처음인가요?"],
+  ["We will see the Grand Canyon. We will go to Universal Studios.","그랜드캐니언을 볼 거예요. 유니버설 스튜디오에 갈 거예요.","What will you do here?","여기서 뭐 할 건가요?"],
+  ["Yes. I have it on my phone.","네. 폰에 있어요. (폰에 저장한 서류를 보여 줘요)","Do you have a hotel booking?","호텔 예약이 있나요?"],
+  ["Yes. We rent a car.","네. 차를 빌려요.","Do you have a car?","차가 있나요?"],
+  ["We live in Busan, Korea.","한국 부산에 살아요.","Where do you live?","어디에 사나요?"],
+  ["I work at a company.","회사에서 일해요. (직업에 맞게 바꿔요: teacher, doctor 등)","What do you do?","무슨 일을 하나요?"],
+  ["He is seven.","일곱 살이에요.","How old is your son?","아드님 몇 살이에요?"],
+  ["Yes.","네.","Is he your son? / Is she your wife?","아드님이에요? / 아내분이에요?"]
+ ],"","질문"],
+ ["3. 심사관이 하는 말",[
+  ["Here you are.","여기 있어요.","Passports, please.","여권 주세요."],
+  ["OK.","알겠어요.","Put your fingers here.","손가락을 여기에 올려요."],
+  ["OK.","알겠어요.","Look at the camera.","카메라를 봐요."],
+  ["OK.","알겠어요.","Take off your glasses. / Take off your hat.","안경 / 모자를 벗어요."],
+  ["Thank you!","감사합니다!","Welcome to the U.S. / Have a nice trip.","미국에 온 걸 환영해요. / 즐거운 여행 되세요."]
+ ],"심사관이 하는 말을 알아듣는 연습이에요. 대부분 \"OK.\"만 하면 돼요.","심사관"],
+ ["4. 못 알아들었을 때",[
+  ["Sorry?","네? (다시 말해 달라고 할 때)","",""],
+  ["One more time, please.","한 번 더 말해 주세요.","",""],
+  ["Slowly, please.","천천히 말해 주세요.","",""],
+  ["I speak a little English.","영어를 조금 해요.","",""],
+  ["Korean, please.","한국어로 해 주세요. (통역을 부탁할 때)","",""],
+  ["Wait, please.","잠깐만요.","",""]
+ ],"","질문"]
 ];
 
 // ---- 공통 도구
@@ -372,8 +409,8 @@ function places(){
 let PH=[];
 function phrase(){
   PH=[];
-  return `<h2 class="sec" style="margin-top:20px">여행 영어</h2><p style="margin:0 0 4px;color:var(--mute);font-size:.92rem">문장을 누르면 크게 보이고, 소리 버튼으로 읽어 줍니다.</p>`+
-  phrases.map(([cat,items])=>`<h2 class="sec">${cat}</h2><ul class="list">${items.map(([en,ko])=>{PH.push([en,ko]);const n=PH.length-1;return `<li class="card"><div class="ph"><div data-big="${n}" style="cursor:pointer"><div class="t">${esc(en)}</div><div class="k">${esc(ko)}</div></div><button class="sayb" data-say="${n}" aria-label="소리 듣기">소리</button></div></li>`}).join("")}</ul>`).join("");
+  return `<h2 class="sec" style="margin-top:20px">입국 심사 가이드</h2><p style="margin:0 0 4px;color:var(--mute);font-size:.92rem">아주 쉬운 영어로 짧게 답해요. 답을 누르면 크게 보이고, 소리 버튼으로 읽어 줘요.</p>`+
+  phrases.map(([cat,items,note,ql])=>`<h2 class="sec">${cat}</h2>${note?`<p class="note">${esc(note)}</p>`:""}<ul class="list">${items.map(([en,ko,qe,qk])=>{PH.push([en,ko]);const n=PH.length-1;return `<li class="card"><div class="ph"><div data-big="${n}" style="cursor:pointer">${qe?`<div class="q"><span class="lb qq">${ql||"질문"}</span>${esc(qe)}<br><span class="qk">${esc(qk)}</span></div>`:""}<div class="t"><span class="lb aa">${qe?"답":"말하기"}</span>${esc(en)}</div><div class="k">${esc(ko)}</div></div><button class="sayb" data-say="${n}" aria-label="소리 듣기">소리</button></div></li>`}).join("")}</ul>`).join("");
 }
 function ready(){
   const seg=`<div class="seg" role="tablist"><button role="tab" data-r="todo" aria-selected="${state.ready==="todo"}">해야 할 일</button><button role="tab" data-r="pack" aria-selected="${state.ready==="pack"}">짐 챙기기</button><button role="tab" data-r="book" aria-selected="${state.ready==="book"}">예약 정보</button></div>`;
