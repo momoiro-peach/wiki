@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>26년 미국 서부 여행</title>
+<style>
+:root{--bg:#f6f4ef;--card:#fff;--ink:#1d2433;--mute:#667085;--line:#e4e0d6;--acc:#d9531e;--acc2:#1f6f8b;--ok:#2e7d32;--warn:#b26a00;--chip:#efe9dc}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#12151c;--card:#1b2030;--ink:#eceff6;--mute:#9aa4b8;--line:#2b3247;--acc:#ff8a57;--acc2:#6cc3dd;--ok:#7fd48a;--warn:#f0b35a;--chip:#262d42}}
+:root[data-theme=dark]{--bg:#12151c;--card:#1b2030;--ink:#eceff6;--mute:#9aa4b8;--line:#2b3247;--acc:#ff8a57;--acc2:#6cc3dd;--ok:#7fd48a;--warn:#f0b35a;--chip:#262d42}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,"Segoe UI","Apple SD Gothic Neo","Malgun Gothic",sans-serif}
+.wrap{max-width:860px;margin:0 auto;padding:0 16px 64px}
+header{padding:28px 0 12px}
+h1{margin:0;font-size:1.7rem;letter-spacing:-.02em}
+.sub{color:var(--mute);margin-top:4px}
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.chip{background:var(--chip);border-radius:999px;padding:4px 12px;font-size:.85rem}
+.dday{color:var(--acc);font-weight:700}
+nav{position:sticky;top:0;background:var(--bg);display:flex;gap:6px;padding:10px 0;z-index:5;border-bottom:1px solid var(--line);overflow-x:auto}
+nav button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:10px;font-size:.95rem;cursor:pointer;white-space:nowrap}
+nav button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+section{display:none;padding-top:16px}
+section.on{display:block}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.card h3{margin:0 0 4px;font-size:1.05rem}
+.day{display:grid;grid-template-columns:64px 1fr;gap:12px}
+.date{text-align:center;border-right:1px solid var(--line);padding-right:10px}
+.date b{display:block;font-size:1.1rem;color:var(--acc)}
+.date span{font-size:.78rem;color:var(--mute)}
+.tag{display:inline-block;font-size:.72rem;padding:1px 8px;border-radius:6px;background:var(--chip);color:var(--acc2);margin-right:4px}
+.tag.ok{color:var(--ok)}.tag.warn{color:var(--warn)}
+ul{margin:6px 0 0;padding-left:18px}
+li{margin:2px 0}
+.mute{color:var(--mute);font-size:.88rem}
+table{width:100%;border-collapse:collapse;font-size:.92rem}
+td,th{padding:7px 6px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{color:var(--mute);font-weight:600;font-size:.8rem}
+.kv{display:grid;grid-template-columns:96px 1fr;gap:4px 10px;font-size:.93rem}
+.kv dt{color:var(--mute)}.kv dd{margin:0;word-break:break-word}
+label.chk{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid var(--line);cursor:pointer}
+label.chk input{margin-top:5px;width:18px;height:18px;accent-color:var(--acc)}
+label.chk.done span{text-decoration:line-through;color:var(--mute)}
+h2{font-size:1.05rem;margin:18px 0 8px;color:var(--mute)}
+@media (max-width:520px){.day{grid-template-columns:54px 1fr}.kv{grid-template-columns:80px 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>🇺🇸 26년 미국 서부 여행</h1>
+  <div class="sub">2026.11.12(목) ~ 11.24(화) · 라스베이거스 5박 + 로스앤젤레스 6박 · 석환 · 혜정 · 지후</div>
+  <div class="stats"><span class="chip dday" id="dday"></span><span class="chip">현지 11박</span><span class="chip">렌터카 Mercedes GLE</span><span class="chip">ESTA 완료 ✓</span></div>
+</header>
+<nav id="tabs">
+  <button data-t="plan" class="on">일정</button>
+  <button data-t="book">예약</button>
+  <button data-t="todo">체크리스트</button>
+</nav>
+
+<section id="plan" class="on"></section>
+<section id="book"></section>
+<section id="todo"></section>
+<p class="mute" style="margin-top:28px">가족 공유용 일정표입니다. 예약번호 등 상세는 제외했습니다.</p>
+</div>
+
+<script>
+const days=[
+ {n:1,d:"11/12 목",r:"이동",t:"출국 → 라스베이거스",tags:["확정"],li:["PUS 16:10 → ICN 17:20 (KE1410, 부산에서 출국심사)","ICN T2 21:00 → LAS T3 15:10 (KE005, 프레스티지)","16:30 LAS 공항 Hertz 렌터카 인수 (아내 추가운전자 현지 등록)","16:00~ 엘라라 호텔 체크인"]},
+ {n:2,d:"11/13 금",r:"라스베이거스",t:"윈 뷔페 & 스트립",tags:["예약"],li:["13:30 윈(Wynn) 호텔 뷔페","오후 스트립 산책 (M&M, 코카콜라 스토어 등)"]},
+ {n:3,d:"11/14 토",r:"라스베이거스",t:"쇼핑 & 휴식",li:["노스 프리미엄 아울렛 등 (렌터카 이용)","호텔 부대시설 휴식"]},
+ {n:4,d:"11/15 일",r:"라스베이거스",t:"스피어 '오즈의 마법사'",tags:["예약"],li:["10:15까지 스피어 도착 → 투어 시작","11:00 공연 시작 (3인)","오후 호텔 수영장/자유"]},
+ {n:5,d:"11/16 월",r:"라스베이거스",t:"그랜드 캐니언 웨스트 림",tags:["러프하게"],li:["사전 예약·시간표 없이 컨디션 보며 현지 결정","렌터카 당일 왕복, 일몰(약 16:40) 전 복귀 · 야간 운전 지양","세부 정보는 추후 업데이트"]},
+ {n:6,d:"11/17 화",r:"LAS → LA",t:"LA 이동 & 체크인",tags:["예약"],li:["10:00까지 엘라라 체크아웃","렌터카로 LA 이동 (약 4.5~5시간)","Residence Inn Glendale 체크인"]},
+ {n:7,d:"11/18 수",r:"로스앤젤레스",t:"LA 워밍업",li:["캘리포니아 사이언스 센터 또는 아메리카나 앳 브랜드","테마파크 전 컨디션 조절"]},
+ {n:8,d:"11/19 목",r:"로스앤젤레스",t:"유니버설 스튜디오 1일차",tags:["티켓 보유"],li:["2일권 첫 입장일(11/19 고정)","여권 + 바우처 지참, 개찰구 직행","슈퍼 닌텐도 월드 집중"]},
+ {n:9,d:"11/20 금",r:"로스앤젤레스",t:"유니버설 스튜디오 2일차",tags:["티켓 보유"],li:["같은 티켓으로 재입장 (재발급 불가)","못 본 어트랙션·공연"]},
+ {n:10,d:"11/21 토",r:"로스앤젤레스",t:"키드스페이스 & 그리피스",li:["낮: 패서디나 키드스페이스 칠드런스 뮤지엄","오후~저녁: 그리피스 천문대 일몰·야경 (주말 주차 혼잡, 셔틀 고려)"]},
+ {n:11,d:"11/22 일",r:"로스앤젤레스",t:"산타모니카 & 렌터카 반납",li:["산타모니카 해변 · 퍼시픽 파크","19:00 Hertz 버뱅크 공항(BUR) 반납 → 우버로 숙소"]},
+ {n:12,d:"11/23 월",r:"LA → 귀국",t:"LAX 출국",tags:["확정"],li:["LAX Tom Bradley 터미널(B), 08:00까지 도착 권장","KE018 11:00 출발 (프레스티지)","체크아웃 11/23"]},
+ {n:13,d:"11/24 화",r:"인천 → 부산",t:"귀가",li:["ICN T2 17:35 도착, 같은 터미널에서 환승 (인천 입국심사 없음)","KE1409 19:35 → PUS 20:45, 입국심사는 부산"]}
+];
+const flights=[["11/12","KE1410","PUS 16:10 → ICN T2 17:20","일반석"],["11/12","KE005","ICN T2 21:00 → LAS T3 15:10","프레스티지"],["11/23","KE018","LAX TBIT 11:00 → ICN T2 11/24 17:35","프레스티지 15A·B·D"],["11/24","KE1409","ICN T2 19:35 → PUS 20:45","일반석 41A·B·C"]];
+const books=[
+ ["항공",[["수하물","위탁 2개(각 32kg) · 기내 ICN→LAS/LAX→ICN 2개, 부산 구간 1개"],["좌석","KE1410·KE005 아직 미배정 → 사전 지정 필요"]]],
+ ["라스베이거스 · Elara (HGV Club)",[["주소","80 E Harmon Ave · 1-702-669-6700"],["기간","11/12 16:00 ~ 11/17 10:00 (5박)"],["객실","Junior Suite, 킹+소파베드, 키친넷"],["취소","한국시간 11/10 16:59까지 전액 환불"],["체크인","여권 + 보증금용 카드(현금 불가), 전면 금연(위반 시 $350)"]]],
+ ["LA · Residence Inn Glendale",[["기간","11/17 ~ 11/23 (6박)"],["상태","결제 완료 · 무료취소 11/15까지"]]],
+ ["렌터카 · Hertz",[["차량","Mercedes GLE (Medium Elite SUV)"],["인수","11/12(목) 16:30 · LAS 공항 · 24시간 · +1 702-262-7700"],["반납","11/22(일) 19:00 · Burbank BUR · 일 06~23시 · +1 818-569-3565"],["요금","총 608.80 USD · 반납 시 결제"],["회원/보험","Gold 회원 · 풀 커버리지 · 아내 추가운전자 현지 등록 · 부부 모두 국제면허"],["카시트","myfold 휴대용 구매 완료"]]],
+ ["입장권·공연",[["윈 뷔페","11/13 13:30"],["스피어","11/15 10:15 도착 → 11:00 공연 (3인)"],["USH 2일권","11/19 + 11/20 (11/25까지) · 여권 지참 · 주차 불포함"]]]
+];
+const todos=[
+ ["엘라라 주차/리조트 요금 확인",0],["아내 추가운전자 등록 요금 (Gold 혜택 현장 확인)",0],["Hertz 온라인 체크인 + 카드 홀드 확인",0],
+ ["KE1410·KE005 사전 좌석 지정",0],["(선택) USH 익스프레스 추가 여부",0],["(선택) 지후 유소아식 신청",0],
+ ["스피어 10:15 도착 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],
+ ["(보류) 웨스트 림 입장권·세부 일정 — 러프하게, 추후 공유",0],
+ ["ESTA 신청",1],["엘라라 예약",1],["Glendale 호텔 예약",1],["Hertz 예약",1],["USH 2일권",1],["스피어 예약",1],["윈 뷔페 예약",1],["렌터카 보험 풀 커버리지",1],["myfold 카시트 구매",1]
+];
+const $=s=>document.querySelector(s);
+const store={get(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+
+// D-day
+const dd=Math.ceil((new Date("2026-11-12T00:00:00")-new Date().setHours(0,0,0,0))/864e5);
+$("#dday").textContent=dd>0?`D-${dd}`:dd===0?"D-DAY":`여행 ${-dd+1}일차`;
+
+// plan
+$("#plan").innerHTML=days.map(x=>`<div class="card day"><div class="date"><b>D${x.n}</b><span>${x.d}</span></div><div><h3>${x.t}</h3><div class="mute">${x.r} ${(x.tags||[]).map(t=>`<span class="tag ${t==="러프하게"?"warn":"ok"}">${t}</span>`).join("")}</div><ul>${x.li.map(l=>`<li>${l}</li>`).join("")}</ul></div></div>`).join("");
+
+// book
+$("#book").innerHTML=`<div class="card"><h3>✈️ 항공</h3><table><tr><th>날짜</th><th>편명</th><th>구간</th><th>좌석</th></tr>${flights.map(f=>`<tr><td>${f[0]}</td><td>${f[1]}</td><td>${f[2]}</td><td>${f[3]}</td></tr>`).join("")}</table></div>`+
+ books.map(b=>`<div class="card"><h3>${b[0]}</h3><dl class="kv">${b[1].map(r=>`<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join("")}</dl></div>`).join("");
+
+// todo
+const saved=store.get("todo")||{};
+function drawTodo(){
+  const row=(t,i)=>{const on=saved[i]??t[1];return `<label class="chk ${on?"done":""}"><input type="checkbox" data-i="${i}" ${on?"checked":""}><span>${t[0]}</span></label>`};
+  const open=todos.map((t,i)=>[t,i]).filter(([t,i])=>!(saved[i]??t[1]));
+  const done=todos.map((t,i)=>[t,i]).filter(([t,i])=>saved[i]??t[1]);
+  $("#todo").innerHTML=`<h2>해야 할 일 (${open.length})</h2>${open.map(([t,i])=>row(t,i)).join("")||'<p class="mute">모두 완료!</p>'}<h2>완료 (${done.length})</h2>${done.map(([t,i])=>row(t,i)).join("")}`;
+}
+drawTodo();
+$("#todo").addEventListener("change",e=>{if(e.target.matches("input")){saved[e.target.dataset.i]=e.target.checked;store.set("todo",saved);drawTodo()}});
+
+// tabs
+$("#tabs").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;document.querySelectorAll("nav button,section").forEach(x=>x.classList.remove("on"));b.classList.add("on");$("#"+b.dataset.t).classList.add("on");try{history.replaceState(null,"","#"+b.dataset.t)}catch(e){}});
+const h=location.hash.slice(1);if(["plan","book","todo"].includes(h))document.querySelector(`nav [data-t=${h}]`).click();
+</script>
+</body>
+</html>
