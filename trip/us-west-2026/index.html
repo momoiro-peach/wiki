@@ -473,7 +473,7 @@ async function loadWx(){
   const now=Date.now();
   await Promise.all(Object.keys(LOC).map(async k=>{
     const L=LOC[k], ck="wx_"+k, c=store.get(ck,null);
-    if(c&&now-c.t<3*3600e3){WXD[k]=c.d;WXT[k]=c.t}
+    if(c&&now-c.t<3600e3){WXD[k]=c.d;WXT[k]=c.t}
     else{
       try{
         const r=await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${L.lat}&longitude=${L.lon}&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,precipitation_sum,wind_gusts_10m_max,sunrise,sunset&timezone=auto&forecast_days=16`);
