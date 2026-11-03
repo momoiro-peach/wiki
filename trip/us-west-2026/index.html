@@ -56,8 +56,8 @@ dl.kv dd{margin:0;word-break:break-word}
 .rows .d{font-size:.85rem;color:var(--mute);text-align:right;white-space:nowrap}
 
 /* 일차 선택 */
-.chips{position:sticky;top:0;z-index:8;background:var(--bg);margin:0 -16px;padding:10px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;border-bottom:1px solid var(--line)}
-.chips::-webkit-scrollbar{display:none}
+.chips{position:sticky;top:0;z-index:8;background:var(--bg);margin:0 -16px;padding:10px 16px;display:flex;gap:6px;overflow-x:auto;scrollbar-width:thin;border-bottom:1px solid var(--line);cursor:grab;user-select:none;-webkit-user-select:none}
+.chips:active,.fchips:active{cursor:grabbing}
 .chips button{flex:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:5px 12px;cursor:pointer;line-height:1.3;text-align:center;font-size:.9rem}
 .chips button span{display:block;font-size:.72rem;color:var(--mute)}
 .chips button[aria-selected=true]{background:var(--accent);border-color:var(--accent);color:#fff}
@@ -107,7 +107,7 @@ ul.notes li+li{margin-top:4px}
 
 /* 장소 / 영어 */
 .search{width:100%;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:11px 14px;font:inherit;color:var(--ink);margin:12px 0 10px}
-.fchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:none}
+.fchips{display:flex;gap:6px;overflow-x:auto;padding-bottom:6px;scrollbar-width:thin;cursor:grab;user-select:none;-webkit-user-select:none}
 .fchips button{flex:none;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:4px 12px;cursor:pointer;font-size:.88rem}
 .fchips button[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .fchips button[aria-pressed=true]{color:#10202e}}
@@ -581,6 +581,7 @@ function render(push=true){
   const v=$("#view");
   v.innerHTML={home,plan,places,phrase,ready}[state.v]();
   $$(".mini",v).forEach(m=>{const f=document.createElement("iframe");f.loading="lazy";f.referrerPolicy="no-referrer-when-downgrade";f.title=m.getAttribute("aria-label");f.src=embed(m.dataset.q);m.appendChild(f)});
+  const sel=$(".chips [aria-selected=true]");if(sel){const bar=sel.parentElement;{const a=bar.getBoundingClientRect(),b=sel.getBoundingClientRect();bar.scrollLeft+=(b.left-a.left)-(bar.clientWidth-b.width)/2}}
   renderNextBar();
   if(state.focus&&state.v==="plan"){const el=$(".stop.next");if(el)el.scrollIntoView({block:"center"});state.focus=false}
   if(push){try{history.replaceState(null,"",state.v==="plan"?`#day${state.day+1}`:`#${state.v}`)}catch(e){}}
@@ -620,6 +621,21 @@ const h=location.hash.slice(1), m=h.match(/^day(\d+)$/);
 if(m&&days[+m[1]-1]){state.day=+m[1]-1;state.v="plan"}
 else if(["home","plan","places","phrase","ready"].includes(h))state.v=h;
 else if(tripIdx>=0){state.v="plan";const n=nextStop();if(n){state.day=n.d;state.focus=true}}
+// ---- 가로 메뉴: 마우스 휠과 드래그로 좌우 이동
+$("#view").addEventListener("wheel",e=>{
+  const bar=e.target.closest(".chips,.fchips"); if(!bar||bar.scrollWidth<=bar.clientWidth)return;
+  if(Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+  const max=bar.scrollWidth-bar.clientWidth, next=Math.max(0,Math.min(max,bar.scrollLeft+e.deltaY));
+  if(next===bar.scrollLeft)return;
+  bar.scrollLeft=next; e.preventDefault();
+},{passive:false});
+let drag=null;
+$("#view").addEventListener("mousedown",e=>{const bar=e.target.closest(".chips,.fchips");if(!bar||e.button!==0)return;drag={bar,x:e.clientX,l:bar.scrollLeft,moved:false}});
+window.addEventListener("mousemove",e=>{if(!drag)return;const dx=e.clientX-drag.x;if(Math.abs(dx)>5)drag.moved=true;if(drag.moved){drag.bar.scrollLeft=drag.l-dx;e.preventDefault()}});
+window.addEventListener("mouseup",()=>{
+  if(drag&&drag.moved){const stop=ev=>{ev.stopPropagation();ev.preventDefault()};window.addEventListener("click",stop,true);setTimeout(()=>window.removeEventListener("click",stop,true),0)}
+  drag=null;
+});
 render(false);
 loadWx();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadWx()});
