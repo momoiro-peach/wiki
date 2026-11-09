@@ -144,6 +144,22 @@ tr:last-child td{border:0}
 .mt{margin-top:12px}
 .foot{margin:28px 0 0;color:var(--mute);font-size:.82rem}
 
+/* 시계, 다음 일정 */
+.clock{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-top:18px}
+.clock .c-l{font-size:.78rem;color:var(--mute)}
+.clock .c1{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:2px}
+.clock .big{font-size:2.6rem;font-weight:700;line-height:1.1;color:var(--accent);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.clock .zone{font-size:.8rem;font-weight:700;padding:2px 8px;border-radius:6px;background:var(--accent);color:#fff}
+.clock .date{font-size:1.1rem;font-weight:500}
+.clock .c2{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:.86rem;color:var(--mute);font-variant-numeric:tabular-nums}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .clock .zone{color:#10202e}}
+.nextcard .kst{font-size:.8rem;color:var(--mute);margin-top:2px}
+.nextcard .when b{color:var(--accent)}
+.nextcard .lt{margin-top:12px;font-size:.78rem;color:var(--mute)}
+.later{list-style:none;margin:4px 0 0;padding:0;font-size:.9rem;line-height:1.7}
+.later .tm{display:inline-block;min-width:3.4rem;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+.later small{color:var(--mute)}
+.nextbar .rl{flex:none;font-size:.78rem;color:var(--mute)}
 /* 유용한 정보 */
 .gh{margin:24px 0 8px;font:700 1.02rem var(--font);color:var(--accent)}
 .gp{margin:8px 0;line-height:1.7}
@@ -234,7 +250,6 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
   <button data-v="plan"><svg><use href="#i-cal"/></svg>일정</button>
   <button data-v="places"><svg><use href="#i-pin"/></svg>장소</button>
   <button data-v="info"><svg><use href="#i-info"/></svg>유용한 정보</button>
-  <button data-v="ready"><svg><use href="#i-bag"/></svg>준비</button>
 </div></nav>
 
 <dialog id="dlg" aria-label="영어 문장 크게 보기"><div class="big" id="dbig"></div><div id="dko" style="color:var(--mute)"></div>
@@ -272,9 +287,9 @@ const G=(key,_ko,cat)=>{const [name,addr,q0]=PL[key];return {name,addr,q:q0||`${
 const days=[
  {d:"11/12",w:"목",r:"이동",t:"출국, 라스베이거스 도착",tag:"확정",
   items:[
-   {t:"14:10",st:"est",h:"Gimhae Airport (PUS) 국제선 도착",p:"출발 2시간 전 도착을 권해요. 부산에서 출국심사를 하고, 인천에서는 입출국 절차가 없어요.",pl:G("Gimhae International Airport","김해국제공항","공항")},
-   {t:"16:10",st:"ok",h:"KE1410 부산 → 인천",p:"17:20 인천 T2 도착. 같은 터미널에서 환승해요."},
-   {t:"21:00",st:"ok",h:"KE005 인천 T2 → 라스베이거스",p:"프레스티지석, 11시간 10분. 날짜변경선을 지나 같은 날 오후에 도착해요.",pl:G("Incheon International Airport Terminal 2","인천공항 T2","공항")},
+   {t:"14:10",nt:"KST",at:"2026-11-12T14:10+09:00",st:"est",h:"Gimhae Airport (PUS) 국제선 도착",p:"출발 2시간 전 도착을 권해요. 부산에서 출국심사를 하고, 인천에서는 입출국 절차가 없어요.",pl:G("Gimhae International Airport","김해국제공항","공항")},
+   {t:"16:10",nt:"KST",at:"2026-11-12T16:10+09:00",st:"ok",h:"KE1410 부산 → 인천",p:"17:20 인천 T2 도착. 같은 터미널에서 환승해요."},
+   {t:"21:00",nt:"KST",at:"2026-11-12T21:00+09:00",st:"ok",h:"KE005 인천 T2 → 라스베이거스",p:"프레스티지석, 11시간 10분. 날짜변경선을 지나 같은 날 오후에 도착해요.",pl:G("Incheon International Airport Terminal 2","인천공항 T2","공항")},
    {t:"15:10",nt:"현지",st:"ok",h:"Harry Reid Airport (LAS) T3 도착",p:"입국심사를 받고 수하물을 찾아요.",pl:G("Harry Reid International Airport Terminal 3","해리 리드 국제공항 T3","공항")},
    {t:"16:30",st:"ok",h:"Hertz 렌터카 인수",p:"Mercedes GLE. 아내 추가운전자를 카운터에서 등록해요. 여권, 한국 면허증, 국제면허증, 카드를 챙기고 지후 부스터 시트를 달아요.",pl:G("Hertz Harry Reid International Airport Las Vegas 7135 Gilespie St","Hertz 라스베이거스 공항점","교통")},
    {t:"17:30",st:"est",h:"Elara 체크인",p:"체크인은 16:00부터 가능해요. 여권과 보증금용 카드가 필요해요. 짐을 풀고 근처에서 가볍게 저녁을 먹어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라 (HGV Club)","숙소")}
@@ -353,29 +368,10 @@ const days=[
    {t:"07:30",st:"est",h:"호텔 체크아웃, 우버로 LAX 이동"},
    {t:"08:00",st:"est",h:"LAX Tom Bradley International Terminal (B) 도착",p:"출발 3시간 전 도착을 권해요.",pl:G("Tom Bradley International Terminal LAX","LAX 톰 브래들리 국제선 터미널","공항")},
    {t:"11:00",st:"ok",h:"KE018 로스앤젤레스 → 인천",p:"프레스티지석, 13시간 35분. 좌석 15A, 15B, 15D."},
-   {t:"11/24",nt:"한국",st:"ok",h:"17:35 인천 도착, 19:35 KE1409, 20:45 부산 도착",p:"인천에서는 입국심사 없이 같은 터미널에서 환승하고, 입국심사는 부산에서 해요."}
+   {t:"11/24",nt:"한국",at:"2026-11-24T17:35+09:00",st:"ok",h:"17:35 인천 도착, 19:35 KE1409, 20:45 부산 도착",p:"인천에서는 입국심사 없이 같은 터미널에서 환승하고, 입국심사는 부산에서 해요."}
   ]}
 ];
 const STL={ok:"확정",bk:"예약",est:"예상",opt:"선택"};
-const flights=[["11/12","KE1410","부산 16:10 → 인천 T2 17:20","일반석"],["11/12","KE005","인천 T2 21:00 → 라스베이거스 T3 15:10","프레스티지"],["11/23","KE018","LAX 11:00 → 인천 T2 11/24 17:35","프레스티지 15A·B·D"],["11/24","KE1409","인천 T2 19:35 → 부산 20:45","일반석 41A·B·C"]];
-const books=[
- ["항공",[["수하물","위탁 1인 2개(개당 32kg). 기내는 인천→LAS, LAX→인천 2개(18kg), 부산 구간 1개(10kg)"],["좌석","KE1410, KE005는 아직 미배정이에요. 미리 지정해요"]]],
- ["Las Vegas · Hilton Grand Vacations Club Elara Center Strip Las Vegas",[["주소","80 E Harmon Ave, Las Vegas, NV 89109"],["기간","11/12 16:00 ~ 11/17 10:00 (5박)"],["객실","Junior Suite, 킹 침대와 소파베드, 키친넷"],["취소","한국시간 11/10 16:59까지 전액 환불"],["체크인","여권과 보증금용 카드(현금 불가). 객실 전면 금연"]]],
- ["Los Angeles · Residence Inn by Marriott Los Angeles Glendale",[["주소","199 N Louise St, Glendale, CA 91206"],["기간","11/17 ~ 11/23 (6박)"],["상태","결제 완료, 11/15까지 무료 취소"]]],
- ["렌터카 · Hertz",[["차량","Mercedes GLE"],["인수","11/12(목) 16:30, Hertz Car Rental - Las Vegas - Harry Reid International Airport (LAS), 7135 Gilespie St, Las Vegas, NV 89119. 24시간 영업"],["반납","11/22(일) 19:00, Hertz Car Rental - Burbank - Hollywood Burbank Airport (BUR), 2501 N Hollywood Way, Burbank, CA 91505. 일요일 06:00~23:00"],["요금","총 608.80 USD, 반납할 때 결제"],["준비","Gold 회원, 풀 커버리지, 아내 추가운전자는 현지 등록, 부부 모두 국제면허증"],["카시트","myfold 휴대용 부스터 구매 완료"]]],
- ["입장권 · 공연",[["The Buffet at Wynn Las Vegas","11/13(금) 13:30, 성인 2명과 어린이 1명 선결제 완료. 복장은 리조트 캐주얼(수영복 불가). 결제한 카드와 사진 신분증 지참"],["Sphere","11/15 10:15 도착, 11:00 공연 (3인)"],["Universal Studios Hollywood","2일권, 11/19와 11/20 (11/25까지 사용 가능). 여권 지참, 주차 불포함"]]]
-];
-const todos=[
- ["Elara 주차, 리조트 요금 확인",0],["The Buffet at Wynn: 결제한 신용카드와 여권 챙기기",0],["아내 추가운전자 등록 요금 확인",0],["Hertz 온라인 체크인, 카드 홀드 확인",0],
- ["KE1410, KE005 사전 좌석 지정",0],["(선택) Universal 익스프레스 추가",0],["(선택) 지후 유소아식 신청",0],
- ["Sphere 10:15 도착을 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],["Grand Canyon West 입장권, 세부 일정 (11/14, 러프하게, 추후 정리)",0],["11/16(월) 일정 정하기 (아직 미정)",0],["(선택) 후버 댐 운영 시간 확인 (11/14)",0],
- ["ESTA 신청",1],["Elara 예약",1],["Residence Inn Glendale 예약",1],["Hertz 예약",1],["Universal Studios 2일권",1],["Sphere 예약",1],["Wynn 뷔페 예약",1],["렌터카 풀 커버리지 보험",1],["myfold 카시트 구매",1]
-];
-const packing=[
- "여권 3개 (유효기간 확인)","e-티켓, 유니버설 바우처, 호텔·렌터카 확인서를 폰에 저장","한국 운전면허증, 국제운전면허증 (부부)","예약에 쓴 신용카드 (렌터카, 호텔 보증금)",
- "myfold 부스터 시트","따뜻한 겉옷 (캐니언과 LA 저녁은 쌀쌀해요)","편한 운동화, 얇은 옷 겹쳐 입기","모자, 선크림, 선글라스",
- "충전기, 보조배터리(기내 휴대), 미국 플러그 변환 어댑터","지후 간식, 상비약, 물티슈","작은 가방 (테마파크용)"
-];
 const phrases=[
  ["1. 꼭 나오는 질문",[
   ["We are here for vacation.","여행 왔어요.","Why are you here?","왜 왔나요? (방문 목적)"],
@@ -417,7 +413,7 @@ const phrases=[
 ];
 
 // ---- 유용한 정보 (2026-11-09 작성, 웹 검색·구글 지도 확인 기준. 가격·운영 시간은 바뀔 수 있어요)
-const INFO_TABS=[["imm","입국심사"],["tip","팁 문화"],["gas","주유소"],["west","웨스트림"],["tram","트램·모노레일"],["hotel","호텔투어"]];
+const INFO_TABS=[["imm","입국심사"],["tip","팁 문화"],["gas","주유소"],["park","주차장"],["west","웨스트림"],["tram","트램·모노레일"],["hotel","호텔투어"]];
 const GUIDES={
 tip:[
  {p:"미국은 식당·호텔·택시 직원 월급의 큰 부분이 팁이에요. 그래서 팁은 ‘고마움 표시’라기보다 **사실상 요금의 일부**라고 생각하면 편해요. 1달러, 5달러 지폐를 넉넉히 챙겨요."},
@@ -463,6 +459,35 @@ gas:[
  {ul:["고속도로 출구 바로 앞 주유소가 비싸요. 한두 블록 들어가면 싼 곳이 있어요.","보통 **캘리포니아가 네바다보다 비싸요**. 라스베이거스에서 가득 채워 출발하는 게 유리해요.","가격판에 **Cash / Credit** 두 가격이 있으면 카드가 더 비싸요.","밝고 사람이 많은 주유소를 골라요. 밤에는 더 신경 써요."]},
  {box:"warn",t:"사막 구간 연료",ul:["**11/14 웨스트림**: 출발 전에 가득 채워요. 중간 주유는 Kingman 또는 Dolan Springs뿐이에요.","**11/17 LA 이동**: 출발 전 라스베이거스에서 가득 → EddieWorld(Yermo)에서 보충. 구글 지도에는 보통 휘발유 약 $6.00(하루 이상 지난 가격)으로 표시돼요. Baker 쪽은 더 비싼 경우가 많아요."]},
  {h:"주유 관련 영어",say:[["Pump number five, forty dollars, please.","5번 펌프에 40달러 주세요."],["Fill it up, please.","가득 채워 주세요."],["My card doesn't work at the pump. Can I pay inside?","펌프에서 카드가 안 돼요. 안에서 결제해도 되나요?"],["Could I get a receipt, please?","영수증 주세요."]]}
+],
+park:[
+ {p:"미국은 주차 방법이 곳마다 달라서 처음엔 헷갈려요. **들어갈 때 어떤 방식인지** 보고, **나올 때 어디서 돈을 내는지** 먼저 확인하면 돼요. 우리 일정(라스베이거스, 후버 댐, LA)에 맞춰 정리했어요."},
+ {box:"info",t:"한눈에",ul:["주차장은 **자주식(Self-park)**과 **발렛(Valet)**이 있어요. 자주식은 직접 세우고, 발렛은 직원이 대신 세워 줘요(팁이 필요하고 훨씬 비싸요). 우리는 **자주식**을 써요.","돈 내는 방식은 4가지예요. ① 나갈 때 **출구**에서 ② 세운 뒤 **정산기(Pay station)**에서 ③ **번호판**으로 ④ **앱**으로.","**티켓은 차 안에 두지 말고** 가지고 다녀요. 사진도 찍어 둬요. **층과 기둥 번호**도 사진으로 남겨요.","호텔 자주식 주차는 보통 **‘in/out’(그날 여러 번 드나들 수 있음)**이에요. 호텔마다 달라서 체크인 때 물어봐요.","**차 안에 가방이나 짐을 보이게 두지 마세요.** LA에서는 차량털이가 흔해요."]},
+ {h:"1. 티켓을 받는 주차장 (가장 흔해요)"},
+ {ol:["입구 차단기 앞에서 **버튼을 눌러 티켓**을 받아요. 카드를 대는 곳도 있어요.","빈자리에 세우고 **층·기둥 번호를 사진**으로 남겨요. 티켓은 지갑이나 폰 케이스에 넣어요.","볼일을 보고 돌아오면 **정산기(Pay station, Pay on foot)**를 찾아요. 엘리베이터 근처나 출구 쪽 벽에 있는 경우가 많아요.","정산기에 티켓을 넣으면 금액이 나와요. **신용카드**로 결제해요. 현금을 안 받는 곳이 많아요.","결제하면 티켓이 다시 나오거나 영수증이 나와요. **보통 15~20분 안에** 출구를 나가야 해요(곳마다 달라요). 늦으면 출구에서 추가 요금이 붙을 수 있어요.","출구에서 **티켓을 넣고** 차단기가 열리면 나가요."]},
+ {box:"warn",t:"정산기 없이 출구에서 내는 곳",p:"출구 기계에 티켓을 넣으면 금액이 떠요. 카드로 결제해요. **카드가 안 되면** 당황하지 말고 **Help 버튼**(인터폰)을 눌러 직원에게 말해요."},
+ {box:"warn",t:"티켓을 잃어버렸을 때",ul:["정산기의 **Lost Ticket** 버튼을 누르거나 출구 **직원·인터폰**에 말해요.","보통 **하루 최대 요금**이 나와요.","차량 서류(렌터카는 **계약서**)와 면허증을 보여 달라고 할 수 있어요."]},
+ {h:"2. 도로변(미터기) 주차"},
+ {ul:["표지판에 **시간 제한(예: 2 HR)과 요금 받는 시간**이 적혀 있어요. 그 시간 밖이면 무료인 곳도 있어요.","결제는 거리 **정산기(Pay station)**에서 **번호판**(또는 주차 칸 번호)을 입력하고 카드로 내거나, **앱(ParkMobile, PayByPhone 등)**으로 내요. 어떤 앱인지는 표지판이나 정산기에 적혀 있어요.","렌터카 **번호판 번호**를 계약서나 사진으로 미리 저장해 둬요.","영수증을 계기판에 올려 두는 곳도 있고, 번호판 방식은 올릴 필요가 없어요. 정산기 안내를 따라요."]},
+ {h:"3. LA 길 주차: 연석 색과 표지판 읽기"},
+ {table:[["연석 색","뜻"],["빨강","**절대 주차 불가**"],["흰색","승객이 타고 내리는 곳(잠깐만)"],["초록","시간 제한(보통 15~30분, 월~토 낮 시간)"],["노랑","상업 차량 짐 싣는 곳"],["파랑","장애인 전용"],["색 없음","표지판을 따라요"]]},
+ {ul:["표지판이 여러 장 겹쳐 있으면 **위에서 아래로** 한 장씩 읽어요. 요일과 시간을 각각 확인해요.","**도로 청소(Street Cleaning, No Parking)** 시간에 세워 두면 딱지나 견인이에요.","**소화전 앞**은 불가예요(약 4.5m 안).","세운 뒤 **표지판 사진**을 찍어 두면 안심이에요.","딱지(Citation)를 받으면 렌터카 회사가 벌금에 **수수료를 붙여** 카드로 청구할 수 있어요. 제때 내요."]},
+ {h:"4. 우리 일정별 주차 (2026-11-09 검색 기준, 가격은 바뀔 수 있어요)"},
+ {table:[["장소","주차","메모"],
+  ["Elara (11/12~17, 5박)","**확인 필요**: 자주식 $18~25/박, 발렛 $30~35/일 (2025 자료, 자료마다 달라요)","리조트 요금(약 $45/박)이 따로 붙는지, 주차가 포함인지 **체크인 때 꼭 확인**해요. 전화 +1 702-669-6700. 5박이면 약 $90~125가 될 수 있어요. ‘in/out’ 여부도 물어봐요."],
+  ["Wynn 뷔페 (11/13)","자료가 엇갈려요: 첫 3시간 무료 뒤 $25, 또는 발렛 4시간 무료","뷔페는 3시간을 넘기기 쉬워요. **우버**가 마음 편해요. 차로 가면 입구에서 요금 안내를 확인해요."],
+  ["스트립 호텔 구경 (11/16 등)","MGM 계열(Bellagio, Aria, Park MGM, Venetian 등) 자주식 평일 $20, 금~일 $25 (보도)","Treasure Island, Circus Circus, Sahara는 자주식 무료라는 정보가 있어요. 스트립에서는 **차를 Elara에 두고** 걷기·트램·우버를 써요."],
+  ["후버 댐 (11/14 선택)","네바다 쪽 주차 빌딩 **$10** (08:00~17:15)","공식 안내(미국 개척국)예요. 방문자 센터는 09:00~17:00, 입장 마감 16:15. 대형 차와 트레일러는 애리조나 쪽 주차장을 써요. 시간은 PST 기준이라는 안내가 있어요."],
+  ["Grand Canyon West (11/14)","제가 확인하지 못했어요","입장권을 살 때 **공식 사이트에서 주차 요금**을 확인해요."],
+  ["Residence Inn Glendale (11/17~22)","자주식 **$40/일**로 나와요 (Marriott 목록)","5박이면 약 **$200**이에요. 호텔에 정확한 요금과 ‘in/out’을 물어봐요. 구글 지도 저장 목록의 **Orange St Parking Structure(115 N Artsakh Ave, Glendale)** 같은 시영 주차장이 더 싼지 요금을 확인해 볼 만해요(요금은 제가 확인하지 못했어요)."],
+  ["The Americana at Brand (11/18 선택)","구매 영수증 **검증(validation)**으로 일정 시간 무료","자료가 엇갈려요(2시간 검증이라는 안내, 시간을 넘기면 전액이라는 후기). 가게에서 ‘Could you validate my parking?’ 하고 물어봐요."],
+  ["Universal Studios Hollywood (11/19~20)","일반 **약 $40/일**(17시 전, 2026 자료), Preferred $60~, Front Gate $70~80, 17시 이후 일반 약 $10","티켓에 주차는 **포함 안 돼요.** 이틀이면 일반 기준 약 $80. **우버 왕복 요금과 비교**해 봐요. 최신 요금은 공식 주차 페이지에서 확인해요."],
+  ["Griffith Observatory (11/21)","입장은 무료, **주차는 시간당 약 $10 (카드만)**","토요일 일몰 때는 **만차**예요. 일찍 가거나 DASH Observatory 버스, 또는 Greek Theatre 쪽 무료 주차장(걸어서 약 1.6km)을 써요. 무료 시간대는 자료마다 달라요."],
+  ["Santa Monica Pier (11/22)","시영 **Pier Deck**: 11~3월 평일 시간당 $2.50, 일 최대 $12 (2026 시 요금표)","주말 요금은 더 높을 수 있어요. 해변 Lot 3 North(1150 Pacific Coast Hwy)도 같은 요금이라고 나와요. 현장 정산기 안내를 따라요."],
+  ["Hertz 버뱅크 반납 (11/22 19:00)","주차가 아니라 **반납**","주소 2501 N Hollywood Way(1ST FLOOR). 공항의 **렌터카 시설(RITC)**에 반납해요. 입구는 **Avenue B**(Hollywood Way나 Empire Ave에서 진입), ‘Rental Car Return’ 표지판을 따라가요. 터미널까지 걸어갈 수 있어서 셔틀이 필요 없어요."]
+ ]},
+ {h:"5. 주차 관련 영어",say:[["Where do I pay for parking?","주차 요금은 어디서 내요?"],["I lost my ticket. What should I do?","티켓을 잃어버렸어요. 어떻게 해야 하나요?"],["Could you validate my parking ticket, please?","주차권 검증(할인) 처리를 해 주시겠어요?"],["Does this price include in and out privileges?","이 요금은 자유롭게 드나들 수 있는 요금인가요?"],["How much is it for the whole day?","하루 종일 얼마예요?"],["Is there a daily maximum?","하루 최대 요금이 있나요?"]]},
+ {box:"tip",t:"돈 아끼는 요령",ul:["**차를 쓰는 날만** 차를 쓰고, 스트립에서는 걷기·트램·우버를 써요.","호텔 **‘in/out’**이 되는지 확인해서 하루에 여러 번 나가도 추가 요금이 없게 해요.","**validation(검증)**: 상점이나 식당에서 영수증을 내고 주차권 검증을 받으면 무료 시간이 생겨요.","**앱으로 요금 비교**: ParkMobile 같은 앱에 주차장 요금이 나올 때가 있어요."]}
 ],
 west:[
  {box:"info",t:"한눈에",ul:["거리: 라스베이거스에서 약 **122마일(약 196km)**, 편도 약 **2시간 15분~2시간 30분**.","사우스림은 편도 4시간 30분이 넘어서 지후에게 무리예요. **웨스트림 당일치기**가 맞는 선택이에요.","웨스트림은 국립공원이 아니라 **후알라파이(Hualapai) 원주민 부족**이 운영하는 땅이에요. 입장료는 부족 쪽에 내요.","**11월에는 애리조나 시간이 라스베이거스보다 1시간 빨라요.** 공식 운영 시간은 애리조나 시간 기준이에요. (애리조나는 서머타임이 없어요. 11/2부터 3/13까지)","현장에서 보통 **3~4시간** 걸려요. 11/14(토)에 러프하게 다녀오고, 시간이 되면 복귀길에 후버 댐에 들러요."]},
@@ -597,12 +622,22 @@ const nav=q=>`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComp
 const amap=q=>`https://maps.apple.com/?q=${encodeURIComponent(q)}`;
 const embed=q=>`https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=15&output=embed`;
 const start=new Date("2026-11-12T00:00:00"), today=new Date(); today.setHours(0,0,0,0);
-const dd=Math.round((start-today)/864e5);
-$("#dd").textContent=dd>0?`D-${dd}`:dd===0?"오늘 출발":dd>-12?`${-dd+1}일차`:"여행 끝";
-const tripIdx=(()=>{const i=Math.round((today-start)/864e5);return i>=0&&i<days.length?i:-1})();
-
-let state={v:"home",day:Math.max(tripIdx,0),ready:"todo",cat:"전체",q:"",info:"imm"};
-const done=store.get("done",{}), tdone=store.get("todo",{}), pdone=store.get("pack",{});
+// ---- 시간: 기기 시각 기준 (테스트용으로 ?now=ISO 시각을 주면 그 시각으로 동작해요)
+const TEST_NOW=(()=>{try{const v=new URLSearchParams(location.search).get("now");const t=v?Date.parse(v):NaN;return isNaN(t)?null:t}catch(e){return null}})();
+const nowMs=()=>TEST_NOW??Date.now();
+const TZ_LOC="America/Los_Angeles", TZ_KR="Asia/Seoul";
+function zp(tz,ms,o){const p={};new Intl.DateTimeFormat("ko-KR",{timeZone:tz,...o}).formatToParts(new Date(ms)).forEach(x=>{p[x.type]=x.value});return p}
+const hhmm=(tz,ms)=>{const p=zp(tz,ms,{hour:"2-digit",minute:"2-digit",hour12:false});return `${p.hour==="24"?"00":p.hour}:${p.minute}`};
+const mdw=(tz,ms)=>{const p=zp(tz,ms,{month:"numeric",day:"numeric",weekday:"short"});return `${p.month}월 ${p.day}일 (${p.weekday})`};
+const tzAbbr=ms=>{try{return new Intl.DateTimeFormat("en-US",{timeZone:TZ_LOC,timeZoneName:"short"}).formatToParts(new Date(ms)).find(x=>x.type==="timeZoneName").value}catch(e){return "PST"}};
+function fmtKST(ms){const p=zp(TZ_KR,ms,{month:"numeric",day:"numeric",weekday:"short"});return `${p.month}/${p.day}(${p.weekday}) ${hhmm(TZ_KR,ms)}`}
+function pstDate(){const p=zp(TZ_LOC,nowMs(),{year:"numeric",month:"2-digit",day:"2-digit"});return `${p.year}-${p.month}-${p.day}`}
+function devIdx(){const t=new Date(nowMs());t.setHours(0,0,0,0);return Math.round((t-start)/864e5)}
+const todayDay=()=>Math.min(Math.max(devIdx(),0),days.length-1);
+function ddLabel(){const i=devIdx();return i<0?`D-${-i}`:i===0?"오늘 출발":i<days.length?`${i+1}일차`:"여행 끝"}
+$("#dd").textContent=ddLabel();
+const done=store.get("done",{});
+let state={v:"home",day:todayDay(),cat:"전체",q:"",info:"imm"};
 
 // ---- 날씨 (Open-Meteo 예보 + 미국 기상청 경보)
 const LOC={
@@ -671,7 +706,7 @@ function wxInner(i){
   const date=`2026-11-${String(12+i).padStart(2,"0")}`;
   return WXMAP[i].map(k=>wxOne(k,date)).join("");
 }
-function wxRefresh(){$$(".wxwrap").forEach(w=>{w.innerHTML=wxInner(+w.dataset.i)})}
+function wxRefresh(){$$(".wxwrap[data-i]").forEach(w=>{w.innerHTML=wxInner(+w.dataset.i)});const h=$("#wxhome");if(h)h.innerHTML=todayWxInner()}
 async function loadWx(){
   const now=Date.now();
   await Promise.all(Object.keys(LOC).map(async k=>{
@@ -691,26 +726,71 @@ async function loadWx(){
   }));
   wxRefresh();
 }
-// ---- 다음 일정: 오늘(여행 전이면 1일차)부터 완료 표시가 없는 첫 항목
-function nextStop(){
-  const from=tripIdx>=0?tripIdx:(dd>0?0:-1);
-  if(from<0)return null;
-  for(let d=from;d<days.length;d++){
-    for(let j=0;j<days[d].items.length;j++){if(!done[`${d}-${j}`])return {d,j,it:days[d].items[j]}}
-  }
-  return null;
+// ---- 일정의 절대 시각: 한국 시간 항목은 at(ISO), 나머지는 현지(PST) 기준
+const PST_OFF=8;
+const VAGUE={"아침":7.5,"오전":9,"점심":12,"낮":12,"오후":14,"저녁":18,"개장 전":8,"개장":9,"하루 종일":9};
+function itemMs(i,it){
+  if(it.at)return Date.parse(it.at);
+  const m=/^(\d{1,2}):(\d{2})$/.exec(it.t);
+  let hh,mm=0;
+  if(m){hh=+m[1];mm=+m[2]}else{const v=VAGUE[it.t];if(v==null)return null;hh=Math.floor(v);mm=Math.round((v-hh)*60)}
+  return Date.UTC(2026,10,12+i,hh+PST_OFF,mm);
+}
+function upcoming(n){
+  const now=nowMs(),L=[];
+  days.forEach((x,d)=>x.items.forEach((it,j)=>{
+    if(done[`${d}-${j}`])return;
+    const t=itemMs(d,it); if(t==null||t<=now)return;
+    L.push({d,j,it,t});
+  }));
+  L.sort((a,b)=>a.t-b.t);
+  return L.slice(0,n);
+}
+const nextStop=()=>upcoming(1)[0]||null;
+function rel(ms){
+  const m=Math.round(ms/60000); if(m<1)return "곧";
+  if(m<60)return `${m}분 뒤`;
+  const h=Math.floor(m/60), mm=m%60;
+  if(h<24)return mm?`${h}시간 ${mm}분 뒤`:`${h}시간 뒤`;
+  const d=Math.floor(h/24), hh=h%24;
+  return hh?`${d}일 ${hh}시간 뒤`:`${d}일 뒤`;
 }
 function nextCard(){
-  const n=nextStop(); if(!n)return `<div class="nextcard"><div class="lbn">다음 일정</div><p>모든 일정을 마쳤어요.</p></div>`;
-  const x=days[n.d], it=n.it;
-  const when=tripIdx<0?`출발까지 D-${dd} · ${n.d+1}일차 ${x.d} ${x.w}`:`${n.d+1}일차 · ${x.d} ${x.w}`;
-  return `<div class="nextcard"><div class="lbn">다음 일정</div><div class="when">${when}</div><div class="big"><b>${esc(it.t)}</b><span>${esc(it.h)}</span></div>${it.p?`<p>${esc(it.p)}</p>`:""}${it.pl?`<div class="nm">${esc(it.pl.name)}</div><div class="ad">${esc(it.pl.addr)}</div><div class="links"><a class="go" href="${nav(it.pl.q)}" target="_blank" rel="noopener">길 안내</a><a href="${gmap(it.pl.q)}" target="_blank" rel="noopener">구글 지도</a></div>`:""}<button class="go2" data-next="1">일정에서 보기</button></div>`;
+  const L=upcoming(3);
+  if(!L.length)return `<div class="nextcard"><div class="lbn">다음 일정</div><p>모든 일정을 마쳤어요.</p></div>`;
+  const n=L[0], x=days[n.d], it=n.it, kst=!!(it.at&&/\+09:00$/.test(it.at));
+  const later=L.slice(1).map(o=>`<li><span class="tm">${esc(o.it.t)}</span>${esc(o.it.h)}<small>${o.d===n.d?"":` · ${o.d+1}일차`}</small></li>`).join("");
+  return `<div class="nextcard"><div class="lbn">다음 일정</div><div class="when">${n.d+1}일차 · ${x.d} ${x.w} · <b>${rel(n.t-nowMs())}</b></div>
+  <div class="big"><b>${esc(it.t)}</b><span>${esc(it.h)}</span></div>
+  <div class="kst">${kst?"한국 시간 기준 시각":`현지 시간(${tzAbbr(n.t)}) 기준 · 한국 시간 ${fmtKST(n.t)}`}</div>
+  ${it.p?`<p>${esc(it.p)}</p>`:""}${it.pl?`<div class="nm">${esc(it.pl.name)}</div><div class="ad">${esc(it.pl.addr)}</div><div class="links"><a class="go" href="${nav(it.pl.q)}" target="_blank" rel="noopener">길 안내</a><a href="${gmap(it.pl.q)}" target="_blank" rel="noopener">구글 지도</a></div>`:""}
+  ${later?`<div class="lt">그다음</div><ul class="later">${later}</ul>`:""}<button class="go2" data-next="1">일정에서 보기</button></div>`;
 }
 function renderNextBar(){
   const b=$("#nextbar"), n=nextStop();
   if(!n||state.v==="home"){b.hidden=true;return}
   b.hidden=false;
-  b.innerHTML=`<span class="lbn">다음</span><span class="tm">${esc(n.it.t)}</span><span class="tt">${esc(n.it.h)}</span>`;
+  b.innerHTML=`<span class="lbn">다음</span><span class="tm">${esc(n.it.t)}</span><span class="tt">${esc(n.it.h)}</span><span class="rl">${rel(n.t-nowMs())}</span>`;
+}
+// ---- 시계: 현지(PST) 크게, 한국(KST) 작게
+function clockInner(){
+  const n=nowMs();
+  return `<div class="c-l">현지 시각 (라스베이거스·LA)</div><div class="c1"><span class="big">${hhmm(TZ_LOC,n)}</span><span class="zone">${tzAbbr(n)}</span><span class="date">${mdw(TZ_LOC,n)}</span></div><div class="c2">한국 시간 KST · ${mdw(TZ_KR,n)} ${hhmm(TZ_KR,n)}</div>`;
+}
+const clockCard=()=>`<div class="clock" id="clock">${clockInner()}</div>`;
+// ---- 오늘의 날씨 (현지 날짜 기준)
+function todayWxInner(){
+  const pd=pstDate(), i=Math.round((Date.parse(pd+"T00:00:00Z")-Date.UTC(2026,10,12))/864e5);
+  const ks=(i>=0&&i<days.length)?WXMAP[i]:(i<0?["lv"]:["la"]);
+  return ks.map(k=>wxOne(k,pd)).join("");
+}
+const todayWx=()=>`<h2 class="sec">오늘의 날씨 (현지)</h2><div class="wxwrap" id="wxhome" data-pd="${pstDate()}">${todayWxInner()}</div>`;
+function updateLive(){
+  const c=$("#clock"); if(c)c.innerHTML=clockInner();
+  const nw=$("#nextwrap"); if(nw)nw.innerHTML=nextCard();
+  const w=$("#wxhome"); if(w&&w.dataset.pd!==pstDate()){w.dataset.pd=pstDate();w.innerHTML=todayWxInner()}
+  renderNextBar();
+  $("#dd").textContent=ddLabel();
 }
 // ---- 화면
 function dayRow(i){
@@ -718,7 +798,7 @@ function dayRow(i){
   return `<li><button data-day="${i}"><span class="n">${i+1}일차</span><span><span class="t">${esc(x.t)}</span><br><span class="s">${esc(x.r)} · ${esc(x.tag)}</span></span><span class="d">${x.d} ${x.w}</span></button></li>`;
 }
 function home(){
-  return `${nextCard()}<h2 class="sec">여행 요약</h2>
+  return `${clockCard()}${todayWx()}<div id="nextwrap">${nextCard()}</div><h2 class="sec">여행 요약</h2>
   <div class="card"><dl class="kv">
    <div><dt>기간</dt><dd>2026.11.12(목) ~ 11.24(화), 현지 11박</dd></div>
    <div><dt>인원</dt><dd>석환, 혜정, 지후</dd></div>
@@ -726,7 +806,6 @@ function home(){
    <div><dt>렌터카</dt><dd>11/12 16:30 라스베이거스 공항 → 11/22 19:00 버뱅크 반납</dd></div>
    <div><dt>예약 일정</dt><dd>11/13 The Buffet at Wynn, 11/15 Sphere, 11/19~20 Universal Studios</dd></div>
    <div><dt>귀국</dt><dd>11/23 LAX 11:00 출발 (08:00까지 도착)</dd></div></dl></div>
-  ${tripIdx>=0?`<h2 class="sec">오늘</h2><ul class="rows">${dayRow(tripIdx)}</ul>`:""}
   <h2 class="sec">12일 일정</h2><ul class="rows">${days.map((_,i)=>dayRow(i)).join("")}</ul>`;
 }
 function plan(){
@@ -764,25 +843,12 @@ function phrase(){
   return `<h2 class="sec" style="margin-top:20px">입국 심사 가이드</h2><p style="margin:0 0 4px;color:var(--mute);font-size:.92rem">아주 쉬운 영어로 짧게 답해요. 답을 누르면 크게 보이고, 소리 버튼으로 읽어 줘요.</p>`+
   phrases.map(([cat,items,note,ql])=>`<h2 class="sec">${cat}</h2>${note?`<p class="note">${esc(note)}</p>`:""}<ul class="list">${items.map(([en,ko,qe,qk])=>{PH.push([en,ko]);const n=PH.length-1;return `<li class="card"><div class="ph"><div data-big="${n}" style="cursor:pointer">${qe?`<div class="q"><span class="lb qq">${ql||"질문"}</span>${esc(qe)}<br><span class="qk">${esc(qk)}</span></div>`:""}<div class="t"><span class="lb aa">${qe?"답":"말하기"}</span>${esc(en)}</div><div class="k">${esc(ko)}</div></div><button class="sayb" data-say="${n}" aria-label="소리 듣기">소리</button></div></li>`}).join("")}</ul>`).join("");
 }
-function ready(){
-  const seg=`<div class="seg" role="tablist"><button role="tab" data-r="todo" aria-selected="${state.ready==="todo"}">해야 할 일</button><button role="tab" data-r="pack" aria-selected="${state.ready==="pack"}">짐 챙기기</button><button role="tab" data-r="book" aria-selected="${state.ready==="book"}">예약 정보</button></div>`;
-  if(state.ready==="book")return seg+`<div class="card pad"><h2 class="sec" style="margin:0 0 6px">항공</h2><table><tr><th>날짜</th><th>편명</th><th>구간</th><th>좌석</th></tr>${flights.map(f=>`<tr><td>${f[0]}</td><td>${f[1]}</td><td>${f[2]}</td><td>${f[3]}</td></tr>`).join("")}</table></div>`+
-    books.map(b=>`<div class="card pad mt"><h2 class="sec" style="margin:0 0 4px">${esc(b[0])}</h2><dl class="kv">${b[1].map(r=>`<div><dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd></div>`).join("")}</dl></div>`).join("");
-  if(state.ready==="pack"){
-    const n=packing.filter((_,i)=>pdone[i]).length;
-    return seg+`<div class="prog"><span>${n}/${packing.length} 챙김</span><i><b style="width:${n/packing.length*100}%"></b></i></div><div class="card mt">${packing.map((t,i)=>{const on=!!pdone[i];return `<label class="chk ${on?"done":""}"><input type="checkbox" data-pack="${i}" ${on?"checked":""}><span>${esc(t)}</span></label>`}).join("")}</div>`;
-  }
-  const all=todos.map((t,i)=>[t,i]);
-  const open=all.filter(([t,i])=>!(tdone[i]??t[1])), fin=all.filter(([t,i])=>tdone[i]??t[1]);
-  const row=([t,i])=>{const on=tdone[i]??t[1];return `<label class="chk ${on?"done":""}"><input type="checkbox" data-todo="${i}" ${on?"checked":""}><span>${esc(t[0])}</span></label>`};
-  return seg+`<h2 class="sec" style="margin-top:12px">남은 일 ${open.length}개</h2><div class="card">${open.map(row).join("")||"<p>모두 끝났어요.</p>"}</div><h2 class="sec">끝낸 일 ${fin.length}개</h2><div class="card">${fin.map(row).join("")}</div>`;
-}
 
 // ---- 렌더
 function render(push=true){
   $$("#nav button").forEach(b=>{if(b.dataset.v===state.v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   const v=$("#view");
-  v.innerHTML={home,plan,places,info,ready}[state.v]();
+  v.innerHTML={home,plan,places,info}[state.v]();
   $$(".mini",v).forEach(m=>{const f=document.createElement("iframe");f.loading="lazy";f.referrerPolicy="no-referrer-when-downgrade";f.title=m.getAttribute("aria-label");f.src=embed(m.dataset.q);m.appendChild(f)});
   const sel=$(".chips [aria-selected=true]");if(sel){const bar=sel.parentElement;{const a=bar.getBoundingClientRect(),b=sel.getBoundingClientRect();bar.scrollLeft+=(b.left-a.left)-(bar.clientWidth-b.width)/2}}
   renderNextBar();
@@ -790,7 +856,7 @@ function render(push=true){
   if(push){try{history.replaceState(null,"",state.v==="plan"?`#day${state.day+1}`:state.v==="info"?`#info-${state.info}`:`#${state.v}`)}catch(e){}}
 }
 function go(v,scroll=true){state.v=v;render();if(scroll)window.scrollTo({top:0})}
-$("#nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b)go(b.dataset.v)});
+$("#nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b){if(b.dataset.v==="plan"&&state.v!=="plan")state.day=todayDay();go(b.dataset.v)}});
 $("#nextbar").addEventListener("click",()=>{const n=nextStop();if(n){state.day=n.d;state.focus=true;go("plan",false)}});
 $("#view").addEventListener("click",e=>{
   const t=e.target, c=n=>t.closest(n);
@@ -800,17 +866,10 @@ $("#view").addEventListener("click",e=>{
   else if(c("[data-d]")){state.day=+c("[data-d]").dataset.d;render();window.scrollTo({top:0})}
   else if(c("[data-k]")){const k=c("[data-k]").dataset.k;done[k]=!done[k];store.set("done",done);const y=scrollY;render(false);scrollTo({top:y})}
   else if(c("[data-c]")){state.cat=c("[data-c]").dataset.c;render(false)}
-  else if(c("[data-r]")){state.ready=c("[data-r]").dataset.r;render(false)}
   else if(c("[data-say]"))say(PH[+c("[data-say]").dataset.say][0]);
   else if(c("[data-big]"))openBig(+c("[data-big]").dataset.big);
 });
 $("#view").addEventListener("input",e=>{if(e.target.id==="q"){state.q=e.target.value;const pos=e.target.selectionStart;render(false);const q=$("#q");q.focus();q.setSelectionRange(pos,pos)}});
-$("#view").addEventListener("change",e=>{
-  const el=e.target;if(!el.matches("input[type=checkbox]"))return;
-  if(el.dataset.todo!==undefined){tdone[el.dataset.todo]=el.checked;store.set("todo",tdone)}
-  if(el.dataset.pack!==undefined){pdone[el.dataset.pack]=el.checked;store.set("pack",pdone)}
-  const y=scrollY;render(false);scrollTo({top:y});
-});
 
 // ---- 영어: 소리, 크게 보기
 function say(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-US";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -825,8 +884,7 @@ const h=location.hash.slice(1), m=h.match(/^day(\d+)$/);
 if(m&&days[+m[1]-1]){state.day=+m[1]-1;state.v="plan"}
 else if(h==="phrase"){state.v="info";state.info="imm"}
 else if(/^info(-\w+)?$/.test(h)){state.v="info";const k=h.slice(5);if(INFO_TABS.some(t=>t[0]===k))state.info=k}
-else if(["home","plan","places","ready"].includes(h))state.v=h;
-else if(tripIdx>=0){state.v="plan";const n=nextStop();if(n){state.day=n.d;state.focus=true}}
+else if(["home","plan","places"].includes(h))state.v=h;
 // ---- 가로 메뉴: 마우스 휠과 드래그로 좌우 이동
 $("#view").addEventListener("wheel",e=>{
   const bar=e.target.closest(".chips,.fchips"); if(!bar||bar.scrollWidth<=bar.clientWidth)return;
@@ -843,6 +901,8 @@ window.addEventListener("mouseup",()=>{
   drag=null;
 });
 render(false);
+updateLive();
+setInterval(updateLive,20000);
 loadWx();
 document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadWx()});
 </script>
