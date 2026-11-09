@@ -230,6 +230,7 @@ const PL={
  "Las Vegas North Premium Outlets":["Las Vegas North Premium Outlets","875 S Grand Central Pkwy, Las Vegas, NV 89106"],
  "Sphere Las Vegas 255 Sands Ave":["Sphere","255 Sands Ave, Las Vegas, NV 89169"],
  "Grand Canyon West Skywalk":["Grand Canyon West Skywalk","808 Eagle Point Rd, Peach Springs, AZ 86434"],
+ "Hoover Dam":["Hoover Dam","네바다·애리조나 경계, 보울더 시티(Boulder City, NV) 근처","Hoover Dam"],
  "Residence Inn by Marriott Los Angeles Glendale":["Residence Inn by Marriott Los Angeles Glendale","199 N Louise St, Glendale, CA 91206"],
  "The Americana at Brand":["The Americana at Brand","889 Americana Way, Glendale, CA 91210"],
  "California Science Center":["California Science Center","700 Exposition Park Dr, Los Angeles, CA 90037"],
@@ -240,7 +241,7 @@ const PL={
  "Hertz Hollywood Burbank Airport 2501 N Hollywood Way Burbank":["Hertz Car Rental - Burbank - Hollywood Burbank Airport (BUR)","2501 N Hollywood Way, Burbank, CA 91505"],
  "Tom Bradley International Terminal LAX":["Tom Bradley International Terminal (LAX Terminal B)","380 World Way, Los Angeles, CA 90045"]
 };
-const G=(key,_ko,cat)=>{const [name,addr]=PL[key];return {name,addr,q:`${name}, ${addr}`,cat:cat||"관광"}};
+const G=(key,_ko,cat)=>{const [name,addr,q0]=PL[key];return {name,addr,q:q0||`${name}, ${addr}`,cat:cat||"관광"}};
 const days=[
  {d:"11/12",w:"목",r:"이동",t:"출국, 라스베이거스 도착",tag:"확정",
   items:[
@@ -261,11 +262,13 @@ const days=[
    {t:"15:30",st:"est",h:"스트립 산책",p:"M&M's World와 코카콜라 스토어를 구경해요.",pl:G("M&M's World Las Vegas","M&M's World","쇼핑")},
    {t:"저녁",st:"opt",h:"Fountains of Bellagio",p:"날씨와 체력을 보고 정해요.",pl:G("Fountains of Bellagio","벨라지오 분수","관광")}
   ]},
- {d:"11/14",w:"토",r:"라스베이거스",t:"아울렛 쇼핑과 휴식",tag:"자유",
+ {d:"11/14",w:"토",r:"라스베이거스 근교",t:"Grand Canyon West, Hoover Dam",tag:"러프하게",
   items:[
-   {t:"오전",st:"est",h:"호텔에서 여유롭게 시작"},
-   {t:"11:00",st:"est",h:"Las Vegas North Premium Outlets",p:"렌터카로 가요. 토요일은 붐비니 오후 전에 도착하면 좋아요.",pl:G("Las Vegas North Premium Outlets","라스베이거스 노스 프리미엄 아울렛","쇼핑")},
-   {t:"오후",st:"opt",h:"호텔 수영장, 부대시설에서 쉬기",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")}
+   {t:"아침",st:"est",h:"라스베이거스에서 일찍 출발",p:"Grand Canyon West까지 편도 약 2시간 30분이에요. 입장권과 세부 일정은 정해지면 여기에 추가해요.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림","관광")},
+   {t:"점심",st:"est",h:"Grand Canyon West 도착, 관광",p:"사전 예약 없이 컨디션을 보며 정해요. 토요일이라 붐빌 수 있어요."},
+   {t:"13:00",st:"est",h:"관광을 마치고 출발 (후버 댐 들를지 정하기)",p:"13:00쯤 출발하면 일몰(약 16:30) 전에 후버 댐을 볼 수 있어요. 늦어지면 후버 댐은 건너뛰고 바로 돌아와요."},
+   {t:"15:00",st:"opt",h:"Hoover Dam 들르기 (시간이 되면)",p:"Grand Canyon West에서 약 2시간 걸려요. 운영 시간과 입장 마감은 가기 전에 확인해요. 네바다·애리조나 경계예요. 11월에는 애리조나 시계가 라스베이거스보다 1시간 빨라서 시간을 헷갈리지 않게 확인해요.",pl:G("Hoover Dam","후버 댐","관광")},
+   {t:"저녁",st:"est",h:"Elara로 복귀, 휴식",p:"후버 댐에서 라스베이거스까지 약 50분이에요. 일몰 후 운전은 줄이고, 내일 10:15 Sphere 도착을 위해 일찍 쉬어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")}
   ]},
  {d:"11/15",w:"일",r:"라스베이거스",t:"Sphere '오즈의 마법사'",tag:"예약",
   items:[
@@ -274,12 +277,10 @@ const days=[
    {t:"11:00",st:"bk",h:"'오즈의 마법사' 공연 시작"},
    {t:"오후",st:"opt",h:"호텔 수영장, 자유 일정"}
   ]},
- {d:"11/16",w:"월",r:"라스베이거스",t:"Grand Canyon West",tag:"러프하게",
+ {d:"11/16",w:"월",r:"라스베이거스",t:"일정 미정",tag:"미정",
   items:[
-   {t:"아침",st:"est",h:"일찍 출발",p:"편도 약 2시간 30분이에요. 입장권과 세부 일정은 정해지면 여기에 추가해요.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림","관광")},
-   {t:"점심",st:"est",h:"현지 도착, 관광",p:"사전 예약 없이 컨디션을 보며 정해요."},
-   {t:"14:30",st:"est",h:"늦어도 이 시각에는 출발",p:"일몰(약 16:30) 전에 라스베이거스로 돌아와 야간 운전을 피해요."},
-   {t:"저녁",st:"est",h:"호텔 복귀, 휴식",p:"다음 날 10:00 체크아웃이라 짐을 미리 정리해요."}
+   {t:"미정",st:"opt",h:"아직 정해지지 않았어요",p:"정해지면 여기에 추가해요. 다음 날 10:00 Elara 체크아웃과 LA 이동(약 4시간 30분~5시간)을 생각해서 정해요."},
+   {t:"저녁",st:"est",h:"짐 미리 정리",p:"내일 10:00까지 체크아웃이에요."}
   ]},
  {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동",tag:"이동",
   items:[
@@ -337,7 +338,7 @@ const books=[
 const todos=[
  ["Elara 주차, 리조트 요금 확인",0],["The Buffet at Wynn: 결제한 신용카드와 여권 챙기기",0],["아내 추가운전자 등록 요금 확인",0],["Hertz 온라인 체크인, 카드 홀드 확인",0],
  ["KE1410, KE005 사전 좌석 지정",0],["(선택) Universal 익스프레스 추가",0],["(선택) 지후 유소아식 신청",0],
- ["Sphere 10:15 도착을 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],["Grand Canyon West 입장권, 세부 일정 (러프하게, 추후 정리)",0],
+ ["Sphere 10:15 도착을 위한 호텔 출발 시간 확인",0],["여권 만료일 점검",0],["Grand Canyon West 입장권, 세부 일정 (11/14, 러프하게, 추후 정리)",0],["11/16(월) 일정 정하기 (아직 미정)",0],["(선택) 후버 댐 운영 시간 확인 (11/14)",0],
  ["ESTA 신청",1],["Elara 예약",1],["Residence Inn Glendale 예약",1],["Hertz 예약",1],["Universal Studios 2일권",1],["Sphere 예약",1],["Wynn 뷔페 예약",1],["렌터카 풀 커버리지 보험",1],["myfold 카시트 구매",1]
 ];
 const packing=[
@@ -405,9 +406,9 @@ const done=store.get("done",{}), tdone=store.get("todo",{}), pdone=store.get("pa
 const LOC={
   lv:{n:"라스베이거스",lat:36.1088,lon:-115.1683,norm:[19,7]},
   la:{n:"로스앤젤레스 (글렌데일)",lat:34.1478,lon:-118.2529,norm:[22,11]},
-  gc:{n:"그랜드 캐니언 웨스트",lat:36.0119,lon:-113.8108,norm:[14,2]}
+  gc:{n:"그랜드 캐니언 웨스트 (애리조나 시간)",lat:36.0119,lon:-113.8108,norm:[14,2]}
 };
-const WXMAP=[["lv"],["lv"],["lv"],["lv"],["gc","lv"],["lv","la"],["la"],["la"],["la"],["la"],["la"],["la"]];
+const WXMAP=[["lv"],["lv"],["gc","lv"],["lv"],["lv"],["lv","la"],["la"],["la"],["la"],["la"],["la"],["la"]];
 const WXD={}, WXT={}, WXA={};
 const WMO={0:"맑음",1:"대체로 맑음",2:"구름 조금",3:"흐림",45:"안개",48:"안개",51:"약한 이슬비",53:"이슬비",55:"강한 이슬비",56:"어는 이슬비",57:"어는 이슬비",61:"약한 비",63:"비",65:"강한 비",66:"어는 비",67:"어는 비",71:"약한 눈",73:"눈",75:"강한 눈",77:"싸락눈",80:"소나기",81:"소나기",82:"강한 소나기",85:"눈 소나기",86:"강한 눈 소나기",95:"뇌우",96:"우박 동반 뇌우",99:"우박 동반 강한 뇌우"};
 function wxIcon(c){
