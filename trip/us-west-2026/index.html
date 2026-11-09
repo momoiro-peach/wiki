@@ -230,6 +230,9 @@ const PL={
  "Las Vegas North Premium Outlets":["Las Vegas North Premium Outlets","875 S Grand Central Pkwy, Las Vegas, NV 89106"],
  "Sphere Las Vegas 255 Sands Ave":["Sphere","255 Sands Ave, Las Vegas, NV 89169"],
  "Grand Canyon West Skywalk":["Grand Canyon West Skywalk","808 Eagle Point Rd, Peach Springs, AZ 86434"],
+ "Alien Fresh Jerky":["Alien Fresh Jerky","72302 Baker Blvd, Baker, CA 92309"],
+ "EddieWorld":["EddieWorld","36017 Calico Rd, Yermo, CA 92398"],
+ "Barstow Station":["Barstow Station","1611 E Main St, Barstow, CA 92311"],
  "Hoover Dam":["Hoover Dam","네바다·애리조나 경계, 보울더 시티(Boulder City, NV) 근처","Hoover Dam"],
  "Residence Inn by Marriott Los Angeles Glendale":["Residence Inn by Marriott Los Angeles Glendale","199 N Louise St, Glendale, CA 91206"],
  "The Americana at Brand":["The Americana at Brand","889 Americana Way, Glendale, CA 91210"],
@@ -282,11 +285,14 @@ const days=[
    {t:"미정",st:"opt",h:"아직 정해지지 않았어요",p:"정해지면 여기에 추가해요. 다음 날 10:00 Elara 체크아웃과 LA 이동(약 4시간 30분~5시간)을 생각해서 정해요."},
    {t:"저녁",st:"est",h:"짐 미리 정리",p:"내일 10:00까지 체크아웃이에요."}
   ]},
- {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동",tag:"이동",
+ {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동 (휴게소 3곳)",tag:"이동",
   items:[
-   {t:"10:00",st:"ok",h:"Elara 체크아웃",p:"10:00까지 체크아웃하고 짐을 실어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")},
-   {t:"11:00",st:"est",h:"LA로 출발",p:"약 4시간 30분~5시간. 중간에 점심과 휴식을 넣어요."},
-   {t:"15:30",st:"est",h:"Residence Inn Glendale 체크인",p:"결제 완료.",pl:G("Residence Inn by Marriott Los Angeles Glendale","레지던스 인 글렌데일","숙소")},
+   {t:"10:00",st:"ok",h:"Elara 체크아웃, 주유하고 출발",p:"10:00까지 체크아웃하고 짐을 실어요. 출발 전에 라스베이거스에서 기름을 가득 채워요. 캘리포니아보다 보통 저렴하고, Baker부터는 주유소가 드물어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")},
+   {t:"11:25",st:"est",h:"Alien Fresh Jerky (Baker)",p:"Elara에서 약 1시간 24분(88마일). 20~30분 쉬면서 화장실과 간식. 09:00에 열어요. 외계인 모양 건물이라 지후가 좋아할 거예요.",pl:G("Alien Fresh Jerky","","관광")},
+   {t:"12:45",st:"est",h:"EddieWorld (Yermo)",p:"Baker에서 약 51분(53마일). 주유와 화장실 15분. 보통 휘발유는 갤런당 약 $6로 표시돼요(하루 이상 지난 가격). 렌터카 주유구 안쪽의 연료 등급을 확인해요.",pl:G("EddieWorld","","주유소")},
+   {t:"13:15",st:"est",h:"Barstow Station (Barstow)",p:"EddieWorld에서 13분(10마일). 점심 45분. 마지막 구간이 약 1시간 49분으로 가장 길어서 화장실을 꼭 다녀와요.",pl:G("Barstow Station","","식사")},
+   {t:"14:00",st:"est",h:"글렌데일로 출발",p:"LA 퇴근 시간(약 15:30부터)을 피하려면 14:00을 넘기지 않아요. 일몰은 약 16:50이에요. Cajon Pass 일대는 바람이 셀 수 있으니 출발 전에 예보를 확인해요."},
+   {t:"15:50",st:"est",h:"Residence Inn Glendale 체크인",p:"교통이 평소 같으면 이 시각이에요. 결제 완료.",pl:G("Residence Inn by Marriott Los Angeles Glendale","레지던스 인 글렌데일","숙소")},
    {t:"저녁",st:"opt",h:"The Americana at Brand에서 저녁",pl:G("The Americana at Brand","아메리카나 앳 브랜드","쇼핑")}
   ]},
  {d:"11/18",w:"수",r:"로스앤젤레스",t:"LA 워밍업",tag:"자유",
