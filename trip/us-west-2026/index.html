@@ -144,6 +144,30 @@ tr:last-child td{border:0}
 .mt{margin-top:12px}
 .foot{margin:28px 0 0;color:var(--mute);font-size:.82rem}
 
+/* 유용한 정보 */
+.gh{margin:24px 0 8px;font:700 1.02rem var(--font);color:var(--accent)}
+.gp{margin:8px 0;line-height:1.7}
+.gl,.gs{margin:8px 0;padding-left:22px;line-height:1.7}
+.gl li,.gs li{margin:4px 0}
+.gs{padding-left:26px}
+.gs li::marker{color:var(--accent);font-weight:700}
+.gb{margin:12px 0;padding:12px 14px;border:1px solid;border-left-width:5px;border-radius:var(--r);line-height:1.65;font-size:.95rem}
+.gb p{margin:4px 0 0}
+.gb ul{margin:6px 0 0;padding-left:20px}
+.gb li{margin:4px 0}
+.gbt{display:block;font-weight:700;margin-bottom:2px}
+.gb.info{background:var(--accent-soft);border-color:var(--accent)}
+.gb.info .gbt{color:var(--accent)}
+.gb.tip{background:var(--teal-soft);border-color:var(--teal)}
+.gb.tip .gbt{color:var(--teal)}
+.gb.warn{background:var(--amber-soft);border-color:var(--amber)}
+.gb.warn .gbt{color:var(--amber)}
+.gt{overflow-x:auto;margin:10px 0;background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+.gt table{min-width:100%;font-size:.9rem;line-height:1.55}
+.gt th{background:var(--accent-soft);color:var(--accent);font-weight:700;white-space:nowrap;padding:8px 10px}
+.gt td{padding:9px 10px}
+.gt td:first-child{white-space:nowrap;font-weight:500}
+@media (max-width:480px){.gt td:first-child{white-space:normal;min-width:5.5rem}}
 /* 날씨 */
 .wxwrap{display:grid;gap:10px;margin-top:14px}
 .wx{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
@@ -202,14 +226,14 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
 <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11 12 4l9 7"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
 <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4m8-4v4M3 10h18"/></symbol>
 <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-<symbol id="i-id" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="11" r="2"/><path d="M6 16c.6-1.6 5.4-1.6 6 0M14 10h4M14 13h4"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6"/><circle cx="12" cy="7.8" r=".6"/></symbol>
 <symbol id="i-bag" viewBox="0 0 24 24"><rect x="4" y="8" width="16" height="13" rx="2"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/></symbol>
 </defs></svg>
 <nav class="bar" aria-label="주 메뉴"><div class="nextbar" id="nextbar" hidden></div><div class="in" id="nav">
   <button data-v="home"><svg><use href="#i-home"/></svg>한눈에</button>
   <button data-v="plan"><svg><use href="#i-cal"/></svg>일정</button>
   <button data-v="places"><svg><use href="#i-pin"/></svg>장소</button>
-  <button data-v="phrase"><svg><use href="#i-id"/></svg>입국 심사</button>
+  <button data-v="info"><svg><use href="#i-info"/></svg>유용한 정보</button>
   <button data-v="ready"><svg><use href="#i-bag"/></svg>준비</button>
 </div></nav>
 
@@ -260,14 +284,14 @@ const days=[
    {t:"오전",st:"est",h:"시차 적응, 늦은 아침",p:"컨디션이 먼저예요."},
    {t:"13:00",st:"est",h:"Wynn 도착, 뷔페로 이동",p:"차로 가면 호텔 주차 요금을 확인해요. 뷔페는 Wynn 안쪽 Fairway Promenade, 카지노 플로어 바로 옆이에요."},
    {t:"13:30",st:"bk",h:"The Buffet at Wynn Las Vegas",p:"선결제 우선 좌석으로 예약했어요. 성인 2명, 어린이 1명.",
-    l:["15분 안에 도착해야 해요 (선결제 우선 좌석 유예 시간).","도착하면 결제한 신용카드와 같은 이름의 사진 신분증(여권)을 보여 줘야 해요. 예약자는 석환이에요.","복장은 리조트 캐주얼이에요. 수영복은 안 돼요.","좌석 요청은 보장되지 않아요.","날짜, 시간, 인원을 바꾸려면 기존 예약을 취소하고 새로 예약해요. 전화 1-888-320-7110","취소는 24시간 전까지 전화(702-770-3340)로 해요. 도착(11/12 15:10)이 마감보다 늦어서 현지에서는 취소가 어려워요."],
+    l:["15분 안에 도착해야 해요 (선결제 우선 좌석 유예 시간).","도착하면 결제한 신용카드와 같은 이름의 사진 신분증(여권)을 보여 줘야 해요. 예약자는 석환이에요.","복장은 리조트 캐주얼이에요. 수영복은 안 돼요.","좌석 요청은 보장되지 않아요.","날짜, 시간, 인원을 바꾸려면 기존 예약을 취소하고 새로 예약해요. 전화 1-888-320-7110","취소는 24시간 전까지 전화(702-770-3340)로 해요. 도착(11/12 15:10)이 마감보다 늦어서 현지에서는 취소가 어려워요.","팁은 ‘유용한 정보 › 팁 문화’를 봐요."],
     pl:G("The Buffet at Wynn Las Vegas","","식사")},
    {t:"15:30",st:"est",h:"스트립 산책",p:"M&M's World와 코카콜라 스토어를 구경해요.",pl:G("M&M's World Las Vegas","M&M's World","쇼핑")},
    {t:"저녁",st:"opt",h:"Fountains of Bellagio",p:"날씨와 체력을 보고 정해요.",pl:G("Fountains of Bellagio","벨라지오 분수","관광")}
   ]},
  {d:"11/14",w:"토",r:"라스베이거스 근교",t:"Grand Canyon West, Hoover Dam",tag:"러프하게",
   items:[
-   {t:"아침",st:"est",h:"라스베이거스에서 일찍 출발",p:"Grand Canyon West까지 편도 약 2시간 30분이에요. 입장권과 세부 일정은 정해지면 여기에 추가해요.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림","관광")},
+   {t:"아침",st:"est",h:"라스베이거스에서 일찍 출발",p:"Grand Canyon West까지 편도 약 2시간 30분이에요. 입장권과 세부 일정은 정해지면 여기에 추가해요. 준비 방법은 ‘유용한 정보 › 웨스트림’에 있어요.",pl:G("Grand Canyon West Skywalk","그랜드 캐니언 웨스트 림","관광")},
    {t:"점심",st:"est",h:"Grand Canyon West 도착, 관광",p:"사전 예약 없이 컨디션을 보며 정해요. 토요일이라 붐빌 수 있어요."},
    {t:"13:00",st:"est",h:"관광을 마치고 출발 (후버 댐 들를지 정하기)",p:"13:00쯤 출발하면 일몰(약 16:30) 전에 후버 댐을 볼 수 있어요. 늦어지면 후버 댐은 건너뛰고 바로 돌아와요."},
    {t:"15:00",st:"opt",h:"Hoover Dam 들르기 (시간이 되면)",p:"Grand Canyon West에서 약 2시간 걸려요. 운영 시간과 입장 마감은 가기 전에 확인해요. 네바다·애리조나 경계예요. 11월에는 애리조나 시계가 라스베이거스보다 1시간 빨라서 시간을 헷갈리지 않게 확인해요.",pl:G("Hoover Dam","후버 댐","관광")},
@@ -287,7 +311,7 @@ const days=[
   ]},
  {d:"11/17",w:"화",r:"라스베이거스 → LA",t:"LA로 이동 (휴게소 3곳)",tag:"이동",
   items:[
-   {t:"10:00",st:"ok",h:"Elara 체크아웃, 주유하고 출발",p:"10:00까지 체크아웃하고 짐을 실어요. 출발 전에 라스베이거스에서 기름을 가득 채워요. 캘리포니아보다 보통 저렴하고, Baker부터는 주유소가 드물어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")},
+   {t:"10:00",st:"ok",h:"Elara 체크아웃, 주유하고 출발",p:"10:00까지 체크아웃하고 짐을 실어요. 출발 전에 라스베이거스에서 기름을 가득 채워요. 캘리포니아보다 보통 저렴하고, Baker부터는 주유소가 드물어요. 주유 방법은 ‘유용한 정보 › 주유소’에 있어요.",pl:G("Elara Hilton Grand Vacations 80 E Harmon Ave Las Vegas","엘라라","숙소")},
    {t:"11:25",st:"est",h:"Alien Fresh Jerky (Baker)",p:"Elara에서 약 1시간 24분(88마일). 20~30분 쉬면서 화장실과 간식. 09:00에 열어요. 외계인 모양 건물이라 지후가 좋아할 거예요.",pl:G("Alien Fresh Jerky","","관광")},
    {t:"12:45",st:"est",h:"EddieWorld (Yermo)",p:"Baker에서 약 51분(53마일). 주유와 화장실 15분. 보통 휘발유는 갤런당 약 $6로 표시돼요(하루 이상 지난 가격). 렌터카 주유구 안쪽의 연료 등급을 확인해요.",pl:G("EddieWorld","","주유소")},
    {t:"13:15",st:"est",h:"Barstow Station (Barstow)",p:"EddieWorld에서 13분(10마일). 점심 45분. 마지막 구간이 약 1시간 49분으로 가장 길어서 화장실을 꼭 다녀와요.",pl:G("Barstow Station","","식사")},
@@ -392,6 +416,178 @@ const phrases=[
  ],"","질문"]
 ];
 
+// ---- 유용한 정보 (2026-11-09 작성, 웹 검색·구글 지도 확인 기준. 가격·운영 시간은 바뀔 수 있어요)
+const INFO_TABS=[["imm","입국심사"],["tip","팁 문화"],["gas","주유소"],["west","웨스트림"],["tram","트램·모노레일"],["hotel","호텔투어"]];
+const GUIDES={
+tip:[
+ {p:"미국은 식당·호텔·택시 직원 월급의 큰 부분이 팁이에요. 그래서 팁은 ‘고마움 표시’라기보다 **사실상 요금의 일부**라고 생각하면 편해요. 1달러, 5달러 지폐를 넉넉히 챙겨요."},
+ {box:"info",t:"가장 쉬운 계산법",ul:["식당 영수증의 **세금 전 금액(Subtotal)**에 **20%**를 주면 돼요. 예) $50이면 $10.","영수증에 ‘Suggested tip(권장 팁)’ 18% / 20% / 25%가 인쇄돼 있으면 그중 하나를 고르면 돼요.","라스베이거스 식당 세금은 약 8%예요. 세금 포함 총액에 20%를 줘도 크게 차이 나지 않아요."]},
+ {h:"상황별 팁 한눈에"},
+ {table:[["상황","팁","메모"],
+  ["식당 (자리에 앉아 주문)","세금 전 금액의 **18~20%** (아주 좋았으면 25%)","서버가 주문받고 음식을 가져다주는 곳은 모두 해당해요."],
+  ["뷔페","1인당 $1~3 (또는 테이블에 $5~10)","일반적인 관행이고 정해진 규칙은 아니에요. 음료를 가져다주고 접시를 치워 주는 서버에게 주는 거예요."],
+  ["Wynn 뷔페 (우리 예약)","따로 줘요","예약 결제 내역에 세금만 있고 팁은 없었어요. 식사 후 서버에게 현금으로 주면 돼요."],
+  ["카운터 주문 (패스트푸드, 푸드코트, 카페)","**안 줘도 돼요**","결제 단말기에 팁 화면이 떠도 ‘No tip’이나 ‘Skip’을 누르면 돼요. 마음이 가면 $1."],
+  ["포장 (To-go)","안 줘도 돼요 (주면 $1~3)",""],
+  ["호텔 벨맨 (짐 옮겨 줄 때)","가방 1개당 $1~2","체크인과 체크아웃 때 짐을 들어 줄 때만 줘요."],
+  ["호텔 청소 (하우스키핑)","하루 $2~5","매일 다른 직원이 올 수 있어서 **매일 아침** 베개나 탁자 위에 두고 ‘Thank you’ 메모를 남겨요."],
+  ["호텔 발렛 파킹","차를 돌려받을 때 $2~5","발렛이 있는 호텔은 주차 요금도 따로 있어요."],
+  ["룸서비스","배달·서비스 요금이 붙었는지 먼저 확인","이미 붙어 있으면 따로 안 줘도 되고, 없으면 15~20%."],
+  ["우버·택시","요금의 10~20%","우버는 내린 뒤 앱 평가 화면에서 팁을 줄 수 있어요. 필수는 아니에요. 짐을 실어 줬으면 조금 더 줘요."],
+  ["바·음료","음료 1잔당 $1~2 (또는 10~20%)",""],
+  ["유료 투어 가이드","10~20%","우리는 직접 운전해서 웨스트림에 가기 때문에 거의 해당이 없어요."],
+  ["거리 공연·캐릭터 분장 사진","사진을 찍으면 $1~5를 요구해요","스트립에서 캐릭터 분장한 사람과 사진을 찍으면 팁을 요구해요. 줄 생각이 없으면 가까이 가지 않아요."],
+  ["카지노","게임을 안 하면 해당 없어요","아이와 함께라 거의 해당이 없어요."],
+  ["주유소, 마트, 옷가게","**필요 없어요**",""]
+ ]},
+ {h:"식당에서"},
+ {ul:["카드로 결제할 때: 단말기에서 팁 금액(18/20/25%)을 고르거나, 종이 영수증의 **Tip** 칸에 금액을 쓰고 **Total**에 합계를 적은 뒤 서명해요.","카드 결제 후 **팁만 현금**으로 테이블에 두기도 해요.","6~8명 이상 단체에는 팁(Gratuity)이 **자동으로 붙는** 곳이 있어요. 영수증을 보고 이미 붙어 있으면 또 주지 않아요. 우리 3명은 거의 해당이 없어요.","서비스가 정말 나빴을 때만 15% 정도로 줄여요. 아예 안 주는 건 무례하게 여겨져요.","계산서는 직접 달라고 해야 오는 경우가 많아요: ‘Check, please.’"]},
+ {h:"호텔에서"},
+ {ul:["**벨맨**: 가방 1개당 $1~2. 카트에 실어 방까지 가져다줄 때 줘요.","**청소**: 하루 $2~5를 **매일** 두기. 마지막 날 한 번에 두면 앞선 날 담당 직원이 못 받아요.","**리조트 요금(Resort fee)**은 팁이 아니라 호텔 시설 이용료예요. 숙박 요금과 별도로 현장에서 붙을 수 있어서 체크인 때 확인해요. (‘해야 할 일’에 Elara 요금 확인이 있어요.)"]},
+ {box:"tip",t:"우리 가족 준비",ul:["공항에서 또는 ATM으로 **$1 지폐 20장, $5 지폐 6장** 정도(약 $50)를 따로 챙기면 여행 내내 편해요. (제 추정이에요. 상황에 맞게 조절해요.)","입국심사에서 말할 현금과 별도로, 팁용 현금은 작은 지갑에 따로 나눠 둬요."]},
+ {h:"팁 관련 영어",say:[["Here you go. Keep the change.","여기 있어요. 잔돈은 괜찮아요."],["Is the tip included?","팁이 포함인가요?"],["Can I add a tip to the card?","카드에 팁을 더해도 될까요?"],["Could we get the check, please?","계산서 주세요."],["Thank you for your help!","도와줘서 고마워요!"]]},
+ {box:"warn",t:"조심할 것",ul:["팁 화면이 뜬 단말기에서 **금액을 잘못 누르지** 않게 확인해요. 20% 버튼이 기본으로 눌려 있는 경우도 있어요.","카운터에서 팁을 안 줘도 되는 곳에서 팁 화면이 나와도 부담 갖지 않아도 돼요."]}
+],
+gas:[
+ {p:"미국 주유소도 대부분 셀프예요. 다만 **결제 방법**이 한국과 달라요. 한국 신용카드는 펌프에서 **우편번호(ZIP code)** 입력 단계에서 막히는 경우가 많아서, **가게 안에서 먼저 결제**하는 방법을 기본으로 생각하는 게 좋아요."},
+ {box:"info",t:"한눈에",ul:["휘발유는 **Gas**라고 해요. 가격은 **갤런(gallon)**당이고 1갤런은 약 3.8리터예요. 예) 갤런당 $5면 $50 = 약 10갤런(약 38리터).","연료 등급: **Regular(87)**, Plus(89), **Premium(91~93)**, Diesel. **렌터카 주유구 안쪽 스티커**에 적힌 등급을 따라요. 경유(Diesel)를 넣으면 큰 사고예요.","한국 카드는 펌프에서 안 될 수 있어요. 그러면 **가게 안에서 먼저 결제(Prepay)**가 가장 확실해요."]},
+ {h:"방법 A. 펌프에서 카드로 결제 (Pay at the pump)"},
+ {ol:["주유기 옆에 차를 세우고 **시동을 꺼요**. 주유구 위치는 계기판 연료 표시 옆 화살표(◀ ▶)로 알 수 있어요.","주유구 뚜껑을 열어요. 차마다 달라서 뚜껑을 눌러 열거나 운전석 옆 레버를 당겨요. 안쪽 스티커의 **연료 등급**을 확인해요.","펌프 화면에 카드를 꽂거나(칩 먼저) 대요.","**ZIP code**를 물으면 한국 카드는 대부분 맞지 않아요. 몇 번 안 되면 바로 방법 B로 가요. (00000이나 99999를 넣어 보는 사람도 있지만 대부분 실패한다고 해요.)","연료 등급 버튼을 눌러요.","노즐을 빼서 주유구에 끝까지 꽂고 손잡이를 당겨요.","자동으로 ‘딸깍’ 멈추면 끝이에요. 노즐을 제자리에 걸고 주유구를 닫아요. 영수증은 필요하면 Yes."]},
+ {box:"warn",t:"카드 임시 승인(홀드)",p:"펌프 결제는 $75~150 정도가 임시로 잡히기도 해요(실제 청구는 주유한 금액). **신용카드**를 쓰고 체크카드는 피해요."},
+ {h:"방법 B. 가게 안에서 먼저 결제 (Prepay, 추천)"},
+ {ol:["주유기의 **번호(Pump 1, 2, 3…)**를 기억해요. 주유기에 크게 적혀 있어요.","가게 안으로 들어가 카운터에서 말해요: **‘Pump 5, forty dollars, please.’** (5번 펌프에 40달러 주세요)","카드나 현금으로 결제해요.","주유기로 돌아가 노즐을 꽂고 등급을 고른 뒤 주유해요. 선결제한 금액에 닿으면 자동으로 멈춰요.","남은 금액은 보통 카드로 환불돼요. 현금이면 가게 안에서 잔액을 받아요."]},
+ {ul:["**‘Fill it up’**(가득 채워 주세요)이라고 하고 카드를 맡기면 가득 채운 뒤 정산해 주는 곳도 있어요. 주유소마다 달라요.","지후는 혼자 차에 두지 말고 **같이 가게 안으로** 가요."]},
+ {h:"렌터카 연료 (Hertz)"},
+ {ul:["보통 **받을 때와 같은 연료량(대개 가득)**으로 반납하는 조건이에요. 덜 채워 반납하면 갤런당 비싼 요금으로 청구돼요. 계약서의 연료 조건을 확인해요.","**11/22 Burbank 반납 전**에 근처 주유소에서 가득 채우고 **영수증을 저장**해요.","풀 커버리지 보험과 연료 조건은 별개예요."]},
+ {h:"가격 팁"},
+ {ul:["고속도로 출구 바로 앞 주유소가 비싸요. 한두 블록 들어가면 싼 곳이 있어요.","보통 **캘리포니아가 네바다보다 비싸요**. 라스베이거스에서 가득 채워 출발하는 게 유리해요.","가격판에 **Cash / Credit** 두 가격이 있으면 카드가 더 비싸요.","밝고 사람이 많은 주유소를 골라요. 밤에는 더 신경 써요."]},
+ {box:"warn",t:"사막 구간 연료",ul:["**11/14 웨스트림**: 출발 전에 가득 채워요. 중간 주유는 Kingman 또는 Dolan Springs뿐이에요.","**11/17 LA 이동**: 출발 전 라스베이거스에서 가득 → EddieWorld(Yermo)에서 보충. 구글 지도에는 보통 휘발유 약 $6.00(하루 이상 지난 가격)으로 표시돼요. Baker 쪽은 더 비싼 경우가 많아요."]},
+ {h:"주유 관련 영어",say:[["Pump number five, forty dollars, please.","5번 펌프에 40달러 주세요."],["Fill it up, please.","가득 채워 주세요."],["My card doesn't work at the pump. Can I pay inside?","펌프에서 카드가 안 돼요. 안에서 결제해도 되나요?"],["Could I get a receipt, please?","영수증 주세요."]]}
+],
+west:[
+ {box:"info",t:"한눈에",ul:["거리: 라스베이거스에서 약 **122마일(약 196km)**, 편도 약 **2시간 15분~2시간 30분**.","사우스림은 편도 4시간 30분이 넘어서 지후에게 무리예요. **웨스트림 당일치기**가 맞는 선택이에요.","웨스트림은 국립공원이 아니라 **후알라파이(Hualapai) 원주민 부족**이 운영하는 땅이에요. 입장료는 부족 쪽에 내요.","**11월에는 애리조나 시간이 라스베이거스보다 1시간 빨라요.** 공식 운영 시간은 애리조나 시간 기준이에요. (애리조나는 서머타임이 없어요. 11/2부터 3/13까지)","현장에서 보통 **3~4시간** 걸려요. 11/14(토)에 러프하게 다녀오고, 시간이 되면 복귀길에 후버 댐에 들러요."]},
+ {h:"1. 티켓은 미리 온라인으로"},
+ {table:[["종류","가격","내용"],
+  ["All-Access Pass","$99 (세금 별도)","공식 사이트의 기본 티켓이에요. **Skywalk 포함**, 셔틀, 전망대. 식사 $10 할인과 기념품 $10 할인이 포함돼요(식사는 최소 $20 구매 조건)."],
+  ["General Admission","$67","**Skywalk이 빠진** 입장권이에요. 일부 정보에만 보여서 구매 화면에서 판매 여부를 확인해요."],
+  ["Sunset Pass","$59","애리조나 시간 **오후 3시 이후** 입장. Skywalk 포함. 우리는 오전에 가서 해당이 적어요."]
+ ]},
+ {ul:["**공식 사이트(grandcanyonwest.com)**에서 사는 게 가장 안전해요. 가격과 내용이 페이지마다 달라서 **구매 직전 화면 기준**으로 판단해요.","**어린이(지후 7세) 요금**이 따로 있는지, 환불·변경 규정은 제가 확인하지 못했어요. 구매 화면에서 확인해요.","구매하면 QR이나 바우처를 **폰에 저장**해요. 현장은 휴대폰 신호가 약해요."]},
+ {box:"tip",t:"Skywalk, 갈까 말까?",ul:["후기가 갈려요. ‘비싸고 사진도 못 찍어 아쉽다’는 의견과 ‘해 볼 만하다’는 의견이 모두 있어요.","풍경은 **Guano Point**가 가장 넓고 **무료**라는 후기가 많아요.","지후가 유리 바닥을 무서워할 수 있어요. 도착해서 **구경만 해 보고 결정**하는 방법이 안전해요.","General Admission($67)이 있다면 1인 $32씩, 3인 약 **$96**를 아낄 수 있어요."]},
+ {h:"2. 가는 길"},
+ {ol:["Elara에서 **US-93 S(후버 댐 방향)**로 가요. 구글 지도에서 ‘Grand Canyon West Skywalk’로 길 안내하면 돼요.","US-93에서 **Pierce Ferry Rd**로 빠져요(Dolan Springs 근처). 이 길을 약 28마일 달린 뒤 **Diamond Bar Rd**로 우회전하고, **Buck and Doe Rd**를 따라가면 도착해요.","국립공원 안내에는 **전 구간이 포장**됐다고 나와요(예전엔 비포장이 있었어요). 그래도 낙석이나 파손 구간이 있을 수 있어서 천천히 가요.","휴대폰 신호가 약해요. **구글 지도 오프라인 지도**를 미리 저장해요. (구글 지도 → 프로필 → 오프라인 지도)","주유는 **출발 전에 가득**. 중간 주유소는 Kingman이나 Dolan Springs뿐이에요.","도착하면 **Welcome Center 주차장**에 차를 대고 셔틀을 타요."]},
+ {h:"3. 현장 코스 (셔틀 무료, 자유롭게 타고 내려요)"},
+ {p:"셔틀은 **Welcome Center → Eagle Point → Guano Point → Hualapai Point → Welcome Center**로 돌아요(무료 hop-on hop-off)."},
+ {table:[["장소","볼거리","지후와 함께"],
+  ["Guano Point","가장 넓은 협곡 풍경, 무료. 걷는 구간이 있어요.","난간이 없는 곳이 있어서 손을 꼭 잡아요."],
+  ["Eagle Point","**Skywalk**(유리 다리), 독수리 모양 바위, 원주민 마을 재현","Skywalk 줄을 먼저 확인해요."],
+  ["Hualapai Point","전망대와 휴식 공간","식사는 현장 식당에서 해요. 메뉴와 가격은 현장 확인."]
+ ]},
+ {box:"warn",t:"Skywalk 규칙 (후기 기준)",ul:["유리 다리 위에서는 **개인 휴대폰과 카메라를 사물함(무료)에 맡기는** 경우가 많아요. 대신 현장 사진사가 찍어 주고 사진을 팔아요.","최근에는 촬영을 허용했다는 후기도 있어요. **현장 안내를 따라요.**","가방은 사물함에 맡기고 신발 덧신을 줘요."]},
+ {h:"4. 하루 일정 예시 (11/14, 라스베이거스 시간 / 애리조나 시간)"},
+ {table:[["시각 (LV / AZ)","일정","메모"],
+  ["07:00 / 08:00","Elara 출발","전날 저녁 짐 정리, 가득 주유"],
+  ["09:30 / 10:30","도착·주차·첫 셔틀","10시 전 도착을 권하는 후기가 많아요. 일찍 가면 한산하고 시원해요."],
+  ["10:00 / 11:00","Guano Point","40~50분"],
+  ["11:00 / 12:00","Eagle Point·Skywalk","사물함, 줄 확인, 약 60분"],
+  ["12:15 / 13:15","점심 (현장)","일찍 먹으면 줄이 짧아요."],
+  ["13:00 / 14:00","주차장 출발","**후버 댐(선택)**: 일몰 전에 보려면 이 시각까지 출발해요."]
+ ]},
+ {ul:["일몰은 라스베이거스 기준 약 **16:30**(애리조나 시간 17:28)이에요. **야간 운전은 피해요.**","마지막 입장 시각은 11~3월에 **오후 5시**라는 안내와 오후 4시라는 안내가 달라요. 우리는 오전에 가니 큰 문제는 없지만 늦게 도착하면 위험해요."]},
+ {h:"5. 준비물"},
+ {ul:["**물**과 간식(지후), 얇은 담요나 여벌 옷","**겉옷**: 협곡은 바람이 불어요. 예보는 보통 **최고 18° / 최저 11°**로 나와요(바뀔 수 있어요).","모자, 선글라스, 선크림, 편한 운동화","신용카드와 **현금 $20** 정도(기념품·간식)","**오프라인 지도**, 보조배터리, 구매한 티켓 화면 캡처","휴지와 물티슈"]},
+ {box:"warn",t:"확인이 필요한 것",ul:["최신 **가격·입장 마감·운영 시간**은 공식 사이트에서 확인(페이지마다 달라요).","**Skywalk 사진 촬영 정책**과 **어린이 요금**.","11/14 **날씨와 도로 상황**(일정 탭의 날씨 패널에서 볼 수 있어요)."]}
+],
+tram:[
+ {box:"warn",t:"F1 때문에 길이 막힐 수 있어요 (2026-11-09 뉴스 기준)",ul:["F1 라스베이거스 그랑프리는 **11/19~21**(결승 11/21 토 밤)이에요. 우리는 11/17에 떠나지만 **준비 공사**가 우리 일정과 겹쳐요.","11/9~13: 스트립(Las Vegas Blvd, Spring Mountain Rd~Harmon Ave)에서 자정~정오 차선 축소, Sands Ave 야간 차선 축소(~11/13), Harmon 근처 보행 육교 심야 폐쇄.","**Koval Ln(Rochelle~Harmon)**은 **11/14 00:01부터** 전면 통제라는 보도가 있어요(끝나는 날은 보도마다 달라요). Elara는 Harmon Ave에 있어서 **차 출입 경로가 영향받을 수 있어요.**","일정은 계속 바뀌어요. **공식 교통 안내(transportation.f1lasvegasgp.com)**와 호텔 프런트에서 확인해요."]},
+ {box:"info",t:"우리 일정에 미치는 영향",ul:["11/14(캐니언 출발)과 11/17(LA 출발)은 **렌터카 출입 시간을 30분 여유**로 잡아요.","11/15 Sphere(10:15 도착)는 **우버**가 가장 편해요. 모노레일은 Harrah's/LINQ 역에서 걸어야 해요(도보 약 15분, 구글 지도 확인).","11/13, 11/16처럼 스트립에서 오래 다니는 날은 **렌터카를 호텔 주차장에 두고** 걷기+모노레일+우버를 써요."]},
+ {h:"모노레일 (Las Vegas Monorail)"},
+ {p:"스트립 동쪽 호텔 뒤편을 따라 달리는 고가 열차예요. **SAHARA에서 MGM Grand까지 역이 7개**예요. 교통 체증이 있어도 막히지 않아요."},
+ {table:[["남 → 북","역"],
+  ["1","MGM Grand"],
+  ["2","Horseshoe(옛 Bally's) · Paris 쪽 역"],
+  ["3","Flamingo · Caesars Palace"],
+  ["4","Harrah's · The LINQ"],
+  ["5","Las Vegas Convention Center"],
+  ["6","Westgate"],
+  ["7","SAHARA"]
+ ]},
+ {ul:["**Elara에서 가장 가까운 역**은 Horseshoe/Paris 쪽일 가능성이 높아요. 걸어서 10~15분 정도예요. 구글 지도로 확인해요.","역은 대부분 **호텔 안쪽이나 뒤편**에 있어서 카지노나 쇼핑몰을 지나 걸어야 해요. 표지판을 따라요."]},
+ {h:"요금과 운행 시간 (공식 사이트 안내, 바뀔 수 있어요)"},
+ {table:[["표","현장","온라인"],["1회권","$6","$5.50"],["1일 무제한권","$15","$13.45"]]},
+ {ul:["하루에 **3번 이상** 타면 1일권이 유리해요(1회 $6 × 3 = $18).","운행: 월 07:00~24:00, 화~목 07:00~02:00, 금~일 07:00~03:00.","어린이 요금과 최신 가격은 **lvmonorail.com**에서 확인해요."]},
+ {h:"타는 방법"},
+ {ol:["역에서 **자동 발매기(TVM)**나 창구에서 표를 사요. 온라인으로 사면 **모바일 표(QR)**를 받아 게이트에 스캔해요.","종이표는 **접거나 구기지 마세요.** 접힌 표는 게이트가 안 열리고 환불도 안 돼요.","게이트에 표를 대고 들어가요. 행선지(SAHARA 방면 / MGM Grand 방면)를 보고 승강장에서 기다려요.","열차 문이 열리면 내리는 사람이 먼저 내린 뒤 타요. 짐은 무릎 위나 발 앞에 둬요.","내릴 역은 안내 방송과 화면으로 알려 줘요. 내려서는 출구 표지판을 따라 호텔 안으로 걸어 나가요."]},
+ {h:"무료 트램 2개"},
+ {table:[["이름","구간","메모"],
+  ["Mandalay Bay Tram","Mandalay Bay ↔ Luxor ↔ Excalibur","**무료**예요. 북쪽으로 갈 때는 Luxor에 서고, 남쪽 급행은 Luxor를 건너뛰어요. 운행 시간 안내가 자료마다 달라서(금~일만 운행한다는 정보도 있어요) 현장에서 확인해요."],
+  ["Aria Express","Park MGM ↔ Aria(CityCenter) ↔ Bellagio","**무료**예요. 짧은 구간이라 지후가 타 보기에 좋아요."],
+  ["Mirage–Treasure Island","(운행 안 해요)","Mirage가 2024-07-17에 문을 닫아서 운행하지 않아요. 2027년 재개 계획이라는 보도가 있어요."]
+ ]},
+ {h:"우버·리프트와 버스"},
+ {ul:["우버·리프트는 호텔마다 **지정된 탑승 장소**가 있어요. F1 기간에는 위치가 바뀔 수 있으니 호텔 안내판과 앱을 확인해요.","요금은 시간대에 따라 크게 달라요. 앱에서 **요금을 확인한 뒤** 호출해요. 가까운 호텔 사이는 걷거나 트램이 더 빨라요.","스트립을 오가는 시내버스(RTC Deuce)도 있어요. 요금과 정류장은 RTC 공식 안내에서 확인해요. (제가 확인하지 못했어요.)","**Elara 주차 요금**은 아직 확인이 필요해요(‘해야 할 일’)."]}
+],
+hotel:[
+ {p:"라스베이거스 스트립은 호텔 자체가 관광지예요. 호텔마다 테마 건물과 **무료 볼거리**가 있어서 입장료 없이 구경할 수 있어요. 카지노를 가로질러 가야 하는 곳이 많아요."},
+ {box:"warn",t:"아이와 카지노를 지나갈 때",ul:["21세 미만은 카지노 구역을 **지나가는 것**은 되지만 머물거나 게임 구역에 서 있으면 안 돼요. 목적지(상점·식당·전시)로 곧장 가요.","지후 손을 꼭 잡아요. 담배 냄새와 소음이 있어요.","호객하는 사람, 전단지를 주는 사람, 캐릭터 분장 사진(**팁을 요구해요**)을 조심해요."]},
+ {box:"info",t:"우리 일정과 맞춰 보기",ul:["**11/13(금)** Wynn 뷔페 뒤 스트립 산책: Bellagio **분수쇼**는 평일 **15:00부터 30분 간격**, **20:00부터 자정까지 15분 간격**이에요. 단 **Bellagio 온실은 11/8~13에 전시 교체 기간이라** 11/13에는 못 봐요.","**11/14(토)부터 Bellagio 온실에 홀리데이 전시**가 시작돼요(2027-01-02까지). **11/15(일) Sphere 공연 후 오후**나 **일정이 미정인 11/16(월)**이 호텔투어 날로 딱 좋아요.","**11/16(월)** 예시: 낮에 Flamingo 홍학 → Bellagio 온실 → Forum Shops, 저녁에 분수쇼와 야경."]},
+ {h:"코스 1. Elara에서 걸어서 (남·중부)"},
+ {table:[["장소","볼거리","메모"],
+  ["Flamingo Wildlife Habitat","홍학과 새를 보는 야외 공간. 무료, 매일 열려요.","오전 10시에 사육사 설명이 있다는 안내가 있어요(확인). 지후가 좋아할 곳이에요."],
+  ["Paris Las Vegas","에펠탑과 파리 거리 분위기","에펠탑 전망대는 유료예요."],
+  ["Bellagio","**온실(홀리데이 전시, 11/14~)**, 로비 천장의 유리꽃, **분수쇼**","온실은 24시간 열려 있고 무료예요. 분수쇼 시간은 위를 봐요. 바람이 세면 쇼가 멈춰요."],
+  ["Caesars Palace · Forum Shops","로마풍 쇼핑몰, 하늘 같은 천장","Atlantis 애니매트로닉 쇼는 무료로 유명한데 지금 운영하는지 확인해요."]
+ ]},
+ {h:"코스 2. 북쪽"},
+ {table:[["장소","볼거리","메모"],
+  ["Wynn · Encore","꽃 장식, 정원 같은 로비","저녁에 호수 쇼(Lake of Dreams)가 무료로 열리는데 시간은 확인해요."],
+  ["Venetian · Palazzo","Grand Canal Shoppes: 실내 운하와 하늘 같은 천장","곤돌라는 유료예요. 구경만 해도 재미있어요."],
+  ["Sphere (외관)","건물 외벽의 영상","11/15에 공연을 보니 그날 밖에서 한 번 더 구경해요."]
+ ]},
+ {h:"코스 3. 남쪽"},
+ {table:[["장소","볼거리","메모"],
+  ["New York-New York","자유의 여신상, 뉴욕 거리","옆에 M&M's World, Coca-Cola Store가 있어요(11/13 계획)."],
+  ["Excalibur · Luxor · Mandalay Bay","성, 피라미드","**Mandalay Bay Tram(무료)**으로 이어져요. Mandalay Bay의 Shark Reef는 유료예요."]
+ ]},
+ {box:"warn",t:"이것은 이제 없어요",p:"**Mirage의 화산쇼**는 Mirage가 2024-07-17에 문을 닫아서 볼 수 없어요."},
+ {h:"11/16(월) 하루 예시 (제안이에요)"},
+ {table:[["시각","장소","메모"],
+  ["10:30","Flamingo Wildlife Habitat","홍학 구경. 근처 Flamingo 호텔 로비도 구경해요."],
+  ["11:30","Paris → Bellagio로 걷기","도로를 건널 때는 육교를 써요."],
+  ["12:00","Bellagio 온실 · 로비 유리꽃","홀리데이 전시. 사진 찍기 좋아요."],
+  ["13:00","점심","호텔 푸드코트나 식당."],
+  ["14:00","Caesars Forum Shops","에어컨 나오는 실내라 쉬기 좋아요."],
+  ["15:30","Bellagio 분수쇼","평일 15:00부터 30분 간격."],
+  ["17:00","Aria Express (무료)","Bellagio → Aria → Park MGM. 지후에게 재미있어요."],
+  ["19:00","저녁","20:00부터 분수쇼가 15분 간격이라 야경과 함께 보기 좋아요. 귀가는 우버."]
+ ]},
+ {h:"걷기 팁"},
+ {ul:["스트립은 길어요. 한쪽 끝에서 끝까지 **약 6km**로 알려져 있어서 **하루에 한 구역**만 걸어요.","호텔 사이가 가까워 보여도 건물이 커서 걸으면 **15~20분**씩 걸려요. 중간에 쉴 곳(로비, 푸드코트, 화장실)을 미리 잡아요.","**F1 공사**로 일부 보행 육교가 심야에 막혀요. 구글 지도로 길을 확인해요.","저녁에는 쌀쌀해요. **겉옷**을 챙기고 일정 탭의 날씨를 확인해요.","무료 쇼와 전시 **시간은 바뀌어요.** 가기 전에 호텔 공식 앱이나 사이트를 확인해요.","물과 간식은 호텔 안에서 비싸요. 미리 마트(Walmart, H Mart)에서 사 두면 좋아요."]}
+]
+};
+
+const rich=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+function saylist(items){
+  return `<ul class="list">${items.map(([en,ko])=>{PH.push([en,ko]);const n=PH.length-1;return `<li class="card"><div class="ph"><div data-big="${n}" style="cursor:pointer"><div class="t">${esc(en)}</div><div class="k">${esc(ko)}</div></div><button class="sayb" data-say="${n}" aria-label="소리 듣기">소리</button></div></li>`}).join("")}</ul>`;
+}
+function gblocks(bl){
+  return bl.map(b=>{
+    if(b.h)return `<h3 class="gh">${esc(b.h)}</h3>`+(b.say?saylist(b.say):"");
+    if(b.box)return `<div class="gb ${b.box}">${b.t?`<b class="gbt">${esc(b.t)}</b>`:""}${b.p?`<p>${rich(b.p)}</p>`:""}${b.ul?`<ul>${b.ul.map(x=>`<li>${rich(x)}</li>`).join("")}</ul>`:""}</div>`;
+    if(b.p)return `<p class="gp">${rich(b.p)}</p>`;
+    if(b.ul)return `<ul class="gl">${b.ul.map(x=>`<li>${rich(x)}</li>`).join("")}</ul>`;
+    if(b.ol)return `<ol class="gs">${b.ol.map(x=>`<li>${rich(x)}</li>`).join("")}</ol>`;
+    if(b.table){const [h,...rows]=b.table;return `<div class="gt"><table><tr>${h.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>${rows.map(r=>`<tr>${r.map(c=>`<td>${rich(c)}</td>`).join("")}</tr>`).join("")}</table></div>`}
+    return "";
+  }).join("");
+}
+function info(){
+  PH=[];
+  const chips=INFO_TABS.map(([k,n])=>`<button role="tab" data-g="${k}" aria-selected="${state.info===k}">${n}</button>`).join("");
+  const name=INFO_TABS.find(t=>t[0]===state.info)[1];
+  const body=state.info==="imm"?phrase():`<h2 class="sec" style="margin-top:20px">${name}</h2>`+gblocks(GUIDES[state.info]);
+  return `<div class="chips" role="tablist" aria-label="유용한 정보 메뉴">${chips}</div>${body}`;
+}
 // ---- 공통 도구
 const $=(s,e=document)=>e.querySelector(s), $$=(s,e=document)=>[...e.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -405,7 +601,7 @@ const dd=Math.round((start-today)/864e5);
 $("#dd").textContent=dd>0?`D-${dd}`:dd===0?"오늘 출발":dd>-12?`${-dd+1}일차`:"여행 끝";
 const tripIdx=(()=>{const i=Math.round((today-start)/864e5);return i>=0&&i<days.length?i:-1})();
 
-let state={v:"home",day:Math.max(tripIdx,0),ready:"todo",cat:"전체",q:""};
+let state={v:"home",day:Math.max(tripIdx,0),ready:"todo",cat:"전체",q:"",info:"imm"};
 const done=store.get("done",{}), tdone=store.get("todo",{}), pdone=store.get("pack",{});
 
 // ---- 날씨 (Open-Meteo 예보 + 미국 기상청 경보)
@@ -586,12 +782,12 @@ function ready(){
 function render(push=true){
   $$("#nav button").forEach(b=>{if(b.dataset.v===state.v)b.setAttribute("aria-current","page");else b.removeAttribute("aria-current")});
   const v=$("#view");
-  v.innerHTML={home,plan,places,phrase,ready}[state.v]();
+  v.innerHTML={home,plan,places,info,ready}[state.v]();
   $$(".mini",v).forEach(m=>{const f=document.createElement("iframe");f.loading="lazy";f.referrerPolicy="no-referrer-when-downgrade";f.title=m.getAttribute("aria-label");f.src=embed(m.dataset.q);m.appendChild(f)});
   const sel=$(".chips [aria-selected=true]");if(sel){const bar=sel.parentElement;{const a=bar.getBoundingClientRect(),b=sel.getBoundingClientRect();bar.scrollLeft+=(b.left-a.left)-(bar.clientWidth-b.width)/2}}
   renderNextBar();
   if(state.focus&&state.v==="plan"){const el=$(".stop.next");if(el)el.scrollIntoView({block:"center"});state.focus=false}
-  if(push){try{history.replaceState(null,"",state.v==="plan"?`#day${state.day+1}`:`#${state.v}`)}catch(e){}}
+  if(push){try{history.replaceState(null,"",state.v==="plan"?`#day${state.day+1}`:state.v==="info"?`#info-${state.info}`:`#${state.v}`)}catch(e){}}
 }
 function go(v,scroll=true){state.v=v;render();if(scroll)window.scrollTo({top:0})}
 $("#nav").addEventListener("click",e=>{const b=e.target.closest("button");if(b)go(b.dataset.v)});
@@ -600,6 +796,7 @@ $("#view").addEventListener("click",e=>{
   const t=e.target, c=n=>t.closest(n);
   if(c("[data-next]")){const n=nextStop();if(n){state.day=n.d;state.focus=true;go("plan",false)}}
   else if(c("[data-day]")){state.day=+c("[data-day]").dataset.day;go("plan")}
+  else if(c("[data-g]")){state.info=c("[data-g]").dataset.g;render();window.scrollTo({top:0})}
   else if(c("[data-d]")){state.day=+c("[data-d]").dataset.d;render();window.scrollTo({top:0})}
   else if(c("[data-k]")){const k=c("[data-k]").dataset.k;done[k]=!done[k];store.set("done",done);const y=scrollY;render(false);scrollTo({top:y})}
   else if(c("[data-c]")){state.cat=c("[data-c]").dataset.c;render(false)}
@@ -626,7 +823,9 @@ $("#dclose").onclick=()=>$("#dlg").close();
 // ---- 시작: 해시, 여행 중이면 오늘 일정
 const h=location.hash.slice(1), m=h.match(/^day(\d+)$/);
 if(m&&days[+m[1]-1]){state.day=+m[1]-1;state.v="plan"}
-else if(["home","plan","places","phrase","ready"].includes(h))state.v=h;
+else if(h==="phrase"){state.v="info";state.info="imm"}
+else if(/^info(-\w+)?$/.test(h)){state.v="info";const k=h.slice(5);if(INFO_TABS.some(t=>t[0]===k))state.info=k}
+else if(["home","plan","places","ready"].includes(h))state.v=h;
 else if(tripIdx>=0){state.v="plan";const n=nextStop();if(n){state.day=n.d;state.focus=true}}
 // ---- 가로 메뉴: 마우스 휠과 드래그로 좌우 이동
 $("#view").addEventListener("wheel",e=>{
