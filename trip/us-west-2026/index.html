@@ -153,6 +153,12 @@ tr:last-child td{border:0}
 .clock .date{font-size:1.1rem;font-weight:500}
 .clock .c2{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line);font-size:.86rem;color:var(--mute);font-variant-numeric:tabular-nums}
 @media (prefers-color-scheme:dark){:root:not([data-theme=light]) .clock .zone{color:#10202e}}
+.clock .fx{margin-top:8px;padding-top:8px;border-top:1px dashed var(--line)}
+.clock .fx1{display:flex;justify-content:space-between;align-items:baseline;gap:4px 10px;flex-wrap:wrap;font-size:.8rem;color:var(--mute)}
+.clock .fx1 b{font-size:1.05rem;color:var(--accent);font-variant-numeric:tabular-nums}
+.clock .fx2{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:6px;font-size:.84rem;color:var(--mute);font-variant-numeric:tabular-nums}
+.clock .fx2 b{color:var(--ink);font-weight:500}
+.clock .fx3{margin-top:4px;font-size:.72rem;color:var(--mute)}
 .nextcard .kst{font-size:.8rem;color:var(--mute);margin-top:2px}
 .nextcard .when b{color:var(--accent)}
 .nextcard .lt{margin-top:12px;font-size:.78rem;color:var(--mute)}
@@ -235,7 +241,7 @@ nav.bar button[aria-current=page]{color:var(--accent);font-weight:700}
 <div class="wrap">
   <header class="top"><div class="row"><span class="sub">2026.11.12 ~ 11.24 · 라스베이거스, 로스앤젤레스</span><span class="dd" id="dd"></span></div><h1>2026년 크아 가족 미국 서부 여행</h1></header>
   <main id="view"></main>
-  <p class="foot">가족 공유용 일정표입니다. 예약번호 같은 개인 정보는 뺐습니다. 점선 동그라미는 아직 정해지지 않은 예상 시각입니다. 날씨는 Open-Meteo 예보와 미국 기상청(NWS) 경보를 사용합니다.</p>
+  <p class="foot">가족 공유용 일정표입니다. 예약번호 같은 개인 정보는 뺐습니다. 점선 동그라미는 아직 정해지지 않은 예상 시각입니다. 날씨는 Open-Meteo 예보와 미국 기상청(NWS) 경보를 사용합니다. 환율은 Coinbase, <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener">ExchangeRate-API</a>, Frankfurter의 공개 환율을 참고용으로 사용합니다.</p>
 </div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -772,10 +778,33 @@ function renderNextBar(){
   b.hidden=false;
   b.innerHTML=`<span class="lbn">다음</span><span class="tm">${esc(n.it.t)}</span><span class="tt">${esc(n.it.h)}</span><span class="rl">${rel(n.t-nowMs())}</span>`;
 }
+// ---- 환율 (USD → KRW, 1시간 단위 갱신, 참고용). 앞 서비스가 실패하면 다음 서비스로 넘어가요.
+let FX=null; // null=불러오는 중, false=실패, {rate,src,t,stale}
+const FX_SRC=[
+  ["Coinbase",async()=>{const r=await fetch("https://api.coinbase.com/v2/exchange-rates?currency=USD");const j=await r.json();return +j.data.rates.KRW}],
+  ["ExchangeRate-API",async()=>{const r=await fetch("https://open.er-api.com/v6/latest/USD");const j=await r.json();return +j.rates.KRW}],
+  ["Frankfurter",async()=>{const r=await fetch("https://api.frankfurter.dev/v1/latest?base=USD&symbols=KRW");const j=await r.json();return +j.rates.KRW}]
+];
+async function loadFx(force){
+  const now=Date.now(), c=store.get("fx",null);
+  if(c&&!force&&now-c.t<3600e3){FX={...c,stale:false};fxPaint();return}
+  for(const [name,get] of FX_SRC){
+    try{const rate=await get();if(rate>500&&rate<3000){FX={rate,src:name,t:now,stale:false};store.set("fx",{rate,src:name,t:now});fxPaint();return}}catch(e){}
+  }
+  FX=c?{...c,stale:true}:false;fxPaint();
+}
+function fxPaint(){const c=$("#clock");if(c)c.innerHTML=clockInner()}
+function fxInner(){
+  if(FX===null)return `<div class="fx"><div class="fx1"><span>환율을 불러오는 중이에요…</span></div></div>`;
+  if(FX===false)return `<div class="fx"><div class="fx1"><span>환율을 불러오지 못했어요. 연결을 확인해 주세요.</span></div></div>`;
+  const f=n=>Math.round(n*FX.rate).toLocaleString("ko-KR");
+  const age=Date.now()-FX.t, ageTxt=age>=2*3600e3?`${Math.floor(age/3600e3)}시간 전 값`:`갱신 ${hhmm(undefined,FX.t)}`;
+  return `<div class="fx"><div class="fx1"><b>1 USD ≈ ₩${FX.rate.toLocaleString("ko-KR",{maximumFractionDigits:1})}</b><span>${ageTxt} · ${FX.src}</span></div><div class="fx2">${[10,50,100,300].map(n=>`<span>$${n} <b>₩${f(n)}</b></span>`).join("")}</div><div class="fx3">참고용이에요. 카드와 환전 환율은 수수료가 붙어 더 높아요.${FX.stale?" (연결이 안 되어 저장해 둔 값을 보여 줘요)":""}</div></div>`;
+}
 // ---- 시계: 현지(PST) 크게, 한국(KST) 작게
 function clockInner(){
   const n=nowMs();
-  return `<div class="c-l">현지 시각 (라스베이거스·LA)</div><div class="c1"><span class="big">${hhmm(TZ_LOC,n)}</span><span class="zone">${tzAbbr(n)}</span><span class="date">${mdw(TZ_LOC,n)}</span></div><div class="c2">한국 시간 KST · ${mdw(TZ_KR,n)} ${hhmm(TZ_KR,n)}</div>`;
+  return `<div class="c-l">현지 시각 (라스베이거스·LA)</div><div class="c1"><span class="big">${hhmm(TZ_LOC,n)}</span><span class="zone">${tzAbbr(n)}</span><span class="date">${mdw(TZ_LOC,n)}</span></div><div class="c2">한국 시간 KST · ${mdw(TZ_KR,n)} ${hhmm(TZ_KR,n)}</div>${fxInner()}`;
 }
 const clockCard=()=>`<div class="clock" id="clock">${clockInner()}</div>`;
 // ---- 오늘의 날씨 (현지 날짜 기준)
@@ -904,7 +933,9 @@ render(false);
 updateLive();
 setInterval(updateLive,20000);
 loadWx();
-document.addEventListener("visibilitychange",()=>{if(!document.hidden)loadWx()});
+loadFx();
+setInterval(()=>loadFx(true),3600e3);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden){loadWx();loadFx()}});
 </script>
 </body>
 </html>
