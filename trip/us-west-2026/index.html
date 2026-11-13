@@ -638,7 +638,6 @@ const gmap=q=>`https://www.google.com/maps/search/?api=1&query=${encodeURICompon
 const nav=q=>`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}&travelmode=driving`;
 const amap=q=>`https://maps.apple.com/?q=${encodeURIComponent(q)}`;
 const embed=q=>`https://maps.google.com/maps?q=${encodeURIComponent(q)}&z=15&output=embed`;
-const start=new Date("2026-11-12T00:00:00"), today=new Date(); today.setHours(0,0,0,0);
 // ---- 시간: 기기 시각 기준 (테스트용으로 ?now=ISO 시각을 주면 그 시각으로 동작해요)
 const TEST_NOW=(()=>{try{const v=new URLSearchParams(location.search).get("now");const t=v?Date.parse(v):NaN;return isNaN(t)?null:t}catch(e){return null}})();
 const nowMs=()=>TEST_NOW??Date.now();
@@ -649,7 +648,9 @@ const mdw=(tz,ms)=>{const p=zp(tz,ms,{month:"numeric",day:"numeric",weekday:"sho
 const tzAbbr=ms=>{try{return new Intl.DateTimeFormat("en-US",{timeZone:TZ_LOC,timeZoneName:"short"}).formatToParts(new Date(ms)).find(x=>x.type==="timeZoneName").value}catch(e){return "PST"}};
 function fmtKST(ms){const p=zp(TZ_KR,ms,{month:"numeric",day:"numeric",weekday:"short"});return `${p.month}/${p.day}(${p.weekday}) ${hhmm(TZ_KR,ms)}`}
 function pstDate(){const p=zp(TZ_LOC,nowMs(),{year:"numeric",month:"2-digit",day:"2-digit"});return `${p.year}-${p.month}-${p.day}`}
-function devIdx(){const t=new Date(nowMs());t.setHours(0,0,0,0);return Math.round((t-start)/864e5)}
+// 일차 계산은 기기 시간대가 아니라 현지(미국 서부) 날짜 기준이에요.
+const dayNum=d=>Date.parse(d+"T00:00:00Z")/864e5;
+function devIdx(){return Math.round(dayNum(pstDate())-dayNum("2026-11-12"))}
 const todayDay=()=>Math.min(Math.max(devIdx(),0),days.length-1);
 function ddLabel(){const i=devIdx();return i<0?`D-${-i}`:i===0?"오늘 출발":i<days.length?`${i+1}일차`:"여행 끝"}
 $("#dd").textContent=ddLabel();
@@ -711,7 +712,7 @@ function wxOne(k,date){
   }
   const c=D.weather_code[idx], hi=Math.round(D.temperature_2m_max[idx]), lo=Math.round(D.temperature_2m_min[idx]);
   const pp=D.precipitation_probability_max[idx], ps=D.precipitation_sum[idx]||0, g=Math.round(D.wind_gusts_10m_max[idx]||0);
-  const away=Math.round((new Date(date+"T00:00:00")-today)/864e5);
+  const away=Math.round(dayNum(date)-dayNum(pstDate()));
   const haz=wxHazards(c,ps,g,lo,hi).map(([lv,t])=>`<div class="wxhaz ${lv}">${lv==="danger"?"⚠ 위험 · ":"주의 · "}${esc(t)}</div>`).join("");
   const upd=WXT[k]?new Date(WXT[k]):null;
   const fd=upd?`${upd.getMonth()+1}/${upd.getDate()} ${String(upd.getHours()).padStart(2,"0")}:${String(upd.getMinutes()).padStart(2,"0")}`:"";
